@@ -21,7 +21,7 @@ import sys
 
 from uc2.application import UCApplication
 from uc2.utils import system
-from uc2 import cms, uc2const
+from uc2 import uc2const
 
 from sk1 import _, config, events, icons
 from sk1 import dialogs
