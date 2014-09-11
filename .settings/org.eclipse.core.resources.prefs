@@ -1,10 +1,10 @@
 eclipse.preferences.version=1
 encoding//src/sk1/application.py=utf-8
-encoding//src/sk1/clipboard.py=utf-8
 encoding//src/sk1/dialogs/__init__.py=utf-8
 encoding//src/sk1/dialogs/credits.py=utf-8
 encoding//src/sk1/dialogs/license.py=utf-8
 encoding//src/sk1/prefs/__init__.py=utf-8
+encoding//src/sk1/ui/clipboard.py=utf-8
 encoding//src/sk1/ui/mainwindow.py=utf-8
 encoding//src/sk1/ui/menubar.py=utf-8
 encoding//src/sk1/ui/palette.py=utf-8

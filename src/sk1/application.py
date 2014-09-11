@@ -33,7 +33,7 @@ from sk1.inspector import DocumentInspector
 from sk1.ui.mainwindow import MainWindow
 from sk1.actions import create_actions
 from sk1.presenter import PD_Presenter
-from sk1.clipboard import AppClipboard
+from sk1.ui.clipboard import AppClipboard
 
 
 class Application(UCApplication):
