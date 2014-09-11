@@ -12,4 +12,5 @@ encoding//src/sk1/ui/palette.py=utf-8
 encoding//src/sk1/ui/statusbar.py=utf-8
 encoding//src/sk1/ui/toolbar.py=utf-8
 encoding//src/sk1/ui/tools.py=utf-8
+encoding//src/sk1/view/api.py=utf-8
 encoding//src/sk1/view/eventloop.py=utf-8

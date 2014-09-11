@@ -30,7 +30,7 @@ from sk1.dialogs import ProgressDialog
 from widgets.docarea import DocArea
 
 from sk1.view.eventloop import EventLoop
-from sk1.api import PresenterAPI
+from sk1.view.api import PresenterAPI
 from sk1.view.selection import Selection
 from sk1.view.snapping import SnapManager
 
