@@ -279,7 +279,7 @@ def create_actions(app):
 	 proxy.project_website, None, None],
 	['PROJECT_FORUM', _('Project _forum'), _('Project forum'), None, None,
 	 proxy.project_forum, None, None],
-	['ABOUT', _('_About PrintDesign'), _('About PrintDesign'), gtk.STOCK_ABOUT, None,
+	['ABOUT', _('_About sK1'), _('About sK1'), gtk.STOCK_ABOUT, None,
 	 proxy.about, None, None],
 
 	['ROTATE_LEFT', _('Rotate _Left'), _('Rotate Left'), icons.STOCK_ROTATE_LEFT, None,

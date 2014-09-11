@@ -30,7 +30,7 @@ config = None
 
 def sk1_run():
 
-	"""PrintDesign application launch routine."""
+	"""sK1 application launch routine."""
 
 	global config
 
