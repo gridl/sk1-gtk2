@@ -32,7 +32,7 @@ from sk1.proxy import AppProxy
 from sk1.inspector import DocumentInspector
 from sk1.ui.mainwindow import MainWindow
 from sk1.actions import create_actions
-from sk1.presenter import SK1_Presenter
+from sk1.view.presenter import SK1_Presenter
 from sk1.ui.clipboard import AppClipboard
 
 
