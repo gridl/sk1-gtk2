@@ -1,0 +1,16 @@
+include LICENSE
+include libutils.py
+include MANIFEST.in
+include GPLv3.txt
+include src/sk1.desktop
+include src/sk1.png
+include src/sk1.xpm
+
+recursive-include src/sk1/share *.*
+recursive-include src/sk1/share/cursors *.*
+recursive-include src/sk1/share/icons *.*
+recursive-include src/sk1/share/icons/obj_browser *.*
+recursive-include src/sk1/share/icons/pager *.*
+recursive-include src/sk1/share/icons/palette *.*
+recursive-include src/sk1/share/icons/preferences *.*
+recursive-include src/sk1/share/icons/tools *.*
