@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2011-2012 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
-#	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
@@ -29,7 +29,7 @@ from sk1 import _, config, events
 from sk1.dialogs import ProgressDialog
 from widgets.docarea import DocArea
 
-from sk1.eventloop import EventLoop
+from sk1.view.eventloop import EventLoop
 from sk1.api import PresenterAPI
 from sk1.view.selection import Selection
 from sk1.view.snapping import SnapManager
@@ -216,7 +216,7 @@ class PD_Presenter:
 			self.eventloop.emit(self.eventloop.PAGE_CHANGED)
 			events.emit(events.PAGE_CHANGED, self)
 
-	def set_active_layer(self, page, layer_num= -1):
+	def set_active_layer(self, page, layer_num=-1):
 		self.active_layer = self.doc_presenter.methods.get_layer(page, layer_num)
 
 	def get_editable_layers(self, page=None):
