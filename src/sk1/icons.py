@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2012 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -21,7 +21,7 @@ import gtk
 from sk1 import _, config
 
 
-STOCK_PDXF_DOC = 'document-icon'
+STOCK_SK1_DOC = 'document-icon'
 STOCK_DONT_SAVE = 'action-dont-save'
 STOCK_ROTATE_LEFT = 'object-rotate-left'
 STOCK_ROTATE_RIGHT = 'object-rotate-right'
@@ -55,7 +55,7 @@ def load_icons():
 			STOCK_PLUGIN_DOM_VIEWER, STOCK_PLUGIN_PAGES, STOCK_SNAP_TO_GRID,
 			STOCK_SNAP_TO_GUIDES, STOCK_SNAP_TO_OBJECTS, STOCK_SNAP_TO_PAGE,
 			STOCK_PAGE_FRAME, STOCK_PAGE_GUIDE_FRAME, STOCK_GUIDES_AT_CENTER,
-			STOCK_REMOVE_ALL_GUIDES, STOCK_PDXF_DOC]
+			STOCK_REMOVE_ALL_GUIDES, STOCK_SK1_DOC]
 
 	path = '' + os.path.join(config.resource_dir, 'icons')
 
