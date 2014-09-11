@@ -34,7 +34,7 @@ from sk1.view.api import PresenterAPI
 from sk1.view.selection import Selection
 from sk1.view.snapping import SnapManager
 
-class PD_Presenter:
+class SK1_Presenter:
 
 	doc_presenter = None
 	doc_file = ''
