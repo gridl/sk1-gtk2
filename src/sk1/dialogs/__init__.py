@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2011-2012 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
-#	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, sys
 import gtk, gobject
@@ -206,7 +206,7 @@ def about_dialog(parent):
 	from sk1.dialogs.credits import CREDITS
 	from sk1.dialogs.license import LICENSE
 	authors = [
-		"\nIgor E. Novikov (PrintDesign, Gtk+ version; sK1, Tk version)\n\
+		"\nIgor E. Novikov (sK1, Gtk+ version; sK1, Tk version)\n\
 		<igor.e.novikov@gmail.com>\n\n\
 ------------------------------",
 		"Bernhard Herzog (Skencil, Tk version)\n\
@@ -219,7 +219,7 @@ def about_dialog(parent):
 
 	about.set_program_name(parent.app.appdata.app_name)
 	about.set_version(parent.app.appdata.version)
-	about.set_copyright("Copyright (C) 2011-2013 by Igor E. Novikov\n")
+	about.set_copyright("Copyright (C) 2011-2014 by Igor E. Novikov\n")
 	about.set_comments(_("Vector graphics editor based on sK1 0.9.x") + "\n" + \
 						  _("and Skencil 0.6.x experience."))
 	about.set_website('http://www.sk1project.org')
