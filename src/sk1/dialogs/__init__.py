@@ -31,26 +31,26 @@ def _get_open_fiters():
 	ext = uc2const.FORMAT_EXTENSION
 	items = [] + data.LOADER_FORMATS
 
-	filter = gtk.FileFilter()
-	filter.set_name(_('All supported formats'))
+	file_filter = gtk.FileFilter()
+	file_filter.set_name(_('All supported formats'))
 	for item in items:
 		for extension in ext[item]:
-			filter.add_pattern('*.' + extension)
-			filter.add_pattern('*.' + extension.upper())
-	result.append(filter)
+			file_filter.add_pattern('*.' + extension)
+			file_filter.add_pattern('*.' + extension.upper())
+	result.append(file_filter)
 
-	filter = gtk.FileFilter()
-	filter.set_name(_('All files'))
-	filter.add_pattern('*')
-	result.append(filter)
+	file_filter = gtk.FileFilter()
+	file_filter.set_name(_('All files'))
+	file_filter.add_pattern('*')
+	result.append(file_filter)
 
 	for item in items:
-		filter = gtk.FileFilter()
-		filter.set_name(descr[item])
+		file_filter = gtk.FileFilter()
+		file_filter.set_name(descr[item])
 		for extension in ext[item]:
-			filter.add_pattern('*.' + extension)
-			filter.add_pattern('*.' + extension.upper())
-		result.append(filter)
+			file_filter.add_pattern('*.' + extension)
+			file_filter.add_pattern('*.' + extension.upper())
+		result.append(file_filter)
 
 	return result
 
@@ -60,25 +60,25 @@ def _get_image_fiters():
 	ext = uc2const.FORMAT_EXTENSION
 	items = [] + uc2const.IMAGE_FORMATS
 	for item in items:
-		filter = gtk.FileFilter()
-		filter.set_name(descr[item])
+		file_filter = gtk.FileFilter()
+		file_filter.set_name(descr[item])
 		for extension in ext[item]:
-			filter.add_pattern('*.' + extension)
-			filter.add_pattern('*.' + extension.upper())
-		result.append(filter)
+			file_filter.add_pattern('*.' + extension)
+			file_filter.add_pattern('*.' + extension.upper())
+		result.append(file_filter)
 
-	filter = gtk.FileFilter()
-	filter.set_name(_('All supported image formats'))
+	file_filter = gtk.FileFilter()
+	file_filter.set_name(_('All supported image formats'))
 	for item in items:
 		for extension in ext[item]:
-			filter.add_pattern('*.' + extension)
-			filter.add_pattern('*.' + extension.upper())
-	result.append(filter)
+			file_filter.add_pattern('*.' + extension)
+			file_filter.add_pattern('*.' + extension.upper())
+	result.append(file_filter)
 
-	filter = gtk.FileFilter()
-	filter.set_name(_('All files'))
-	filter.add_pattern('*')
-	result.append(filter)
+	file_filter = gtk.FileFilter()
+	file_filter.set_name(_('All files'))
+	file_filter.add_pattern('*')
+	result.append(file_filter)
 
 	return result
 
@@ -97,11 +97,11 @@ def get_open_file_name(parent, app, start_dir, image=False):
 	dialog.set_current_folder(start_dir)
 
 	if image:
-		for filter in _get_image_fiters():
-			dialog.add_filter(filter)
+		for file_filter in _get_image_fiters():
+			dialog.add_filter(file_filter)
 	else:
-		for filter in _get_open_fiters():
-			dialog.add_filter(filter)
+		for file_filter in _get_open_fiters():
+			dialog.add_filter(file_filter)
 
 	ret = dialog.run()
 	if not ret == gtk.RESPONSE_CANCEL:
@@ -116,11 +116,11 @@ def _get_save_fiters():
 	ext = uc2const.FORMAT_EXTENSION
 	items = [] + data.SAVER_FORMATS
 	for item in items:
-		filter = gtk.FileFilter()
-		filter.set_name(descr[item])
+		file_filter = gtk.FileFilter()
+		file_filter.set_name(descr[item])
 		for extension in ext[item]:
-			filter.add_pattern('*.' + extension)
-		result.append(filter)
+			file_filter.add_pattern('*.' + extension)
+		result.append(file_filter)
 
 	return result
 
@@ -142,8 +142,8 @@ def get_save_file_name(parent, app, path):
 	doc_name = os.path.basename(path)
 	dialog.set_current_name(doc_name)
 
-	for filter in _get_save_fiters():
-		dialog.add_filter(filter)
+	for file_filter in _get_save_fiters():
+		dialog.add_filter(file_filter)
 
 	ret = dialog.run()
 	if not ret == gtk.RESPONSE_CANCEL:
