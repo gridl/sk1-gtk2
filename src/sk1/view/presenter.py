@@ -95,7 +95,7 @@ class DocPresenter:
 
 		self.methods = self.doc_presenter.methods
 		self.model = self.doc_presenter.model
-#		self.set_active_page()
+		self.set_active_page()
 
 
 		self.cms = self.app.default_cms
@@ -220,27 +220,19 @@ class DocPresenter:
 	def get_editable_layers(self, page=None):
 		if page is None: page = self.active_page
 		layers = []
-		for layer in self.methods.get_desktop_layers():
-			if layer.properties[1]:layers.append(layer)
 		for layer in page.childs:
-			if layer.properties[1]:layers.append(layer)
-		for layer in self.methods.get_master_layers():
-			if layer.properties[1]:layers.append(layer)
+			if not layer.locked:layers.append(layer)
 		return layers
 
 	def get_visible_layers(self, page=None):
 		if page is None: page = self.active_page
 		layers = []
-		for layer in self.methods.get_desktop_layers():
-			if layer.properties[0]:layers.append(layer)
 		for layer in page.childs:
-			if layer.properties[0]:layers.append(layer)
-		for layer in self.methods.get_master_layers():
-			if layer.properties[0]:layers.append(layer)
+			if layer.visible:layers.append(layer)
 		return layers
 
 	def get_page_size(self, page=None):
 		if page is None:
 			page = self.active_page
-		w, h = page.page_format[1]
+		w, h = page.size
 		return w, h
