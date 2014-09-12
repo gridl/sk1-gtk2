@@ -19,7 +19,7 @@ import copy, os
 import gtk
 
 from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY, COLOR_DISPLAY
-from uc2.cms import rgb_to_hexcolor, gdk_hexcolor_to_rgb
+from uc2.cms import gdk_hexcolor_to_rgb
 
 from sk1 import _, config
 from sk1.widgets import SimpleListCombo, ImageStockButton
