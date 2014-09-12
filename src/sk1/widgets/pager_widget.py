@@ -54,7 +54,7 @@ class PagerWidget(gtk.VBox):
 		self.hbox.pack_start(self.end, False, False, 0)
 		self.end.connect('clicked', self.goto_end)
 
-#		self.update_pager()
+		self.update_pager()
 		self.presenter.eventloop.connect(self.presenter.eventloop.PAGE_CHANGED,
 										self.update_pager)
 		self.presenter.eventloop.connect(self.presenter.eventloop.DOC_MODIFIED,
