@@ -17,9 +17,10 @@
 
 import gtk, os
 
-from sk1 import _, config
+from sk1 import _, config, events
+from sk1.widgets.hidable import HidableHBox
 
-class PagerWidget(gtk.VBox):
+class PagerWidget(HidableHBox):
 
 	start = None
 	left = None
@@ -27,13 +28,14 @@ class PagerWidget(gtk.VBox):
 	right = None
 	end = None
 
-	def __init__(self, presenter):
+	def __init__(self, app):
 
-		gtk.VBox.__init__(self)
-		self.presenter = presenter
+		HidableHBox.__init__(self)
+		self.app = app
+		self.insp = app.inspector
 
 		self.hbox = gtk.HBox()
-		self.pack_start(self.hbox, False, False, 0)
+		self.box.pack_start(self.hbox, False, False, 0)
 
 		self.start = PagerButton('pager-arrow-start.png')
 		self.hbox.pack_start(self.start, False, False, 0)
@@ -54,16 +56,26 @@ class PagerWidget(gtk.VBox):
 		self.hbox.pack_start(self.end, False, False, 0)
 		self.end.connect('clicked', self.goto_end)
 
+		self.hbox.pack_start(gtk.VSeparator(), False, False, 0)
+
 		self.update_pager()
-		self.presenter.eventloop.connect(self.presenter.eventloop.PAGE_CHANGED,
-										self.update_pager)
-		self.presenter.eventloop.connect(self.presenter.eventloop.DOC_MODIFIED,
-										self.update_pager)
+		events.connect(events.DOC_CHANGED, self.update_pager)
+		events.connect(events.DOC_MODIFIED, self.update_pager)
+		events.connect(events.DOC_CLOSED, self.update_pager)
+		events.connect(events.NO_DOCS, self.update_pager)
+
 		self.show_all()
 
 	def update_pager(self, *args):
-		pages = self.presenter.get_pages()
-		current_index = pages.index(self.presenter.active_page)
+		if not self.insp.is_doc():
+			self.set_visible(False)
+			return
+		self.set_visible(True)
+
+		presenter = self.app.current_doc
+
+		pages = presenter.get_pages()
+		current_index = pages.index(presenter.active_page)
 
 		text = _("Page %i of %i") % (current_index + 1, len(pages))
 		self.label.set_text(text)
@@ -82,24 +94,24 @@ class PagerWidget(gtk.VBox):
 		self.show_all()
 
 	def goto_start(self, *args):
-		self.presenter.goto_page(0)
+		self.app.current_doc.goto_page(0)
 
 	def goto_left(self, *args):
-		pages = self.presenter.get_pages()
-		current_index = pages.index(self.presenter.active_page)
-		self.presenter.goto_page(current_index - 1)
+		pages = self.app.current_doc.get_pages()
+		current_index = pages.index(self.app.current_doc.active_page)
+		self.app.current_doc.goto_page(current_index - 1)
 
 	def goto_right(self, *args):
-		pages = self.presenter.get_pages()
-		current_index = pages.index(self.presenter.active_page)
+		pages = self.app.current_doc.get_pages()
+		current_index = pages.index(self.app.current_doc.active_page)
 		if current_index < len(pages) - 1:
-			self.presenter.goto_page(current_index + 1)
+			self.app.current_doc.goto_page(current_index + 1)
 		else:
-			self.presenter.app.proxy.insert_page()
+			self.app.current_doc.app.proxy.insert_page()
 
 	def goto_end(self, *args):
-		pages = self.presenter.get_pages()
-		self.presenter.goto_page(len(pages) - 1)
+		pages = self.app.current_doc.get_pages()
+		self.app.current_doc.goto_page(len(pages) - 1)
 
 class PagerButton(gtk.Button):
 	def __init__(self, file_name):

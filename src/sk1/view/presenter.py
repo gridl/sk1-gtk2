@@ -110,7 +110,6 @@ class DocPresenter:
 		self.traced_objects = [
 							self.eventloop,
 							self.api,
-							self.docarea.pager,
 							self.docarea.hruler,
 							self.docarea.vruler,
 							self.docarea.corner,

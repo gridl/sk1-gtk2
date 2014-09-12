@@ -23,7 +23,6 @@ from uc2 import uc2const
 from sk1 import icons
 from sk1.view.canvas import AppCanvas
 from sk1.widgets.ruler import RulerCorner, Ruler
-from sk1.widgets.pager_widget import PagerWidget
 
 
 class DocArea(gtk.Table):
@@ -68,9 +67,6 @@ class DocArea(gtk.Table):
 		vbox.pack_start(line, False, False, 0)
 
 		hbox = gtk.HBox()
-		self.pager = PagerWidget(self.presenter)
-		hbox.pack_start(self.pager, False, False, 0)
-
 		sbox = gtk.VBox()
 		self.h_adj = gtk.Adjustment()
 		self.hscroll = gtk.HScrollbar(self.h_adj)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#	Copyright (C) 2011-2012 by Igor E. Novikov
+#	Copyright (C) 2011-2014 by Igor E. Novikov
 #
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import gtk
 
 from sk1 import events
 from sk1.widgets.color_monitor import ColorMonitorWidget
+from sk1.widgets.pager_widget import PagerWidget
 
 class AppStatusbar(gtk.HBox):
 
@@ -32,6 +33,9 @@ class AppStatusbar(gtk.HBox):
 		self.mw = mw
 		self.app = mw.app
 
+		self.pager = PagerWidget(self.app)
+		self.pack_start(self.pager, False, False, 5)
+
 		self.msg_label = gtk.Label()
 		self.pack_start(self.msg_label, False, False, 0)
 
@@ -43,30 +47,7 @@ class AppStatusbar(gtk.HBox):
 		vbox.pack_start(spacer, False, False, 10)
 		self.pack_end(vbox, False, False, 0)
 
-
 		events.connect(events.APP_STATUS, self.show_message)
 
 	def show_message(self, args):
 		self.msg_label.set_text(args[0])
-
-class OldAppStatusbar(gtk.Statusbar):
-
-	def __init__(self, mw):
-		gtk.Statusbar.__init__(self)
-
-		self.mw = mw
-		self.app = mw.app
-		self.build()
-		events.connect(events.APP_STATUS, self.show_message)
-
-	def build(self):
-		self.cmw = ColorMonitorWidget(self.app)
-		self.pack_end(self.cmw, False, False, 0)
-
-		vbox = gtk.VBox()
-		spacer = gtk.EventBox()
-		vbox.pack_start(spacer, False, False, 10)
-		self.pack_end(vbox, False, False, 0)
-
-	def show_message(self, args):
-		self.push(0, args[0])
