@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2011-2012 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
-#	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import math
 
@@ -156,12 +156,12 @@ class AppProxy:
 			methods = self.app.current_doc.methods
 			api = self.app.current_doc.api
 			grid_layer = methods.get_gird_layer()
-			if grid_layer.properties[0] and not action.get_active():
+			if grid_layer.visible and not action.get_active():
 				prop = [] + grid_layer.properties
 				prop[0] = 0
 				api.set_layer_properties(grid_layer, prop)
 				return
-			if not grid_layer.properties[0] and action.get_active():
+			if not grid_layer.visible and action.get_active():
 				prop = [] + grid_layer.properties
 				prop[0] = 1
 				api.set_layer_properties(grid_layer, prop)
@@ -410,7 +410,7 @@ class AppProxy:
 		if index >= 0:
 			self.app.current_doc.goto_page(index)
 
-	#---Canvas actions		
+	#---Canvas actions
 
 	def move_up(self, *args):
 		if self.insp.is_selection():
