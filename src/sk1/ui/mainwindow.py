@@ -48,11 +48,12 @@ class MainWindow(gtk.Window):
 
 		self.ctx = HidableVBox()
 
+		self.ctx.box.pack_start(gtk.HSeparator(), False, False, 0)
+
 		self.ctx_bar = ContextPanel(self)
 		self.ctx.box.pack_start(self.ctx_bar, False, False, 0)
 
-		self.ctx_line = gtk.HSeparator()
-		self.ctx.box.pack_start(self.ctx_line, False, False, 0)
+		self.ctx.box.pack_start(gtk.HSeparator(), False, False, 0)
 
 		vbox.pack_start(self.ctx, False, False, 0)
 
@@ -78,8 +79,11 @@ class MainWindow(gtk.Window):
 		vbox.pack_start(hbox , True, True, 2)
 		#---CENTRAL PART
 
+
 		self.statusbar = AppStatusbar(self)
 		vbox.pack_end(self.statusbar, expand=False)
+
+		vbox.pack_end(gtk.HSeparator(), False, False, 0)
 
 		self.palette = Palette(self)
 		vbox.pack_end(self.palette, False, False, 0)
