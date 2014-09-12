@@ -19,7 +19,7 @@ import gtk
 
 from uc2.uc2const import PAGE_FORMATS, PAGE_FORMAT_NAMES, PORTRAIT, LANDSCAPE
 
-from sk1 import _, config, events
+from sk1 import _, events
 from sk1.widgets import UnitSpin, ImageToggleButton, SimpleListCombo
 
 class PageFormatPlugin(gtk.HBox):
@@ -76,8 +76,7 @@ class PageFormatPlugin(gtk.HBox):
 		if not self.format[0] == self.formats[self.combo.get_active()]:
 			self.update_flag = True
 			if not self.formats[self.combo.get_active()] == self.formats[-1]:
-				format = self.formats[self.combo.get_active()]
-				w, h = PAGE_FORMATS[format]
+				w, h = PAGE_FORMATS[self.formats[self.combo.get_active()]]
 				if self.portrait.get_active() and w > h:
 					self.width_spin.set_point_value(w)
 					self.height_spin.set_point_value(h)
