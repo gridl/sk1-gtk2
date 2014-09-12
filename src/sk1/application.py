@@ -32,7 +32,7 @@ from sk1.proxy import AppProxy
 from sk1.inspector import DocumentInspector
 from sk1.ui.mainwindow import MainWindow
 from sk1.actions import create_actions
-from sk1.view.presenter import SK1_Presenter
+from sk1.view.presenter import DocPresenter
 from sk1.ui.clipboard import AppClipboard
 
 
@@ -112,7 +112,7 @@ class Application(UCApplication):
 		return False
 
 	def new(self):
-		doc = SK1_Presenter(self)
+		doc = DocPresenter(self)
 		self.docs.append(doc)
 		self.set_current_doc(doc)
 		events.emit(events.APP_STATUS, _('New document created'))
@@ -166,7 +166,7 @@ class Application(UCApplication):
 												config.open_dir)
 		if os.path.lexists(doc_file) and os.path.isfile(doc_file):
 			try:
-				doc = SK1_Presenter(self, doc_file, silent)
+				doc = DocPresenter(self, doc_file, silent)
 			except:
 				details = sys.exc_info()[1].__str__() + sys.exc_info()[2].__str__()
 				msg = _('Cannot open file')

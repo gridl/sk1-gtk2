@@ -21,7 +21,7 @@ import gtk
 
 
 from uc2.formats import get_loader, get_saver
-from uc2.formats.pdxf.presenter import PDXF_Presenter
+from uc2.formats.sk1.presenter import SK1_Presenter
 from uc2 import uc2const
 from uc2.utils.fs import change_file_extension
 
@@ -34,7 +34,7 @@ from sk1.view.api import PresenterAPI
 from sk1.view.selection import Selection
 from sk1.view.snapping import SnapManager
 
-class SK1_Presenter:
+class DocPresenter:
 
 	doc_presenter = None
 	doc_file = ''
@@ -88,18 +88,17 @@ class SK1_Presenter:
 			self.doc_file = self.doc_presenter.doc_file
 			self.doc_name = os.path.basename(self.doc_file)
 			self.doc_name = change_file_extension(self.doc_name,
-									uc2const.FORMAT_EXTENSION[uc2const.PDXF][0])
+									uc2const.FORMAT_EXTENSION[uc2const.SK1][0])
 		else:
-			self.doc_presenter = PDXF_Presenter(app.appdata)
+			self.doc_presenter = SK1_Presenter(app.appdata)
 			self.doc_name = self.app.get_new_docname()
 
 		self.methods = self.doc_presenter.methods
 		self.model = self.doc_presenter.model
-		self.set_active_page()
+#		self.set_active_page()
 
 
-		self.cms = self.doc_presenter.cms
-		self.app.default_cms.registry_cm(self.cms)
+		self.cms = self.app.default_cms
 
 		self.api = PresenterAPI(self)
 		self.docarea = DocArea(self.app, self)
@@ -126,7 +125,6 @@ class SK1_Presenter:
 	def close(self):
 		if not self.docarea is None:
 			self.app.mw.remove_tab(self.docarea)
-		self.app.default_cms.unregistry_cm(self.cms)
 		self.doc_presenter.close()
 		for obj in self.traced_objects:
 			fields = obj.__dict__
