@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2011-2012 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
-#	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
 import cairo
@@ -296,8 +296,8 @@ class AppCanvas(gtk.DrawingArea):
 		self.width = w
 		self.height = h
 		zoom = min(w / width, h / height) * PAGEFIT
-		dx = w / 2.0
-		dy = h / 2.0
+		dx = w / 2.0 - width * zoom / 2.0
+		dy = h / 2.0 + height * zoom / 2.0
 		self.trafo = [zoom, 0, 0, -zoom, dx, dy]
 		self.matrix = cairo.Matrix(zoom, 0, 0, -zoom, dx, dy)
 		self.zoom = zoom

@@ -23,7 +23,8 @@ import gobject
 import cairo
 
 from uc2.uc2const import unit_dict, HORIZONTAL, VERTICAL
-from uc2.formats.pdxf import const
+from uc2.formats.sk1.sk1const import DOC_ORIGIN_CENTER, DOC_ORIGIN_LL, \
+DOC_ORIGIN_LU, ORIGINS
 from uc2.utils import system
 
 from sk1 import config, events, modes
@@ -87,10 +88,10 @@ class RulerCorner(gtk.DrawingArea):
 
 	def click_event(self, *args):
 		origin = self.presenter.model.doc_origin
-		if origin < const.ORIGINS[-1]:
+		if origin < ORIGINS[-1]:
 			origin += 1
 		else:
-			origin = const.ORIGINS[0]
+			origin = ORIGINS[0]
 		self.presenter.api.set_doc_origin(origin)
 
 	def repaint(self, *args):
@@ -265,11 +266,10 @@ class Ruler(gtk.DrawingArea):
 			scale = self.canvas.zoom
 
 		w, h = self.presenter.get_page_size()
-		if self.origin == const.DOC_ORIGIN_LL:
-			x += w / 2.0
-			y += h / 2.0
-		elif self.origin == const.DOC_ORIGIN_LU:
-			x += w / 2.0
+		if self.origin == DOC_ORIGIN_LU:
+			y -= h
+		elif self.origin == DOC_ORIGIN_CENTER:
+			x -= w / 2.0
 			y -= h / 2.0
 
 		if self.orient:
@@ -355,7 +355,7 @@ class Ruler(gtk.DrawingArea):
 		for i in range(start_index, len(positions), stride):
 			pos = positions[i] * units_per_pixel + origin / pt_per_unit
 			pos = round(pos, 5)
-			if self.origin == const.DOC_ORIGIN_LU and self.orient == VERTICAL:
+			if self.origin == DOC_ORIGIN_LU and self.orient == VERTICAL:
 				pos *= -1
 			if pos == 0.0:
 				pos = 0.0

@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2011-2012 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -87,14 +87,14 @@ class PDRenderer(CairoRenderer):
 		self.ctx.set_line_width(1.0 / self.canvas.zoom)
 		offset = 5.0 / self.canvas.zoom
 		w, h = self.canvas.presenter.get_page_size()
-		self.ctx.rectangle(-w / 2.0 + offset, -h / 2.0 - offset, w, h)
+		self.ctx.rectangle(offset, -offset, w, h)
 		self.ctx.set_source_rgb(*CAIRO_GRAY)
 		self.ctx.fill()
 		self.ctx.set_antialias(cairo.ANTIALIAS_NONE)
-		self.ctx.rectangle(-w / 2.0, -h / 2.0, w, h)
+		self.ctx.rectangle(0.0, 0.0, w, h)
 		self.ctx.set_source_rgb(*CAIRO_WHITE)
 		self.ctx.fill()
-		self.ctx.rectangle(-w / 2.0, -h / 2.0, w, h)
+		self.ctx.rectangle(0.0, 0.0, w, h)
 		self.ctx.set_source_rgb(*CAIRO_BLACK)
 		self.ctx.stroke()
 
