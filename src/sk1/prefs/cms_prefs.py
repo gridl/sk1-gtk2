@@ -400,20 +400,6 @@ class ProfilesTab(PrefsTab):
 
 			index += 1
 
-		note = gtk.Label()
-		text = _('<span size="small"><b>Note:</b> The profiles are used for'
-				' newly created document and will be embedded into the '
-				'document (except built-in profiles).</span>')
-		note.set_markup(text)
-		note.set_line_wrap(True)
-		note.set_alignment(0, 1)
-		note.set_sensitive(False)
-		note.set_size_request(450, -1)
-		note.set_justify(gtk.JUSTIFY_FILL)
-		hbox = gtk.HBox()
-		hbox.pack_start(note, True, True, 0)
-		tab.attach(hbox, 0, 3, 4, 5, gtk.FILL | gtk.EXPAND, gtk.SHRINK)
-
 		title = gtk.Label()
 		text = _('Application related profile')
 		title.set_markup('<b>%s</b>' % (text))
@@ -436,9 +422,8 @@ class ProfilesTab(PrefsTab):
 
 		note = gtk.Label()
 		text = _('<span size="small"><b>Note:</b> Display profile affects on '
-				'document screen representation only. Therefore it is not '
-				'embedded into document. The profile for your hardware '
-				'you can get either from monitor manufacture or '
+				'document screen representation only. The profile for your '
+				'hardware you can get either from monitor manufacture or '
 				'calibrating monitor (prefered option) or download '
 				'from ICC Profile Taxi service http://icc.opensuse.org/</span>')
 		note.set_markup(text)
