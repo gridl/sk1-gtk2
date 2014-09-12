@@ -40,8 +40,8 @@ class PageFormatPlugin(gtk.HBox):
 		self.build()
 
 	def build(self):
-		label = gtk.Label(_('Page:'))
-		self.pack_start(label, False, False, 0)
+#		label = gtk.Label(_('Page:'))
+#		self.pack_start(label, False, False, 0)
 
 		self.formats = PAGE_FORMAT_NAMES + [_('Custom'), ]
 
