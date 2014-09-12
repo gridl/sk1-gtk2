@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2013 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -478,16 +478,15 @@ class ProfilesTab(PrefsTab):
 		if not name or not name in profiles:
 			widget.set_active(0)
 			if colorspace == COLOR_RGB:
-				self.pdxf_config.default_rgb_profile = ''
+				config.default_rgb_profile = ''
 			elif colorspace == COLOR_CMYK:
-				self.pdxf_config.default_cmyk_profile = ''
+				config.default_cmyk_profile = ''
 			elif colorspace == COLOR_LAB:
-				self.pdxf_config.default_lab_profile = ''
+				config.default_lab_profile = ''
 			elif colorspace == COLOR_GRAY:
-				self.pdxf_config.default_gray_profile = ''
+				config.default_gray_profile = ''
 			else:
 				config.cms_display_profile = ''
-			self.pdxf_config.save()
 		else:
 			widget.set_active(profiles.index(name))
 
@@ -511,16 +510,15 @@ class ProfilesTab(PrefsTab):
 			profile_name = ''
 			if index: profile_name = profiles[index]
 			if colorspace == COLOR_RGB:
-				self.pdxf_config.default_rgb_profile = profile_name
+				config.default_rgb_profile = profile_name
 			elif colorspace == COLOR_CMYK:
-				self.pdxf_config.default_cmyk_profile = profile_name
+				config.default_cmyk_profile = profile_name
 			elif colorspace == COLOR_LAB:
-				self.pdxf_config.default_lab_profile = profile_name
+				config.default_lab_profile = profile_name
 			elif colorspace == COLOR_GRAY:
-				self.pdxf_config.default_gray_profile = profile_name
+				config.default_gray_profile = profile_name
 			else:
 				config.cms_display_profile = profile_name
-			self.pdxf_config.save()
 
 class ManageButton(ImageStockButton):
 

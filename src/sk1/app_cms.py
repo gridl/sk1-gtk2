@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2013 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -21,7 +21,6 @@ from uc2 import uc2const
 from uc2.uc2const import COLOR_DISPLAY
 
 from uc2.cms import ColorManager, CS, libcms
-from uc2.formats.pdxf.pdxf_config import PDXF_Config
 from sk1 import config, events
 
 class AppColorManager(ColorManager):
@@ -43,14 +42,7 @@ class AppColorManager(ColorManager):
 			events.emit(events.CMS_CHANGED)
 
 	def get_profiles(self):
-		pdxf_config = PDXF_Config()
-		filename = 'pdxf_config.xml'
-		config_file = os.path.join(self.app.appdata.app_config_dir, filename)
-		pdxf_config.load(config_file)
-		profiles = [pdxf_config.default_rgb_profile,
-				pdxf_config.default_cmyk_profile,
-				pdxf_config.default_lab_profile,
-				pdxf_config.default_gray_profile]
+		profiles = ['', '', '', '']
 		profiles.append(config.cms_display_profile)
 		return profiles
 

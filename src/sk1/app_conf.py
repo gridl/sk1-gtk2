@@ -176,6 +176,12 @@ class AppConfig(UCConfig):
 	resource_dir = ''
 	profile_import_dir = '~'
 
+	#============== COLOR MANAGEMENT SECTION ===================
+	default_rgb_profile = ''
+	default_cmyk_profile = ''
+	default_lab_profile = ''
+	default_gray_profile = ''
+
 	def __init__(self, path):
 		pass
 #		self.resource_dir = os.path.join(path, 'share')
