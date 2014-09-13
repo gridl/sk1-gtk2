@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2011-2012 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
-#	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
 
@@ -87,7 +87,7 @@ def create_actions(app):
 	actions = {}
 	entries = [
 
-#	name, label, tooltip, icon, shortcut, callable, [channels], validator, args 
+#	name, label, tooltip, icon, shortcut, callable, [channels], validator, args
 #gtk.accelerator_name(ord('+'),gtk.gdk.CONTROL_MASK)
 
 #SELECT_MODE = 0
@@ -205,6 +205,8 @@ def create_actions(app):
 	 proxy.zoom_100, [NO_DOCS, DOC_CHANGED], insp.is_doc],
 	['ZOOM_SELECTED', _('Zoom selected'), _('Zoom selected'), gtk.STOCK_ZOOM_FIT, 'F4',
 	 proxy.zoom_selected, [NO_DOCS, DOC_CHANGED, SELECTION_CHANGED], insp.is_selection],
+	['ZOOM_PREVIOUS', _('Previous zoom'), _('Previous zoom'), None, 'F3',
+	 proxy.zoom_previous, [NO_DOCS, DOC_CHANGED], insp.is_doc],
 	['FORCE_REDRAW', _('Redraw document'), _('Redraw document'),
 	gtk.STOCK_REFRESH, '<Alt>R', proxy.force_redraw,
 	[NO_DOCS, DOC_CHANGED], insp.is_doc],

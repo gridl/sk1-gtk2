@@ -43,6 +43,7 @@ class AppCanvas(gtk.DrawingArea):
 	matrix = None
 	trafo = []
 	zoom = 1.0
+	zoom_stack = []
 	width = 0
 	height = 0
 	mode = None
@@ -299,6 +300,7 @@ class AppCanvas(gtk.DrawingArea):
 		dx = w / 2.0 - width * zoom / 2.0
 		dy = h / 2.0 + height * zoom / 2.0
 		self.trafo = [zoom, 0, 0, -zoom, dx, dy]
+		self.zoom_stack.append([] + self.trafo)
 		self.matrix = cairo.Matrix(zoom, 0, 0, -zoom, dx, dy)
 		self.zoom = zoom
 		self.update_scrolls()
@@ -315,10 +317,20 @@ class AppCanvas(gtk.DrawingArea):
 		dx = dx * dzoom - _dx
 		dy = dy * dzoom - _dy
 		self.trafo = [m11, m12, m21, -m11, dx, dy]
-		self.matrix = cairo.Matrix(m11, m12, m21, -m11, dx, dy)
+		self.zoom_stack.append([] + self.trafo)
+		self.matrix = cairo.Matrix(*self.trafo)
 		self.zoom = m11
 		self.update_scrolls()
 		self.force_redraw()
+
+	def zoom_previous(self):
+		if len(self.zoom_stack) > 1:
+			self.zoom_stack = self.zoom_stack[:-1]
+			self.trafo = [] + self.zoom_stack[-1]
+			self.zoom = self.trafo[0]
+			self.matrix = cairo.Matrix(*self.trafo)
+			self.update_scrolls()
+			self.force_redraw()
 
 	def zoom_in(self):
 		self._zoom(ZOOM_IN)

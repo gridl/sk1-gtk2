@@ -265,6 +265,9 @@ class AppProxy:
 	def zoom_selected(self, *args):
 		self.app.current_doc.canvas.zoom_selected()
 
+	def zoom_previous(self, *args):
+		self.app.current_doc.canvas.zoom_previous()
+
 	def force_redraw(self, *args):
 		if self.app.current_doc:
 			self.app.current_doc.canvas.force_redraw()
