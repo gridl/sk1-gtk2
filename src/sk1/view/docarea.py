@@ -83,7 +83,7 @@ class DocArea(gtk.Table):
 		if system.get_os_family() == system.WINDOWS:
 			xpad = 2; ypad = 0
 		else:
-			xpad = ypad = 3
+			xpad = ypad = 0
 
 		self.attach(da_box, 0, 1, 0, 1,
 					gtk.EXPAND | gtk.FILL, gtk.EXPAND | gtk.FILL,
