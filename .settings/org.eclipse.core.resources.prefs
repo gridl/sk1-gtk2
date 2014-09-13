@@ -28,5 +28,6 @@ encoding//src/sk1/view/renderer.py=utf-8
 encoding//src/sk1/widgets/__init__.py=utf-8
 encoding//src/sk1/widgets/color_monitor.py=utf-8
 encoding//src/sk1/widgets/docarea.py=utf-8
+encoding//src/sk1/widgets/hidable.py=utf-8
 encoding//src/sk1/widgets/pager_widget.py=utf-8
 encoding//src/sk1/widgets/ruler.py=utf-8
