@@ -74,13 +74,16 @@ class MainWindow(gtk.Window):
 		self.workarea.box2.pack_start(self.nb_splash , True, True, 0)
 		#---CENTRAL PART END
 
+		self.palette = Palette(self)
+		self.workarea.box.pack_start(self.palette, False, False, 2)
+
 		self.statusbar = AppStatusbar(self)
-		vbox.pack_end(self.statusbar, expand=False)
+		vbox.pack_end(self.statusbar, False, False, 0)
 
 		vbox.pack_end(gtk.HSeparator(), False, False, 0)
 
-		self.palette = Palette(self)
-		vbox.pack_end(self.palette, False, False, 0)
+#		self.palette = Palette(self)
+#		vbox.pack_end(self.palette, False, False, 2)
 
 		self.add(vbox)
 		self.set_win_title()
