@@ -27,7 +27,7 @@ from uc2.utils.fs import change_file_extension
 
 from sk1 import _, config, events
 from sk1.dialogs import ProgressDialog
-from sk1.widgets.docarea import DocArea
+from sk1.view.docarea import DocArea
 
 from sk1.view.eventloop import EventLoop
 from sk1.view.api import PresenterAPI
