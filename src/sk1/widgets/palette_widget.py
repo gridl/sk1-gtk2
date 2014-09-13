@@ -139,7 +139,7 @@ class HPaletteWidget(gtk.DrawingArea):
 		i = self.position
 
 		for color in self.pal:
-			x0 = i * config.palette_cell_horizontal
+			x0 = i * config.hpalette_cell_horizontal
 			ctx.rectangle(x0, y0, offset, y1)
 			r, g, b = self.app.default_cms.get_display_color(color)
 			ctx.set_source_rgb(r, g, b)
