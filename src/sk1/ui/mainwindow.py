@@ -26,7 +26,7 @@ from sk1.ui.palette import Palette
 from sk1.ui.statusbar import AppStatusbar
 from sk1.context import ContextPanel
 from sk1.plugins import PluginPanel
-from sk1.widgets.hidable import HidableVBox
+from sk1.widgets.hidable import HidableArea
 
 class MainWindow(gtk.Window):
 
@@ -46,39 +46,33 @@ class MainWindow(gtk.Window):
 		self.toolbar = AppToolbar(self)
 		vbox.pack_start(self.toolbar, False, False, 0)
 
-		self.ctx = HidableVBox()
-
-		self.ctx.box.pack_start(gtk.HSeparator(), False, False, 0)
-
-		self.ctx_bar = ContextPanel(self)
-		self.ctx.box.pack_start(self.ctx_bar, False, False, 0)
-
-		self.ctx.box.pack_start(gtk.HSeparator(), False, False, 0)
-
-		vbox.pack_start(self.ctx, False, False, 0)
-
 		#---CENTRAL PART
-		hbox = gtk.HBox(False, 0)
-		self.tools_frame = gtk.EventBox()
-		self.tools = AppTools(self)
-		hbox.pack_start(self.tools_frame, False, False, 1)
+		self.workarea = HidableArea()
 
+		self.workarea.box.pack_start(gtk.HSeparator(), False, False, 0)
+		self.ctx_bar = ContextPanel(self)
+		self.workarea.box.pack_start(self.ctx_bar, False, False, 0)
+		self.workarea.box.pack_start(gtk.HSeparator(), False, False, 0)
+
+		hbox = gtk.HBox(False, 0)
+		self.tools = AppTools(self)
+		hbox.pack_start(self.tools, False, False, 1)
 		self.inner_hpaned = gtk.HPaned()
-		self.nb_frame = gtk.EventBox()
-		self.inner_hpaned.pack1(self.nb_frame, 1, 0)
-		self.nb_splash = SplashArea(self)
-		hbox.pack_start(self.inner_hpaned, True, True, 1)
+		self.nb = gtk.Notebook()
+		self.nb.connect('switch-page', self.change_doc)
+		self.nb.set_property('scrollable', True)
+		self.inner_hpaned.pack1(self.nb, 1, 0)
 
 		self.plugin_panel = PluginPanel(self)
 
-		self.nb = gtk.Notebook()
-		self.nb_frame.add(self.nb_splash)
-		self.nb.connect('switch-page', self.change_doc)
-		self.nb.set_property('scrollable', True)
+		hbox.pack_start(self.inner_hpaned, True, True, 1)
+		self.workarea.box.pack_start(hbox , True, True, 0)
+		vbox.pack_start(self.workarea , True, True, 0)
 
-		vbox.pack_start(hbox , True, True, 2)
-		#---CENTRAL PART
-
+		#---SPLASH
+		self.nb_splash = SplashArea(self)
+		self.workarea.box2.pack_start(self.nb_splash , True, True, 0)
+		#---CENTRAL PART END
 
 		self.statusbar = AppStatusbar(self)
 		vbox.pack_end(self.statusbar, expand=False)
@@ -109,19 +103,14 @@ class MainWindow(gtk.Window):
 
 	def set_win_title(self, docname=''):
 		if docname:
-			title = '%s - %s' % (docname, self.app.appdata.app_name)
+			title = '[%s] - %s' % (docname, self.app.appdata.app_name)
 			self.set_title(title)
 		else:
 			self.set_title(self.app.appdata.app_name)
 
 	def add_tab(self, da):
 		if not self.nb.get_n_pages():
-			self.nb_frame.remove(self.nb_splash)
-			self.nb_frame.add(self.nb)
-			self.tools_frame.add(self.tools)
-			self.tools.show_all()
-			self.ctx.set_visible(True)
-			self.tools_frame.show_all()
+			self.workarea.set_visible(True)
 		index = self.nb.append_page(da, da.tab_caption)
 		da.show_all()
 		self.nb.show_all()
@@ -131,12 +120,9 @@ class MainWindow(gtk.Window):
 	def remove_tab(self, tab):
 		self.nb.remove_page(self.nb.page_num(tab))
 		if not self.nb.get_n_pages():
-			self.nb_frame.remove(self.nb)
-			self.nb_frame.add(self.nb_splash)
 			self.set_win_title()
 			self.app.current_doc = None
-			self.tools_frame.remove(self.tools)
-			self.ctx.set_visible(False)
+			self.workarea.set_visible(False)
 
 	def change_doc(self, *args):
 		da = self.nb.get_nth_page(args[2])
@@ -168,8 +154,6 @@ class SplashArea(gtk.DrawingArea):
 
 		banner_file = os.path.join(config.resource_dir, 'cairo_banner.png')
 		self.cairo_banner = gtk.gdk.pixbuf_new_from_file(banner_file)
-#		banner_file = os.path.join(config.resource_dir, 'startup_banner.png')
-#		self.central_banner = gtk.gdk.pixbuf_new_from_file(banner_file)
 		self.connect('expose_event', self.repaint)
 
 	def repaint(self, *args):
@@ -177,9 +161,6 @@ class SplashArea(gtk.DrawingArea):
 			h = self.allocation[3]
 			self.composite(self.cairo_banner, 5,
 						h - self.cairo_banner.get_height() - 5)
-#			self.composite(self.central_banner,
-#						w / 2 - self.central_banner.get_width() / 2,
-#						(h - self.central_banner.get_height()) / 3)
 
 	def composite(self, banner, x, y):
 		frame = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB,
