@@ -23,7 +23,6 @@ import cairo
 from sk1 import events, config
 from sk1.resources import cmyk_palette
 
-HEIGHT = 17
 SHIFT = 15
 
 class HPaletteWidget(gtk.DrawingArea):
@@ -35,7 +34,7 @@ class HPaletteWidget(gtk.DrawingArea):
 		self.app = master.app
 		self.pal = cmyk_palette.palette
 
-		self.set_size_request(-1, HEIGHT)
+		self.set_size_request(-1, config.hpalette_cell_vertical)
 		self.queue_draw()
 		self.position = 0
 		self.max_pos = 0
@@ -66,7 +65,7 @@ class HPaletteWidget(gtk.DrawingArea):
 	def max_position(self):
 		x, y, w, h = self.allocation
 		if w and h:
-			size = float(config.palette_cell_horizontal)
+			size = float(config.hpalette_cell_horizontal)
 			self.max_pos = len(self.pal) * size / w - 1.0
 			self.max_pos *= w / size
 
@@ -84,7 +83,7 @@ class HPaletteWidget(gtk.DrawingArea):
 	def update_tooltip(self, *args):
 		x = args[1]
 		tooltip = args[4]
-		offset = config.palette_cell_horizontal
+		offset = config.hpalette_cell_horizontal
 		cell = int(float(x) / float(offset) - self.position)
 		if cell > len(self.pal): return False
 		color = self.pal[cell]
@@ -116,7 +115,7 @@ class HPaletteWidget(gtk.DrawingArea):
 
 	def button_press(self, *args):
 		event = args[1]
-		offset = config.palette_cell_horizontal
+		offset = config.hpalette_cell_horizontal
 		cell = int(float(event.x) / float(offset) - self.position)
 		if event.button == 1:
 			self.app.proxy.fill_selected(self.pal[cell])
@@ -134,14 +133,11 @@ class HPaletteWidget(gtk.DrawingArea):
 		ctx.set_antialias(cairo.ANTIALIAS_NONE)
 
 		x0 = 0.0; y0 = 2.0
-		offset = config.palette_cell_horizontal
-		y1 = HEIGHT + 1
+		offset = config.hpalette_cell_horizontal
+		y1 = config.hpalette_cell_vertical + 1
 
 		i = self.position
-		if self.app.current_doc:
-			cms = self.app.current_doc.cms
-		else:
-			cms = self.app.default_cms
+
 		for color in self.pal:
 			x0 = i * config.palette_cell_horizontal
 			ctx.rectangle(x0, y0, offset, y1)

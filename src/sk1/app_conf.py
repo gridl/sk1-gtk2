@@ -70,9 +70,11 @@ class AppConfig(UCConfig):
 	system_encoding = 'utf-8'# default encoding (GUI uses utf-8 only)
 	new_doc_on_start = True
 	#============== UI SECTION ===================
-	palette_cell_vertical = 18
-	palette_cell_horizontal = 40
-	palette_orientation = 1
+	hpalette_cell_vertical = 18
+	hpalette_cell_horizontal = 40
+	vpalette_cell_vertical = 18
+	vpalette_cell_vertical = 18
+	palette_orientation = appconst.HORIZONTAL
 
 	mw_maximized = 0
 
