@@ -18,10 +18,11 @@
 import os
 import gtk
 
-from sk1 import _, events, config
-from sk1.widgets.palette_widget import PaletteWidget
+from sk1 import _, config
+from sk1.widgets.palette_widget import HPaletteWidget
+from sk1.widgets.hidable import HidableHBox
 
-class Palette(gtk.HBox):
+class HPalette(HidableHBox):
 
 	def __init__(self, mw):
 		gtk.HBox.__init__(self, False, 0)
@@ -38,7 +39,7 @@ class Palette(gtk.HBox):
 		self.no_color = NoColorButton(self)
 		self.pack_start(self.no_color, False, False, 0)
 
-		self.palwidget = PaletteWidget(self)
+		self.palwidget = HPaletteWidget(self)
 		self.pack_start(self.palwidget, True, True, 1)
 
 		self.forward = PalButton('arrow-right.png')

@@ -26,7 +26,7 @@ from sk1.resources import cmyk_palette
 HEIGHT = 17
 SHIFT = 15
 
-class PaletteWidget(gtk.DrawingArea):
+class HPaletteWidget(gtk.DrawingArea):
 
 	def __init__(self, master):
 

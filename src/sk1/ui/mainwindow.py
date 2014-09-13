@@ -22,7 +22,7 @@ from sk1 import config, events
 from sk1.ui.menubar import AppMenubar
 from sk1.ui.toolbar import AppToolbar
 from sk1.ui.tools import AppTools
-from sk1.ui.palette import Palette
+from sk1.ui.palette import HPalette
 from sk1.ui.statusbar import AppStatusbar
 from sk1.context import ContextPanel
 from sk1.plugins import PluginPanel
@@ -74,8 +74,8 @@ class MainWindow(gtk.Window):
 		self.workarea.box2.pack_start(self.nb_splash , True, True, 0)
 		#---CENTRAL PART END
 
-		self.palette = Palette(self)
-		self.workarea.box.pack_start(self.palette, False, False, 2)
+		self.hpalette = HPalette(self)
+		self.workarea.box.pack_start(self.hpalette, False, False, 2)
 
 		self.statusbar = AppStatusbar(self)
 		vbox.pack_end(self.statusbar, False, False, 0)
