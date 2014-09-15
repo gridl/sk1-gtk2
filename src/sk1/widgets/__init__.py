@@ -18,7 +18,7 @@
 from generic import SimpleListCombo
 from imagewidgets import ImageButton, ImageStockButton, ImageToggleButton
 from imagewidgets import KeepRatioLabel
-from unitwidgets import UnitLabel, UnitSpin
+from unitwidgets import UnitLabel, UnitSpin, AngleSpin
 from actionwidgets import ActionButton, ActionToggleButton
 
 from color_monitor import ColorMonitorWidget

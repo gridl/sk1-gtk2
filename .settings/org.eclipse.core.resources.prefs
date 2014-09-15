@@ -8,6 +8,7 @@ encoding//src/sk1/appconst.py=utf-8
 encoding//src/sk1/application.py=utf-8
 encoding//src/sk1/context/__init__.py=utf-8
 encoding//src/sk1/context/page_format.py=utf-8
+encoding//src/sk1/context/transform.py=utf-8
 encoding//src/sk1/dialogs/__init__.py=utf-8
 encoding//src/sk1/dialogs/credits.py=utf-8
 encoding//src/sk1/dialogs/license.py=utf-8
