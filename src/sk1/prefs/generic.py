@@ -20,7 +20,7 @@ import os
 import gtk
 
 from sk1 import appconst, config
-from sk1.widgets import LargeLabel
+from sk1.widgets import PangoLabel
 from sk1.resources.images import load_image, load_stock_image
 
 class GenericPrefsPlugin(gtk.VBox):
@@ -48,7 +48,7 @@ class GenericPrefsPlugin(gtk.VBox):
 			self.icon = load_stock_image(self.icon_stock, gtk.ICON_SIZE_MENU)
 
 	def build(self):
-		title = LargeLabel(self.title)
+		title = PangoLabel(self.title, appconst.TXT_LARGE, True)
 		self.pack_start(title, False, False, 0)
 		self.pack_start(gtk.HSeparator(), False, False, 5)
 		self.built = True

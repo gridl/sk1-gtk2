@@ -22,11 +22,11 @@ from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY, COLOR_DIS
 from uc2.cms import gdk_hexcolor_to_rgb
 from uc2 import uc2const
 
-from sk1 import _, config
-from sk1.widgets import SimpleListCombo, ImageStockButton
+from sk1 import _, config, appconst
+from sk1.widgets import SimpleListCombo, ImageStockButton, PangoLabel
 from sk1.prefs.generic import GenericPrefsPlugin
 from sk1.prefs.profilemngr import get_profiles_dialog
-from sk1.resources.images import IMG_PREFS_CMS
+from sk1.resources.images import IMG_PREFS_CMS_BANNER, IMG_PREFS_CMS, load_image
 
 COLORSPACES = [COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY, COLOR_DISPLAY]
 
@@ -113,15 +113,11 @@ class CMSTab(PrefsTab):
 		self.pack_start(self.container, True, True, 0)
 
 		hbox = gtk.HBox()
-		txt = _('<span size="small"><b>Note:</b> If Color Management is not '
-			'activated all colors will be processed using simple calculation '
-			'procedures. Therefore resulted color values will be not accurate.'
-			'</span>')
-		note = gtk.Label()
-		note.set_markup(txt)
-		note.set_line_wrap(True)
+		txt = _('<b>Note:</b> If Color Management is not activated all colors '
+			'will be processed using simple calculation procedures. Therefore '
+			'resulted color values will be not accurate.')
+		note = PangoLabel(txt, appconst.TXT_SMALL, enabled=False, wrap=True)
 		note.set_alignment(0, 1)
-		note.set_sensitive(False)
 		note.set_size_request(450, -1)
 		hbox.pack_start(note, False, True, 10)
 		self.pack_start(hbox, False, True, 10)
@@ -154,15 +150,12 @@ class CMSSplash(gtk.DrawingArea):
 		b = self.bg.blue / 0xff
 		self.pixel = r * 256 * 256 * 256 + g * 65536 + b * 256 + 255
 
-		banner_file = os.path.join(config.resource_dir, 'cms-banner.png')
-		self.cms_banner = gtk.gdk.pixbuf_new_from_file(banner_file)
+		self.cms_banner = load_image(IMG_PREFS_CMS_BANNER)
 		self.connect('expose_event', self.repaint)
 
 	def repaint(self, *args):
 		if config.show_splash:
 			_x, _y, w, h = self.allocation
-#			self.composite(self.cairo_banner, 5,
-#						h - self.cairo_banner.get_height() - 5)
 			self.composite(self.cms_banner,
 						w / 2 - self.cms_banner.get_width() / 2,
 						(h - self.cms_banner.get_height()) / 2)
@@ -365,9 +358,7 @@ class ProfilesTab(PrefsTab):
 	def __init__(self, app, dlg, pdxf_config):
 		PrefsTab.__init__(self, app, dlg, pdxf_config)
 
-		title = gtk.Label()
-		text = _('Document related profiles')
-		title.set_markup('<b>%s</b>' % (text))
+		title = PangoLabel(_('Document related profiles'), bold=True)
 		self.pack_start(title, False, False, 0)
 		self.pack_start(gtk.HSeparator(), False, False, 5)
 
@@ -401,9 +392,7 @@ class ProfilesTab(PrefsTab):
 
 			index += 1
 
-		title = gtk.Label()
-		text = _('Application related profile')
-		title.set_markup('<b>%s</b>' % (text))
+		title = PangoLabel(_('Application related profile'), bold=True)
 		tab.attach(title, 0, 3, 5, 6, gtk.FILL, gtk.SHRINK)
 		line = gtk.HSeparator()
 		tab.attach(line, 0, 3, 6, 7, gtk.FILL, gtk.SHRINK)
@@ -421,16 +410,13 @@ class ProfilesTab(PrefsTab):
 		button = ManageButton(self, colorspace)
 		tab.attach(button, 2, 3, 7, 8, gtk.SHRINK, gtk.SHRINK)
 
-		note = gtk.Label()
-		text = _('<span size="small"><b>Note:</b> Display profile affects on '
+		text = _('<b>Note:</b> Display profile affects on '
 				'document screen representation only. The profile for your '
 				'hardware you can get either from monitor manufacture or '
 				'calibrating monitor (prefered option) or download '
-				'from ICC Profile Taxi service http://icc.opensuse.org/</span>')
-		note.set_markup(text)
-		note.set_line_wrap(True)
+				'from ICC Profile Taxi service http://icc.opensuse.org/')
+		note = PangoLabel(text, appconst.TXT_SMALL, enabled=False, wrap=True)
 		note.set_alignment(0, 1)
-		note.set_sensitive(False)
 		note.set_size_request(430, -1)
 		tab.attach(note, 0, 2, 8, 9, gtk.FILL | gtk.EXPAND, gtk.SHRINK)
 

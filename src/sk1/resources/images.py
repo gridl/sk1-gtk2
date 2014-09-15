@@ -19,6 +19,7 @@ import os, gtk
 from sk1 import config
 
 IMG_PREFS_CMS = 'sk1-prefs-cms'
+IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 
 def load_image(image_id):
 	loader = gtk.gdk.pixbuf_new_from_file

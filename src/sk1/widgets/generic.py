@@ -17,11 +17,20 @@
 
 import gtk, gobject
 
-class LargeLabel(gtk.Label):
+from sk1.appconst import TXT_NORMAL
 
-	def __init__(self, text=''):
+class PangoLabel(gtk.Label):
+
+	def __init__(self, text='', size='', bold=False,
+				italic=False, enabled=True, wrap=False):
 		gtk.Label.__init__(self)
-		self.set_markup('<span size="large"><b>%s</b></span>' % (text))
+		markup = '%s'
+		if italic:markup = '<i>%s</i>' % (markup)
+		if bold:markup = '<b>%s</b>' % (markup)
+		if size:markup = '<span size="%s">%s</span>' % (size, markup)
+		self.set_markup(markup % (text))
+		if not enabled: self.set_sensitive(False)
+		if wrap: self.set_line_wrap(True)
 
 class SimpleListCombo(gtk.ComboBox):
 
