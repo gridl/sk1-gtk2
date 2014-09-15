@@ -23,7 +23,7 @@ from uc2.application import UCApplication
 from uc2.utils import system
 from uc2 import uc2const
 
-from sk1 import _, config, events, icons
+from sk1 import _, config, events
 from sk1 import dialogs
 from sk1 import modes
 from sk1.app_conf import AppData
@@ -34,6 +34,7 @@ from sk1.ui.mainwindow import MainWindow
 from sk1.actions import create_actions
 from sk1.view.presenter import DocPresenter
 from sk1.ui.clipboard import AppClipboard
+from sk1.resources import icons
 
 
 class Application(UCApplication):

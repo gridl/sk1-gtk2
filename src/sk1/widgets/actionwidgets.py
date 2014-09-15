@@ -18,7 +18,7 @@
 
 import gtk
 
-from sk1 import icons
+from sk1.resources import icons
 
 class ActionButton(gtk.Button):
 	def __init__(self, action):

@@ -20,7 +20,7 @@ import gtk
 from uc2.utils import system
 from uc2 import uc2const
 
-from sk1 import icons
+from sk1.resources import icons
 from sk1.view.canvas import AppCanvas
 from sk1.widgets.ruler import RulerCorner, Ruler
 

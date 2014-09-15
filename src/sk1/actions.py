@@ -17,7 +17,8 @@
 
 import gtk
 
-from sk1 import _, events, icons
+from sk1 import _, events
+from sk1.resources import icons
 from sk1.events import CLIPBOARD, DOC_CHANGED, PAGE_CHANGED, \
 DOC_CLOSED, DOC_MODIFIED, DOC_SAVED, NO_DOCS, SELECTION_CHANGED
 

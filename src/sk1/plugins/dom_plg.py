@@ -19,7 +19,8 @@ import os
 import gtk
 
 from uc2.formats.sk1 import model
-from sk1 import _, events, icons, config
+from sk1 import _, events, config
+from sk1.resources import icons
 from sk1.plugins.plg_caption import PluginTabCaption
 
 class DOMPlugin(gtk.VBox):

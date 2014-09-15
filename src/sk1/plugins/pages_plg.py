@@ -18,7 +18,8 @@
 import gtk
 
 
-from sk1 import _, events, icons
+from sk1 import _, events
+from sk1.resources import icons
 from sk1.plugins.plg_caption import PluginTabCaption
 
 class PagesPlugin(gtk.VBox):
