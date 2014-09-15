@@ -17,8 +17,6 @@
 
 import gtk, gobject
 
-from sk1.appconst import TXT_NORMAL
-
 class PangoLabel(gtk.Label):
 
 	def __init__(self, text='', size='', bold=False,
