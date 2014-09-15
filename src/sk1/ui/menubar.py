@@ -197,7 +197,7 @@ class AppMenubar(gtk.MenuBar):
 		for item in items:
 			if item is None:
 				parent.append(gtk.SeparatorMenuItem())
-			elif isinstance(item, str):
+			elif isinstance(item, int):
 				action = self.actions[item]
 				menuitem = action.create_menu_item()
 				action.menuitem = menuitem
