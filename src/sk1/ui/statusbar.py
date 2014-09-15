@@ -19,8 +19,8 @@
 import gtk
 
 from sk1 import events
-from sk1.widgets.color_monitor import ColorMonitorWidget
-from sk1.widgets.pager_widget import PagerWidget
+from sk1.widgets import ColorMonitorWidget
+from sk1.widgets import PagerWidget
 
 class AppStatusbar(gtk.HBox):
 
