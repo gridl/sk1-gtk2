@@ -36,5 +36,8 @@ KEY_KP_ENTER = 65421
 KEY_RETURN = 65293
 
 TXT_SMALL = 'small'
+TXT_SMALLER = 'smaller'
+TXT_MEDIUM = 'medium'
 TXT_LARGE = 'large'
+TXT_LARGER = 'larger'
 

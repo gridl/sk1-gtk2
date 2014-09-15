@@ -19,6 +19,7 @@ encoding//src/sk1/inspector.py=utf-8
 encoding//src/sk1/plugins/dom_plg.py=utf-8
 encoding//src/sk1/prefs/__init__.py=utf-8
 encoding//src/sk1/prefs/cms_prefs.py=utf-8
+encoding//src/sk1/prefs/general.py=utf-8
 encoding//src/sk1/prefs/generic.py=utf-8
 encoding//src/sk1/prefs/test.py=utf-8
 encoding//src/sk1/proxy.py=utf-8

@@ -68,7 +68,7 @@ class AppConfig(UCConfig):
 
 	#============== GENERIC SECTION ===================
 	system_encoding = 'utf-8'# default encoding (GUI uses utf-8 only)
-	new_doc_on_start = True
+	new_doc_on_start = False
 	#============== UI SECTION ===================
 	hpalette_cell_vertical = 18
 	hpalette_cell_horizontal = 40
