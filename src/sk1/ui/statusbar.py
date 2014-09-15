@@ -18,9 +18,9 @@
 
 import gtk
 
-from sk1 import events
+from sk1 import events, appconst
 from sk1.widgets import ColorMonitorWidget
-from sk1.widgets import PagerWidget
+from sk1.widgets import PagerWidget, PangoLabel
 
 class AppStatusbar(gtk.HBox):
 
@@ -36,7 +36,7 @@ class AppStatusbar(gtk.HBox):
 		self.pager = PagerWidget(self.app)
 		self.pack_start(self.pager, False, False, 5)
 
-		self.msg_label = gtk.Label()
+		self.msg_label = PangoLabel(size=appconst.TXT_SMALLER)
 		self.pack_start(self.msg_label, False, False, 0)
 
 		self.cmw = ColorMonitorWidget(self.app)

@@ -23,6 +23,8 @@ from actionwidgets import ActionButton, ActionToggleButton
 
 from color_monitor import ColorMonitorWidget
 from pager_widget import PagerWidget
+from palette_widget import HPaletteWidget
 
 from actions import AppAction, AppToggleAction
+from hidable import HidableArea, HidableHBox, HidableVBox
 

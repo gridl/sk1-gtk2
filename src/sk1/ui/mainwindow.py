@@ -26,7 +26,7 @@ from sk1.ui.palette import HPalette
 from sk1.ui.statusbar import AppStatusbar
 from sk1.context import ContextPanel
 from sk1.plugins import PluginPanel
-from sk1.widgets.hidable import HidableArea
+from sk1.widgets import HidableArea
 
 class MainWindow(gtk.Window):
 

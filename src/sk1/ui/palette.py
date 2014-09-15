@@ -19,8 +19,7 @@ import os
 import gtk
 
 from sk1 import _, config
-from sk1.widgets.palette_widget import HPaletteWidget
-from sk1.widgets.hidable import HidableHBox
+from sk1.widgets import HPaletteWidget, HidableHBox
 
 class HPalette(HidableHBox):
 

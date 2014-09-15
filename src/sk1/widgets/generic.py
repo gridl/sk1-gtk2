@@ -26,9 +26,13 @@ class PangoLabel(gtk.Label):
 		if italic:markup = '<i>%s</i>' % (markup)
 		if bold:markup = '<b>%s</b>' % (markup)
 		if size:markup = '<span size="%s">%s</span>' % (size, markup)
+		self.markup = markup
 		self.set_markup(markup % (text))
 		if not enabled: self.set_sensitive(False)
 		if wrap: self.set_line_wrap(True)
+
+	def set_text(self, text):
+		self.set_markup(self.markup % (text))
 
 class SimpleListCombo(gtk.ComboBox):
 
