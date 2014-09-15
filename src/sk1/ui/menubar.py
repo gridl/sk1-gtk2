@@ -17,7 +17,7 @@
 
 import gtk
 
-from sk1 import _
+from sk1 import _, actions
 
 class AppMenubar(gtk.MenuBar):
 
@@ -29,109 +29,109 @@ class AppMenubar(gtk.MenuBar):
 
 		#----FILE MENU
 		self.file_item, self.file_menu = self.create_menu(_("_File"))
-		items = ['NEW',
+		items = [actions.NEW,
 				 None,
-				 'OPEN',
-				 'SAVE',
-				 'SAVE_AS',
-				 'SAVE_ALL',
+				 actions.OPEN,
+				 actions.SAVE,
+				 actions.SAVE_AS,
+				 actions.SAVE_ALL,
 				 None,
-				 'CLOSE',
-				 'CLOSE_ALL',
+				 actions.CLOSE,
+				 actions.CLOSE_ALL,
 				 None,
-				 'IMPORT_IMAGE',
+				 actions.IMPORT_IMAGE,
 				 None,
-				 'PRINT_SETUP',
-				 'PRINT',
+				 actions.PRINT_SETUP,
+				 actions.PRINT,
 				 None,
-				 'QUIT'
+				 actions.QUIT,
 		]
 		self.add_items(self.file_menu, items)
 
 		#----EDIT MENU
 		self.edit_item, self.edit_menu = self.create_menu(_("_Edit"))
-		items = ['UNDO',
-				 'REDO',
-				 'CLEAR_HISTORY',
+		items = [actions.UNDO,
+				 actions.REDO,
+				 actions.CLEAR_HISTORY,
 				 None,
-				 'CUT',
-				 'COPY',
-				 'PASTE',
-				 'DELETE',
+				 actions.CUT,
+				 actions.COPY,
+				 actions.PASTE,
+				 actions.DELETE,
 				 None,
-				 'SELECT_ALL',
-				 'DESELECT',
+				 actions.SELECT_ALL,
+				 actions.DESELECT,
 				 None,
-				 'PROPERTIES',
-				 'PREFERENCES',
+				 actions.PROPERTIES,
+				 actions.PREFERENCES,
 		]
 		self.add_items(self.edit_menu, items)
 
 		#----SHOW TO Submenu
 		self.show_item, self.show_menu = self.create_menu(_("_Show"))
-		items = ['SHOW_GRID',
-				 'SHOW_GUIDES',
-				 'SHOW_SNAP',
-				 'SHOW_PAGE', ]
+		items = [actions.SHOW_GRID,
+				 actions.SHOW_GUIDES,
+				 actions.SHOW_SNAP,
+				 actions.SHOW_PAGE, ]
 		self.add_items(self.show_menu, items)
 
 		#----SNAP TO Submenu
 		self.snap_to_item, self.snap_to_menu = self.create_menu(_("_Snap to"))
-		items = ['SNAP_TO_GRID',
-				 'SNAP_TO_GUIDES',
-				 'SNAP_TO_OBJECTS',
-				 'SNAP_TO_PAGE', ]
+		items = [actions.SNAP_TO_GRID,
+				 actions.SNAP_TO_GUIDES,
+				 actions.SNAP_TO_OBJECTS,
+				 actions.SNAP_TO_PAGE, ]
 		self.add_items(self.snap_to_menu, items)
 
 		#----VIEW MENU
 		self.view_item, self.view_menu = self.create_menu(_("_View"))
-		items = ['STROKE_VIEW',
-				'DRAFT_VIEW',
+		items = [actions.STROKE_VIEW,
+				actions.DRAFT_VIEW,
 				 None,
-				 'ZOOM_100',
-				 'ZOOM_IN',
-				 'ZOOM_OUT',
-				 'ZOOM_PREVIOUS',
+				 actions.ZOOM_100,
+				 actions.ZOOM_IN,
+				 actions.ZOOM_OUT,
+				 actions.ZOOM_PREVIOUS,
 				 None,
-				 'ZOOM_PAGE',
-				 'ZOOM_SELECTED',
+				 actions.ZOOM_PAGE,
+				 actions.ZOOM_SELECTED,
 				 None,
 				 self.show_item,
 				 None,
 				 self.snap_to_item,
 				 None,
-				 'FORCE_REDRAW',
+				 actions.FORCE_REDRAW,
 		]
 		self.add_items(self.view_menu, items)
 
 		#----LAYOUT MENU
 		self.layout_item, self.layout_menu = self.create_menu(_("_Layout"))
-		items = ['INSERT_PG',
-				 'DELETE_PG',
-				 'GOTO_PG',
+		items = [actions.INSERT_PG,
+				 actions.DELETE_PG,
+				 actions.GOTO_PG,
 				 None,
-				 'NEXT_PG',
-				 'PREV_PG',
+				 actions.NEXT_PG,
+				 actions.PREV_PG,
 		]
 		self.add_items(self.layout_menu, items)
 
 		#----ARRANGE MENU
 		self.arrange_item, self.arrange_menu = self.create_menu(_("_Arrange"))
-		items = ['COMBINE',
-				'BREAK_APART',
+		items = [actions.COMBINE,
+				actions.BREAK_APART,
 				None,
-				'GROUP',
-				'UNGROUP',
-				'UNGROUP_ALL',
+				actions.GROUP,
+				actions.UNGROUP,
+				actions.UNGROUP_ALL,
 				None,
-				'CONVERT_TO_CURVES',
+				actions.CONVERT_TO_CURVES,
 		]
 		self.add_items(self.arrange_menu, items)
 
 		#----EFFETCS MENU
 		self.effects_item, self.effects_menu = self.create_menu(_("Effe_cts"))
-		items = ['SET_CONTAINER',
-				'UNPACK_CONTAINER',
+		items = [actions.SET_CONTAINER,
+				actions.UNPACK_CONTAINER,
 		]
 		self.add_items(self.effects_menu, items)
 
@@ -140,38 +140,38 @@ class AppMenubar(gtk.MenuBar):
 
 		#----TEXT MENU
 		self.text_item, self.text_menu = self.create_menu(_("_Text"))
-		items = ['EDIT_TEXT',
+		items = [actions.EDIT_TEXT,
 		]
 		self.add_items(self.text_menu, items)
 
 		#----TOOLS MENU
 		self.tools_item, self.tools_menu = self.create_menu(_("T_ools"))
-		items = ['PAGES',
-				'LAYERS',
-				'DOM_VIEWER',
+		items = [actions.PAGES,
+				actions.LAYERS,
+				actions.DOM_VIEWER,
 		]
 		self.add_items(self.tools_menu, items)
 
 		#----HELP MENU
 		self.help_item, self.help_menu = self.create_menu(_("_Help"))
-		items = ['REPORT_BUG',
+		items = [actions.REPORT_BUG,
 				None,
-				'PROJECT_WEBSITE',
-				'PROJECT_FORUM',
+				actions.PROJECT_WEBSITE,
+				actions.PROJECT_FORUM,
 				None,
-				'ABOUT',
+				actions.ABOUT,
 		]
 		self.add_items(self.help_menu, items)
 
 		#----HIDDEN MENU
 		self.hidden_item, self.hidden_menu = self.create_menu("hidden")
-		items = ['PREV_PG_KP',
-				'NEXT_PG_KP',
-				'CUT2',
-				'CUT3',
-				'PASTE2',
-				'PASTE3',
-				'DELETE2',
+		items = [actions.PREV_PG_KP,
+				actions.NEXT_PG_KP,
+				actions.CUT2,
+				actions.CUT3,
+				actions.PASTE2,
+				actions.PASTE3,
+				actions.DELETE2,
 		]
 		self.add_items(self.hidden_menu, items)
 

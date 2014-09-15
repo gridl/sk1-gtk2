@@ -19,7 +19,7 @@ import os
 import gtk
 
 from sk1 import _, config
-from sk1 import events, modes
+from sk1 import events, modes, actions
 
 class AppTools(gtk.VBox):
 
@@ -33,16 +33,16 @@ class AppTools(gtk.VBox):
 		self.pack_start(spacer, False, False, 10)
 
 		items = [None,
-				('select.png', 'SELECT_MODE', modes.SELECT_MODE),
-				('shaper.png', 'SHAPER_MODE', modes.SHAPER_MODE),
-				('fleur.png', 'FLEUR_MODE', modes.FLEUR_MODE),
-				('zoom.png', 'ZOOM_MODE', modes.ZOOM_MODE),
-				('create_poly.png', 'LINE_MODE', modes.LINE_MODE),
-				('create_curve.png', 'CURVE_MODE', modes.CURVE_MODE),
-				('create_rect.png', 'RECT_MODE', modes.RECT_MODE),
-				('create_ellipse.png', 'ELLIPSE_MODE', modes.ELLIPSE_MODE),
-#				('create_polygon.png', 'POLYGON_MODE', modes.POLYGON_MODE),
-				('create_text.png', 'TEXT_MODE', modes.TEXT_MODE),
+				('select.png', actions.SELECT_MODE, modes.SELECT_MODE),
+				('shaper.png', actions.SHAPER_MODE, modes.SHAPER_MODE),
+				('fleur.png', actions.FLEUR_MODE, modes.FLEUR_MODE),
+				('zoom.png', actions.ZOOM_MODE, modes.ZOOM_MODE),
+				('create_poly.png', actions.LINE_MODE, modes.LINE_MODE),
+				('create_curve.png', actions.CURVE_MODE, modes.CURVE_MODE),
+				('create_rect.png', actions.RECT_MODE, modes.RECT_MODE),
+				('create_ellipse.png', actions.ELLIPSE_MODE, modes.ELLIPSE_MODE),
+#				('create_polygon.png', actions.POLYGON_MODE, modes.POLYGON_MODE),
+				('create_text.png', actions.TEXT_MODE, modes.TEXT_MODE),
 				None,
 				'stroke.png',
 				'fill.png',

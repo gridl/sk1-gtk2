@@ -18,7 +18,7 @@
 import os
 import gtk
 
-from sk1 import _, config
+from sk1 import _, config, actions
 from sk1.widgets import ActionButton, AngleSpin, ActionToggleButton
 
 class ActionPlugin(gtk.HBox):
@@ -39,13 +39,13 @@ class GroupPlugin(ActionPlugin):
 	name = 'GroupPlugin'
 
 	def build(self):
-		self.rot_left = ActionButton(self.actions['GROUP'])
+		self.rot_left = ActionButton(self.actions[actions.GROUP])
 		self.pack_start(self.rot_left, False, False, 0)
 
-		self.rot_left = ActionButton(self.actions['UNGROUP'])
+		self.rot_left = ActionButton(self.actions[actions.UNGROUP])
 		self.pack_start(self.rot_left, False, False, 0)
 
-		self.rot_left = ActionButton(self.actions['UNGROUP_ALL'])
+		self.rot_left = ActionButton(self.actions[actions.UNGROUP_ALL])
 		self.pack_start(self.rot_left, False, False, 0)
 
 class RotatePlugin(ActionPlugin):
@@ -65,10 +65,10 @@ class RotatePlugin(ActionPlugin):
 		self.pack_start(self.angle_spin, False, False, 0)
 		self.angle_spin.set_angle_value(0.0)
 
-		self.rot_left = ActionButton(self.actions['ROTATE_LEFT'])
+		self.rot_left = ActionButton(self.actions[actions.ROTATE_LEFT])
 		self.pack_start(self.rot_left, False, False, 0)
 
-		self.rot_right = ActionButton(self.actions['ROTATE_RIGHT'])
+		self.rot_right = ActionButton(self.actions[actions.ROTATE_RIGHT])
 		self.pack_start(self.rot_right, False, False, 0)
 
 	def user_update(self, *args):
@@ -83,10 +83,10 @@ class MirrorPlugin(ActionPlugin):
 	name = 'MirrorPlugin'
 
 	def build(self):
-		self.rot_left = ActionButton(self.actions['HOR_MIRROR'])
+		self.rot_left = ActionButton(self.actions[actions.HOR_MIRROR])
 		self.pack_start(self.rot_left, False, False, 0)
 
-		self.rot_right = ActionButton(self.actions['VERT_MIRROR'])
+		self.rot_right = ActionButton(self.actions[actions.VERT_MIRROR])
 		self.pack_start(self.rot_right, False, False, 0)
 
 class CombinePlugin(ActionPlugin):
@@ -94,10 +94,10 @@ class CombinePlugin(ActionPlugin):
 	name = 'CombinePlugin'
 
 	def build(self):
-		self.rot_left = ActionButton(self.actions['COMBINE'])
+		self.rot_left = ActionButton(self.actions[actions.COMBINE])
 		self.pack_start(self.rot_left, False, False, 0)
 
-		self.rot_right = ActionButton(self.actions['BREAK_APART'])
+		self.rot_right = ActionButton(self.actions[actions.BREAK_APART])
 		self.pack_start(self.rot_right, False, False, 0)
 
 class ToCurvePlugin(ActionPlugin):
@@ -105,7 +105,7 @@ class ToCurvePlugin(ActionPlugin):
 	name = 'ToCurvePlugin'
 
 	def build(self):
-		self.but = ActionButton(self.actions['CONVERT_TO_CURVES'])
+		self.but = ActionButton(self.actions[actions.CONVERT_TO_CURVES])
 		self.pack_start(self.but, False, False, 0)
 
 class SnappingPlugin(ActionPlugin):
@@ -113,16 +113,16 @@ class SnappingPlugin(ActionPlugin):
 	name = 'SnappingPlugin'
 
 	def build(self):
-		self.but = ActionToggleButton(self.actions['SNAP_TO_GRID'])
+		self.but = ActionToggleButton(self.actions[actions.SNAP_TO_GRID])
 		self.pack_start(self.but, False, False, 0)
 
-		self.but = ActionToggleButton(self.actions['SNAP_TO_GUIDES'])
+		self.but = ActionToggleButton(self.actions[actions.SNAP_TO_GUIDES])
 		self.pack_start(self.but, False, False, 0)
 
-		self.but = ActionToggleButton(self.actions['SNAP_TO_OBJECTS'])
+		self.but = ActionToggleButton(self.actions[actions.SNAP_TO_OBJECTS])
 		self.pack_start(self.but, False, False, 0)
 
-		self.but = ActionToggleButton(self.actions['SNAP_TO_PAGE'])
+		self.but = ActionToggleButton(self.actions[actions.SNAP_TO_PAGE])
 		self.pack_start(self.but, False, False, 0)
 
 class PageBorderPlugin(ActionPlugin):
@@ -130,12 +130,12 @@ class PageBorderPlugin(ActionPlugin):
 	name = 'PageBorderPlugin'
 
 	def build(self):
-		self.but = ActionButton(self.actions['PAGE_FRAME'])
+		self.but = ActionButton(self.actions[actions.PAGE_FRAME])
 		self.pack_start(self.but, False, False, 0)
-		self.but = ActionButton(self.actions['PAGE_GUIDE_FRAME'])
+		self.but = ActionButton(self.actions[actions.PAGE_GUIDE_FRAME])
 		self.pack_start(self.but, False, False, 0)
-		self.but = ActionButton(self.actions['GUIDES_AT_CENTER'])
+		self.but = ActionButton(self.actions[actions.GUIDES_AT_CENTER])
 		self.pack_start(self.but, False, False, 0)
-		self.but = ActionButton(self.actions['REMOVE_ALL_GUIDES'])
+		self.but = ActionButton(self.actions[actions.REMOVE_ALL_GUIDES])
 		self.pack_start(self.but, False, False, 0)
 
