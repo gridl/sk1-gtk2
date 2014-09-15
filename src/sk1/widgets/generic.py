@@ -17,6 +17,12 @@
 
 import gtk, gobject
 
+class LargeLabel(gtk.Label):
+
+	def __init__(self, text=''):
+		gtk.Label.__init__()
+		self.set_markup('<span size="large"><b>%s</b></span>' % (text))
+
 class SimpleListCombo(gtk.ComboBox):
 
 	def __init__(self, listdata=[]):
