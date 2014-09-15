@@ -24,3 +24,5 @@ from actionwidgets import ActionButton, ActionToggleButton
 from color_monitor import ColorMonitorWidget
 from pager_widget import PagerWidget
 
+from actions import AppAction, AppToggleAction
+
