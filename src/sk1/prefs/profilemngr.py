@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2013 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -23,6 +23,7 @@ from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY
 from uc2.cms import get_profile_name, get_profile_info
 from sk1 import _, config, dialogs
 from sk1.widgets import ImageStockButton
+from sk1.resources.images import load_image, IMG_PREFS_CMS
 
 def get_profiles_dialog(app, parent, owner, colorspace):
 	title = _('%s profiles') % (colorspace)
@@ -46,17 +47,17 @@ def _get_import_fiters():
 	result = []
 
 	ext_list = ['icc', 'icm']
-	filter = gtk.FileFilter()
-	filter.set_name(_('ICC color profiles'))
+	file_filter = gtk.FileFilter()
+	file_filter.set_name(_('ICC color profiles'))
 	for extension in ext_list:
-		filter.add_pattern('*.' + extension)
-		filter.add_pattern('*.' + extension.upper())
-	result.append(filter)
+		file_filter.add_pattern('*.' + extension)
+		file_filter.add_pattern('*.' + extension.upper())
+	result.append(file_filter)
 
-	filter = gtk.FileFilter()
-	filter.set_name(_('All files'))
-	filter.add_pattern('*')
-	result.append(filter)
+	file_filter = gtk.FileFilter()
+	file_filter.set_name(_('All files'))
+	file_filter.add_pattern('*')
+	result.append(file_filter)
 
 	return result
 
@@ -73,8 +74,8 @@ def get_profile_import_dialog(parent, app, start_dir):
 	start_dir = expanduser_unicode(start_dir)
 	dialog.set_current_folder(start_dir)
 
-	for filter in _get_import_fiters():
-		dialog.add_filter(filter)
+	for file_filter in _get_import_fiters():
+		dialog.add_filter(file_filter)
 
 	ret = dialog.run()
 	if not ret == gtk.RESPONSE_CANCEL:
@@ -316,7 +317,6 @@ class ProfileListModel(gtk.ListStore):
 
 	def __init__(self, objs):
 		gtk.ListStore.__init__(self, gtk.gdk.Pixbuf, str)
-		ICON = gtk.gdk.pixbuf_new_from_file(os.path.join(config.resource_dir,
-							'icons', 'preferences', 'prefs-cms.png'))
+		icon = load_image(IMG_PREFS_CMS)
 		for item in objs:
-			self.append((ICON, item))
+			self.append((icon, item))
