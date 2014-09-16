@@ -24,6 +24,7 @@ from uc2.utils.fs import expanduser_unicode
 from uc2 import events
 
 from sk1 import _, config
+from sk1.resources.images import load_image, IMG_APP_ICON
 
 def _get_open_fiters():
 	result = []
@@ -223,8 +224,8 @@ def about_dialog(parent):
 	about.set_comments(_("Vector graphics editor based on sK1 0.9.x") + "\n" + \
 						  _("and Skencil 0.6.x experience."))
 	about.set_website('http://www.sk1project.org')
-	logo = os.path.join(config.resource_dir, 'logo.png')
-	about.set_logo(gtk.gdk.pixbuf_new_from_file(logo))
+
+	about.set_logo(load_image(IMG_APP_ICON))
 	about.set_authors(authors + [CREDITS])
 	about.set_license(LICENSE)
 	about.run()
