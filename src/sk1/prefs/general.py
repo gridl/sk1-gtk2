@@ -17,7 +17,7 @@
 
 import gtk
 
-from sk1 import _, config, appconst
+from sk1 import _, config
 from sk1.prefs.generic import GenericPrefsPlugin
 
 class GeneralPlugin(GenericPrefsPlugin):

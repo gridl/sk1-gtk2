@@ -24,6 +24,8 @@ IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 
 IMG_CONTEXT_JUMP = 'sk1-context-jump'
+IMG_CONTEXT_LANDSCAPE = 'sk1-context-page-landscape'
+IMG_CONTEXT_PORTRAIT = 'sk1-context-page-portrait'
 
 def get_image_path(image_id):
 	imgdir = os.path.join(config.resource_dir, 'images')
@@ -34,10 +36,15 @@ def get_pixbuf(image_id):
 	loader = gtk.gdk.pixbuf_new_from_file
 	return loader(get_image_path(image_id))
 
+def get_stock_pixbuf(image_id, size):
+	return gtk.Image().render_icon(image_id, size)
+
 def get_image(image_id):
 	image = gtk.Image()
 	image.set_from_pixbuf(get_pixbuf(image_id))
 	return image
 
 def get_stock_image(image_id, size):
-	return gtk.Image().render_icon(image_id, size)
+	image = gtk.Image()
+	image.set_from_pixbuf(get_stock_pixbuf(image_id, size))
+	return image

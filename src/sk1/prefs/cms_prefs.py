@@ -500,9 +500,8 @@ class ManageButton(ImageStockButton):
 	def __init__(self, owner, colorspace):
 		self.owner = owner
 		self.colorspace = colorspace
-		text = _('Add/remove %s profiles') % (colorspace)
-		ImageStockButton.__init__(self, text, gtk.STOCK_EDIT, False)
-		self.connect('clicked', self.action)
+		txt = _('Add/remove %s profiles') % (colorspace)
+		ImageStockButton.__init__(self, gtk.STOCK_EDIT, txt, cmd=self.action)
 
 	def action(self, *args):
 		get_profiles_dialog(self.owner.app, self.owner.dlg,
@@ -515,9 +514,9 @@ class TaxiButton(ImageStockButton):
 
 	def __init__(self, app):
 		self.app = app
-		text = _('Download profile from ICC Profile Taxi')
-		ImageStockButton.__init__(self, text, gtk.STOCK_GOTO_BOTTOM, False)
-		self.connect('clicked', self.action)
+		txt = _('Download profile from ICC Profile Taxi')
+		image_id = gtk.STOCK_GOTO_BOTTOM
+		ImageStockButton.__init__(self, image_id, txt, cmd=self.action)
 
 	def action(self, *args):
 		self.app.open_url('http://icc.opensuse.org/')

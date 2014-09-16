@@ -21,6 +21,7 @@ from uc2.uc2const import PAGE_FORMATS, PAGE_FORMAT_NAMES, PORTRAIT, LANDSCAPE
 
 from sk1 import _, events
 from sk1.widgets import UnitSpin, ImageToggleButton, SimpleListCombo
+from sk1.resources.images import IMG_CONTEXT_PORTRAIT, IMG_CONTEXT_LANDSCAPE
 
 
 class PageFormatPlugin(gtk.HBox):
@@ -56,17 +57,15 @@ class PageFormatPlugin(gtk.HBox):
 		self.height_spin = UnitSpin(self.height_spin_changed)
 		self.pack_start(self.height_spin, False, False, 2)
 
-		self.portrait = ImageToggleButton(_('Portrait'),
-										['icons', 'page-portrait.png'])
+		self.portrait = ImageToggleButton(IMG_CONTEXT_PORTRAIT, _('Portrait'))
 		self.pack_start(self.portrait, False, False, 0)
 
-		self.landscape = ImageToggleButton(_('Landscape'),
-										['icons', 'page-landscape.png'])
+		self.landscape = ImageToggleButton(IMG_CONTEXT_LANDSCAPE, _('Landscape'))
 		self.pack_start(self.landscape, False, False, 0)
 
 		self.combo.connect('changed', self.combo_changed)
-		self.portrait.connect("toggled", self.portrait_toggled)
-		self.landscape.connect("toggled", self.landscape_toggled)
+		self.portrait.connect('toggled', self.portrait_toggled)
+		self.landscape.connect('toggled', self.landscape_toggled)
 		events.connect(events.DOC_CHANGED, self.update)
 		events.connect(events.DOC_MODIFIED, self.update)
 

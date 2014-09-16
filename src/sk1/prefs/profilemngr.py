@@ -177,17 +177,18 @@ class ProfileManager(gtk.HBox):
 		self.pack_start(self.viewer, False, True, 5)
 
 		box = gtk.VBox()
-		self.add_button = ImageStockButton('Import profile', gtk.STOCK_ADD, False)
-		self.add_button.connect('clicked', self.import_profile)
+
+		self.add_button = ImageStockButton(gtk.STOCK_ADD,
+								_('Import profile'), cmd=self.import_profile)
 		box.pack_start(self.add_button, False, False, 5)
 
-		self.remove_button = ImageStockButton('Remove profile', gtk.STOCK_REMOVE, False)
-		self.remove_button.connect('clicked', self.remove_profile)
+		self.remove_button = ImageStockButton(gtk.STOCK_REMOVE,
+								_('Remove profile'), cmd=self.remove_profile)
 		box.pack_start(self.remove_button, False, False, 5)
 		self.remove_button.set_sensitive(False)
 
-		self.info_button = ImageStockButton('Profile info', gtk.STOCK_INFO, False)
-		self.info_button.connect('clicked', self.inspect_profile)
+		self.info_button = ImageStockButton(gtk.STOCK_INFO, _('Profile info'),
+										cmd=self.inspect_profile)
 		box.pack_start(self.info_button, False, False, 5)
 
 		self.pack_start(box, False, False, 0)
