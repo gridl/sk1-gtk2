@@ -217,16 +217,16 @@ class SettingsTab(PrefsTab):
 
 		label = gtk.Label(_('Display/RGB intent:'))
 		tab.attach(label, 0, 1, 0, 1, gtk.SHRINK, gtk.SHRINK)
-		self.rgb_intent_combo = SimpleListCombo(self.intents_names)
+		self.rgb_intent_combo = SimpleListCombo(self.intents_names,
+											cmd=self.update_vals)
 		self.rgb_intent_combo.set_active(config.cms_rgb_intent)
-		self.rgb_intent_combo.connect('changed', self.update_vals)
 		tab.attach(self.rgb_intent_combo.vbox, 1, 2, 0, 1, gtk.SHRINK, gtk.SHRINK)
 
 		label = gtk.Label(_('Printer/CMYK intent:'))
 		tab.attach(label, 0, 1, 1, 2, gtk.SHRINK, gtk.SHRINK)
-		self.cmyk_intent_combo = SimpleListCombo(self.intents_names)
+		self.cmyk_intent_combo = SimpleListCombo(self.intents_names,
+												cmd=self.update_vals)
 		self.cmyk_intent_combo.set_active(config.cms_cmyk_intent)
-		self.cmyk_intent_combo.connect('changed', self.update_vals)
 		tab.attach(self.cmyk_intent_combo.vbox, 1, 2, 1, 2, gtk.SHRINK, gtk.SHRINK)
 
 		intent_frame.add(tab)
