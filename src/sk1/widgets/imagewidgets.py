@@ -49,11 +49,12 @@ class ImageStockButton(gtk.Button):
 		if cmd: self.connect('clicked', cmd)
 
 class ImageToggleButton(gtk.ToggleButton):
-	def __init__(self, image_id, tooltip_text=''):
+	def __init__(self, image_id, tooltip_text='', cmd=None):
 		gtk.ToggleButton.__init__(self)
 		self.set_property('relief', gtk.RELIEF_NONE)
 		self.add(images.get_image(image_id))
 		if tooltip_text: self.set_tooltip_text(tooltip_text)
+		if cmd: self.connect('toggled', cmd)
 
 class KeepRatioLabel(gtk.EventBox):
 

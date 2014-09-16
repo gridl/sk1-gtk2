@@ -36,7 +36,7 @@ class PangoLabel(gtk.Label):
 
 class SimpleListCombo(gtk.ComboBox):
 
-	def __init__(self, listdata=[]):
+	def __init__(self, listdata=[], cmd=None):
 		self.vbox = gtk.VBox(homogeneous=True)
 		self.liststore = gtk.ListStore(gobject.TYPE_STRING)
 		gtk.ComboBox.__init__(self, self.liststore)
@@ -45,6 +45,7 @@ class SimpleListCombo(gtk.ComboBox):
 		self.add_attribute(cell, 'text', 0)
 		self.set_list(listdata)
 		self.vbox.pack_start(self, False, False, 0)
+		if cmd: self.connect('changed', cmd)
 
 	def clear(self):
 		self.liststore.clear()

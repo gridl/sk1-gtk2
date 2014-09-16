@@ -45,7 +45,7 @@ class PageFormatPlugin(gtk.HBox):
 
 		self.formats = PAGE_FORMAT_NAMES + [_('Custom'), ]
 
-		self.combo = SimpleListCombo(self.formats)
+		self.combo = SimpleListCombo(self.formats, cmd=self.combo_changed)
 		self.pack_start(self.combo.vbox, False, False, 2)
 
 		self.width_spin = UnitSpin(self.width_spin_changed)
@@ -57,15 +57,14 @@ class PageFormatPlugin(gtk.HBox):
 		self.height_spin = UnitSpin(self.height_spin_changed)
 		self.pack_start(self.height_spin, False, False, 2)
 
-		self.portrait = ImageToggleButton(IMG_CONTEXT_PORTRAIT, _('Portrait'))
+		self.portrait = ImageToggleButton(IMG_CONTEXT_PORTRAIT,
+							_('Portrait'), self.portrait_toggled)
 		self.pack_start(self.portrait, False, False, 0)
 
-		self.landscape = ImageToggleButton(IMG_CONTEXT_LANDSCAPE, _('Landscape'))
+		self.landscape = ImageToggleButton(IMG_CONTEXT_LANDSCAPE,
+							_('Landscape'), self.landscape_toggled)
 		self.pack_start(self.landscape, False, False, 0)
 
-		self.combo.connect('changed', self.combo_changed)
-		self.portrait.connect('toggled', self.portrait_toggled)
-		self.landscape.connect('toggled', self.landscape_toggled)
 		events.connect(events.DOC_CHANGED, self.update)
 		events.connect(events.DOC_MODIFIED, self.update)
 

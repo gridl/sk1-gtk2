@@ -20,6 +20,7 @@ from sk1 import config
 
 IMG_APP_ICON = 'sk1-app-icon'
 IMG_CAIRO_BANNER = 'sk1-cairo-banner'
+
 IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 
