@@ -23,6 +23,8 @@ IMG_CAIRO_BANNER = 'sk1-cairo-banner'
 IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 
+IMG_CONTEXT_JUMP = 'sk1-context-jump'
+
 def get_image_path(image_id):
 	imgdir = os.path.join(config.resource_dir, 'images')
 	imgname = image_id + '.png'

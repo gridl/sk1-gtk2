@@ -18,6 +18,16 @@
 import os, gtk
 
 from sk1 import _, config
+from sk1.resources import images
+
+class ImageLabel(gtk.EventBox):
+
+	def __init__(self, image_id, tooltip_txt=''):
+		gtk.EventBox.__init__(self)
+		label = gtk.Image()
+		label.set_from_pixbuf(images.load_image(image_id))
+		self.add(label)
+		if tooltip_txt: self.set_tooltip_text(tooltip_txt)
 
 class ImageButton(gtk.Button):
 	def __init__(self, text, path):

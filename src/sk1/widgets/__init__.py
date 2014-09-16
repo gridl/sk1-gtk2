@@ -17,7 +17,7 @@
 
 from generic import PangoLabel, SimpleListCombo
 from imagewidgets import ImageButton, ImageStockButton, ImageToggleButton
-from imagewidgets import KeepRatioLabel
+from imagewidgets import KeepRatioLabel, ImageLabel
 from unitwidgets import UnitLabel, UnitSpin, AngleSpin
 from actionwidgets import ActionButton, ActionToggleButton
 

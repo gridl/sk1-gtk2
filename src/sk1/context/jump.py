@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2013 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -19,7 +19,8 @@ import os
 import gtk
 
 from sk1 import _, events, config
-from sk1.widgets import UnitLabel, UnitSpin, KeepRatioLabel
+from sk1.widgets import UnitLabel, UnitSpin, ImageLabel
+from sk1.resources import images
 
 class JumpPlugin(gtk.HBox):
 
@@ -36,13 +37,8 @@ class JumpPlugin(gtk.HBox):
 		events.connect(events.CONFIG_MODIFIED, self.config_changed)
 
 	def build(self):
-		ebox = gtk.EventBox()
-		label = gtk.Image()
-		image_file = os.path.join(config.resource_dir, 'icons', 'object-jump.png')
-		label.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_file))
-		ebox.add(label)
-		ebox.set_tooltip_text(_('Default object jump'))
-		self.pack_start(ebox, False, False, 2)
+		label = ImageLabel(images.IMG_CONTEXT_JUMP, _('Default object jump'))
+		self.pack_start(label, False, False, 2)
 
 		self.jump_spin = UnitSpin(self.user_changes)
 		self.pack_start(self.jump_spin, False, False, 0)
