@@ -27,6 +27,8 @@ from sk1.ui.statusbar import AppStatusbar
 from sk1.context import ContextPanel
 from sk1.plugins import PluginPanel
 from sk1.widgets import HidableArea
+from sk1.resources.images import get_image_path, load_image
+from sk1.resources.images import IMG_CAIRO_BANNER, IMG_APP_ICON
 
 class MainWindow(gtk.Window):
 
@@ -82,18 +84,16 @@ class MainWindow(gtk.Window):
 
 		vbox.pack_end(gtk.HSeparator(), False, False, 0)
 
-#		self.palette = Palette(self)
-#		vbox.pack_end(self.palette, False, False, 2)
-
 		self.add(vbox)
 		self.set_win_title()
 		self.set_size_request(config.mw_min_width, config.mw_min_height)
-		self.set_default_size(config.mw_width, config.mw_height)
+		if config.store_win_size:
+			self.set_default_size(config.mw_width, config.mw_height)
 		self.set_position(gtk.WIN_POS_CENTER)
 		self.connect("delete-event", self.exit)
 		self.add_accel_group(self.app.accelgroup)
-		icon = os.path.join(config.resource_dir, 'app_icon.png')
-		self.set_icon_from_file(icon)
+		self.set_icon_from_file(get_image_path(IMG_APP_ICON))
+
 		self.show_all()
 		if config.mw_maximized:
 			self.window.maximize()
@@ -155,19 +155,16 @@ class SplashArea(gtk.DrawingArea):
 		b = self.nodocs_color.blue / 0xff
 		self.pixel = r * 256 * 256 * 256 + g * 65536 + b * 256 + 255
 
-		banner_file = os.path.join(config.resource_dir, 'cairo_banner.png')
-		self.cairo_banner = gtk.gdk.pixbuf_new_from_file(banner_file)
+		self.banner = load_image(IMG_CAIRO_BANNER)
 		self.connect('expose_event', self.repaint)
 
 	def repaint(self, *args):
 		if config.show_splash:
 			h = self.allocation[3]
-			self.composite(self.cairo_banner, 5,
-						h - self.cairo_banner.get_height() - 5)
+			self.composite(self.banner, 5, h - self.banner.get_height() - 5)
 
 	def composite(self, banner, x, y):
-		frame = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB,
-							False, 8,
+		frame = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False, 8,
             banner.get_width(),
             banner.get_height())
 
