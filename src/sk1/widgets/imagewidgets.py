@@ -21,7 +21,6 @@ from sk1 import _, config
 from sk1.resources import images
 
 class ImageLabel(gtk.EventBox):
-
 	def __init__(self, image_id, tooltip_txt=''):
 		gtk.EventBox.__init__(self)
 		self.label = images.get_image(image_id)
@@ -29,15 +28,12 @@ class ImageLabel(gtk.EventBox):
 		if tooltip_txt: self.set_tooltip_text(tooltip_txt)
 
 class ImageButton(gtk.Button):
-	def __init__(self, text, path):
+	def __init__(self, image_id, tooltip_text='', flat=False, cmd=None):
 		gtk.Button.__init__(self)
-		self.set_property('relief', gtk.RELIEF_NONE)
-		loader = gtk.gdk.pixbuf_new_from_file
-		image = gtk.Image()
-		pixbuf = loader(os.path.join(config.resource_dir, *path))
-		image.set_from_pixbuf(pixbuf)
-		self.add(image)
-		if text: self.set_tooltip_text(text)
+		self.set_image(images.get_image(image_id))
+		if flat: self.set_property('relief', gtk.RELIEF_NONE)
+		if tooltip_text: self.set_tooltip_text(tooltip_text)
+		if cmd: self.connect('clicked', cmd)
 
 class ImageStockButton(gtk.Button):
 	def __init__(self, image_id, tooltip_text='',
