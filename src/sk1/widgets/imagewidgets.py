@@ -24,9 +24,8 @@ class ImageLabel(gtk.EventBox):
 
 	def __init__(self, image_id, tooltip_txt=''):
 		gtk.EventBox.__init__(self)
-		label = gtk.Image()
-		label.set_from_pixbuf(images.load_image(image_id))
-		self.add(label)
+		self.label = images.get_image(image_id)
+		self.add(self.label)
 		if tooltip_txt: self.set_tooltip_text(tooltip_txt)
 
 class ImageButton(gtk.Button):

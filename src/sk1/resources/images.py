@@ -30,9 +30,14 @@ def get_image_path(image_id):
 	imgname = image_id + '.png'
 	return os.path.join(imgdir, imgname)
 
-def load_image(image_id):
+def get_pixbuf(image_id):
 	loader = gtk.gdk.pixbuf_new_from_file
 	return loader(get_image_path(image_id))
 
-def load_stock_image(image_id, size):
+def get_image(image_id):
+	image = gtk.Image()
+	image.set_from_pixbuf(get_pixbuf(image_id))
+	return image
+
+def get_stock_image(image_id, size):
 	return gtk.Image().render_icon(image_id, size)

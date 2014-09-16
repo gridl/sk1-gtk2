@@ -26,7 +26,7 @@ from sk1 import _, config, appconst
 from sk1.widgets import SimpleListCombo, ImageStockButton, PangoLabel
 from sk1.prefs.generic import GenericPrefsPlugin
 from sk1.prefs.profilemngr import get_profiles_dialog
-from sk1.resources.images import IMG_PREFS_CMS_BANNER, IMG_PREFS_CMS, load_image
+from sk1.resources.images import IMG_PREFS_CMS_BANNER, IMG_PREFS_CMS, get_pixbuf
 
 COLORSPACES = [COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY, COLOR_DISPLAY]
 
@@ -150,7 +150,7 @@ class CMSSplash(gtk.DrawingArea):
 		b = self.bg.blue / 0xff
 		self.pixel = r * 256 * 256 * 256 + g * 65536 + b * 256 + 255
 
-		self.cms_banner = load_image(IMG_PREFS_CMS_BANNER)
+		self.cms_banner = get_pixbuf(IMG_PREFS_CMS_BANNER)
 		self.connect('expose_event', self.repaint)
 
 	def repaint(self, *args):

@@ -19,9 +19,9 @@ import os
 
 import gtk
 
-from sk1 import appconst, config
+from sk1 import appconst
 from sk1.widgets import PangoLabel
-from sk1.resources.images import load_image, load_stock_image
+from sk1.resources.images import get_pixbuf, get_stock_image
 
 class GenericPrefsPlugin(gtk.VBox):
 
@@ -43,9 +43,9 @@ class GenericPrefsPlugin(gtk.VBox):
 		self.app = app
 		self.dlg = dlg
 		if self.icon_file:
-			self.icon = load_image(self.icon_file)
+			self.icon = get_pixbuf(self.icon_file)
 		else:
-			self.icon = load_stock_image(self.icon_stock, gtk.ICON_SIZE_MENU)
+			self.icon = get_stock_image(self.icon_stock, gtk.ICON_SIZE_MENU)
 
 	def build(self):
 		title = PangoLabel(self.title, appconst.TXT_LARGE, True)

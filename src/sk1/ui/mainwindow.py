@@ -27,7 +27,7 @@ from sk1.ui.statusbar import AppStatusbar
 from sk1.context import ContextPanel
 from sk1.plugins import PluginPanel
 from sk1.widgets import HidableArea
-from sk1.resources.images import get_image_path, load_image
+from sk1.resources.images import get_image_path, get_pixbuf
 from sk1.resources.images import IMG_CAIRO_BANNER, IMG_APP_ICON
 
 class MainWindow(gtk.Window):
@@ -155,7 +155,7 @@ class SplashArea(gtk.DrawingArea):
 		b = self.nodocs_color.blue / 0xff
 		self.pixel = r * 256 * 256 * 256 + g * 65536 + b * 256 + 255
 
-		self.banner = load_image(IMG_CAIRO_BANNER)
+		self.banner = get_pixbuf(IMG_CAIRO_BANNER)
 		self.connect('expose_event', self.repaint)
 
 	def repaint(self, *args):

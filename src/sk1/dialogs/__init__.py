@@ -24,7 +24,7 @@ from uc2.utils.fs import expanduser_unicode
 from uc2 import events
 
 from sk1 import _, config
-from sk1.resources.images import load_image, IMG_APP_ICON
+from sk1.resources.images import get_pixbuf, IMG_APP_ICON
 
 def _get_open_fiters():
 	result = []
@@ -225,7 +225,7 @@ def about_dialog(parent):
 						  _("and Skencil 0.6.x experience."))
 	about.set_website('http://www.sk1project.org')
 
-	about.set_logo(load_image(IMG_APP_ICON))
+	about.set_logo(get_pixbuf(IMG_APP_ICON))
 	about.set_authors(authors + [CREDITS])
 	about.set_license(LICENSE)
 	about.run()

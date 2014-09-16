@@ -22,6 +22,7 @@ from uc2.uc2const import PAGE_FORMATS, PAGE_FORMAT_NAMES, PORTRAIT, LANDSCAPE
 from sk1 import _, events
 from sk1.widgets import UnitSpin, ImageToggleButton, SimpleListCombo
 
+
 class PageFormatPlugin(gtk.HBox):
 
 	name = 'PageFormatPlugin'
@@ -40,8 +41,6 @@ class PageFormatPlugin(gtk.HBox):
 		self.build()
 
 	def build(self):
-#		label = gtk.Label(_('Page:'))
-#		self.pack_start(label, False, False, 0)
 
 		self.formats = PAGE_FORMAT_NAMES + [_('Custom'), ]
 
