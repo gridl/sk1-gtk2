@@ -24,8 +24,8 @@ from sk1.prefs import test
 from sk1.prefs.cms_prefs import CmsPrefsPlugin
 from sk1.prefs.general import GeneralPlugin
 
-PLUGINS = [GeneralPlugin, CmsPrefsPlugin, test.TestPlugin,
-		test.Test1Plugin, test.Test2Plugin, test.Test3Plugin]
+PLUGINS = [GeneralPlugin, CmsPrefsPlugin,
+		test.Test2Plugin, test.Test3Plugin]
 
 def get_prefs_dialog(app):
 	parent = app.mw
