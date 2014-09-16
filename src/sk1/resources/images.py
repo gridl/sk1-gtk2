@@ -26,10 +26,10 @@ IMG_DONT_KEEP_RATIO = 'sk1-dont-keep-ratio'
 IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 
-IMG_CONTEXT_JUMP = 'sk1-context-jump'
-IMG_CONTEXT_LANDSCAPE = 'sk1-context-page-landscape'
-IMG_CONTEXT_PORTRAIT = 'sk1-context-page-portrait'
-IMG_CONTEXT_ROTATE = 'sk1-context-rotate-selection'
+IMG_CTX_JUMP = 'sk1-ctx-jump'
+IMG_CTX_LANDSCAPE = 'sk1-ctx-page-landscape'
+IMG_CTX_PORTRAIT = 'sk1-ctx-page-portrait'
+IMG_CTX_ROTATE = 'sk1-ctx-rotate-selection'
 
 def get_image_path(image_id):
 	imgdir = os.path.join(config.resource_dir, 'images')

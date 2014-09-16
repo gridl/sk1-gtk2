@@ -54,7 +54,7 @@ class RotatePlugin(ActionPlugin):
 	name = 'RotatePlugin'
 
 	def build(self):
-		self.pack_start(ImageLabel(images.IMG_CONTEXT_ROTATE,
+		self.pack_start(ImageLabel(images.IMG_CTX_ROTATE,
 								_('Rotate selection')), False, False, 2)
 
 		self.angle_spin = AngleSpin(self.user_update, True)

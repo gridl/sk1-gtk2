@@ -36,7 +36,7 @@ class JumpPlugin(gtk.HBox):
 		events.connect(events.CONFIG_MODIFIED, self.config_changed)
 
 	def build(self):
-		label = ImageLabel(images.IMG_CONTEXT_JUMP, _('Default object jump'))
+		label = ImageLabel(images.IMG_CTX_JUMP, _('Default object jump'))
 		self.pack_start(label, False, False, 2)
 
 		self.jump_spin = UnitSpin(self.user_changes)
