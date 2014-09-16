@@ -264,15 +264,16 @@ class Application(UCApplication):
 	def update_config(self):
 		config.resource_dir = ''
 		w, h = self.mw.get_size()
-		state = self.mw.window.get_state()
-		if state == gtk.gdk.WINDOW_STATE_MAXIMIZED:
-			if config.os != system.MACOSX:
-				config.mw_maximized = 1
-		else:
-			config.mw_maximized = 0
+		if config.store_win_size:
+			state = self.mw.window.get_state()
+			if state == gtk.gdk.WINDOW_STATE_MAXIMIZED:
+				if config.os != system.MACOSX:
+					config.mw_maximized = True
+			else:
+				config.mw_maximized = False
 
-			config.mw_width = w
-			config.mw_height = h
+				config.mw_width = w
+				config.mw_height = h
 
 	def open_url(self, url):
 		import webbrowser
