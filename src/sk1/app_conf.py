@@ -77,6 +77,13 @@ class AppConfig(UCConfig):
 	mw_min_width = 1000
 	mw_min_height = 700
 
+	#============== RULER OPTIONS ================
+	ruler_size = 20
+	ruler_style = 0
+	ruler_min_tick_step = 3
+	ruler_min_text_step = 50
+	ruler_max_text_step = 100
+
 	#============== UI SECTION ===================
 	hpalette_cell_vertical = 18
 	hpalette_cell_horizontal = 40

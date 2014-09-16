@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#	Copyright (C) 2011-2012 by Igor E. Novikov
+#	Copyright (C) 2011-2014 by Igor E. Novikov
 #
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -15,54 +15,43 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import operator
-from math import floor
+import os, math
 
 import gtk
 import gobject
 import cairo
 
-from uc2.uc2const import unit_dict, HORIZONTAL, VERTICAL
-from uc2.formats.sk1.sk1const import DOC_ORIGIN_CENTER, DOC_ORIGIN_LL, \
-DOC_ORIGIN_LU, ORIGINS
-from uc2.utils import system
+from uc2 import uc2const
+from uc2.uc2const import HORIZONTAL, VERTICAL
+from uc2.formats.sk1.sk1const import DOC_ORIGIN_CENTER, DOC_ORIGIN_LU, \
+DOC_ORIGIN_LL, ORIGINS
 
 from sk1 import config, events, modes
 from sk1.appconst import RENDERING_DELAY
 
+HFONT = {}
+VFONT = {}
+
+BITMAPS = {}
+
+CAIRO_WHITE = [1.0, 1.0, 1.0]
+CAIRO_BLACK = [0.0, 0.0, 0.0]
+
 DEFAULT_CURSOR = -1
-SIZE = 18
 
-tick_lengths = (5, 4, 2, 2)
-text_tick = 9
+def load_font():
+	fntdir = os.path.join(config.resource_dir, 'ruler-font')
+	for char in '.,-0123456789':
+		if char in '.,': file_name = os.path.join(fntdir, 'hdot.png')
+		else: file_name = os.path.join(fntdir, 'h%s.png' % char)
+		surface = cairo.ImageSurface.create_from_png(file_name)
+		HFONT[char] = (surface.get_width(), surface)
 
-tick_config = {'in': (1.0, (2, 2, 2, 2)),
-               'cm': (1.0, (2, 5)),
-               'mm': (10.0, (2, 5)),
-               'pt': (100.0, (2, 5, 2, 5)),
-               }
+		if char in '.,': file_name = os.path.join(fntdir, 'vdot.png')
+		else: file_name = os.path.join(fntdir, 'v%s.png' % char)
+		surface = cairo.ImageSurface.create_from_png(file_name)
+		VFONT[char] = (surface.get_height(), surface)
 
-FONT = {
-	'.': (2, [(0, 1), (0, 0), (0, 1)]),
-	',': (2, [(0, 1), (0, 0), (0, 1)]),
-	'-': (4, [(0, 2), (2, 2), (0, 2), (), (1, 2), (0, 2), (1, 2)]),
-	'0': (5, [(0, 0), (3, 0), (3, 4), (0, 4), (0, 0)]),
-	'1': (3, [(1, 0), (1, 4), (0, 4), (1, 4)]),
-	'2': (5, [(0, 0), (3, 0), (0, 0), (0, 2), (3, 2), (3, 4), (0, 4), (3, 4)]),
-	'3': (5, [(3, 0), (0, 0), (3, 0), (3, 4), (3, 2), (1, 2), (3, 2), (3, 4), (0, 4), (3, 4)]),
-	'4': (5, [(3, 0), (3, 4), (3, 0), (3, 1), (0, 1), (0, 4), (0, 1)]),
-	'5': (5, [(3, 0), (0, 0), (3, 0), (3, 2), (0, 2), (0, 4), (3, 4), (0, 4)]),
-	'6': (5, [(0, 4), (2, 4), (0, 4), (0, 0), (3, 0), (3, 2), (0, 2)]),
-	'7': (5, [(3, 4), (0, 4), (3, 4), (3, 3), (), (1, 2), (1, 0), (1, 1), (), (2, 3), (2, 2), (2, 3)]),
-	'8': (5, [(0, 0), (3, 0), (3, 4), (0, 4), (0, 0), (0, 2), (3, 2)]),
-	'9': (5, [(3, 0), (1, 0), (3, 0), (3, 4), (0, 4), (0, 2), (3, 2)]),
-}
-
-SIGN = {
-	0: ([1, 2, 9, 16, 9], [1, 14, 8, 14, 11], [1, 8, 2, 8, 16], [1, 7, 3, 10, 3], [0, 3, 15, 15, 3]),
-	1: ([1, 3, 2, 3, 16], [1, 2, 3, 5, 3], [1, 1, 13, 16, 13], [1, 14, 12, 14, 15], [0, 4, 13, 15, 2]),
-	2: ([1, 3, 2, 3, 16], [1, 2, 14, 5, 14], [1, 1, 4, 16, 4], [1, 14, 3, 14, 6], [0, 3, 4, 13, 14])
-}
 
 class RulerCorner(gtk.DrawingArea):
 
@@ -76,7 +65,8 @@ class RulerCorner(gtk.DrawingArea):
 		self.add_events(gtk.gdk.BUTTON_PRESS_MASK |
 					gtk.gdk.BUTTON_RELEASE_MASK)
 
-		self.set_size_request(SIZE, SIZE)
+		size = config.ruler_size
+		self.set_size_request(size, size)
 		self.connect('expose_event', self.repaint)
 		self.connect('button-release-event', self.click_event)
 		self.eventloop.connect(self.eventloop.DOC_MODIFIED, self.check_coords)
@@ -95,50 +85,17 @@ class RulerCorner(gtk.DrawingArea):
 		self.presenter.api.set_doc_origin(origin)
 
 	def repaint(self, *args):
-		if config.ruler_style:
-			color = self.get_style().bg[gtk.STATE_ACTIVE]
-			r = color.red / 65535.0
-			g = color.green / 65535.0
-			b = color.blue / 65535.0
-		else:
-			r = g = b = 0
-
-		if system.get_os_family() == system.WINDOWS:
-			bgcolor = self.get_style().base[gtk.STATE_NORMAL]
-		else:
-			bgcolor = self.get_style().bg[gtk.STATE_NORMAL]
-		r0 = bgcolor.red / 65535.0
-		g0 = bgcolor.green / 65535.0
-		b0 = bgcolor.blue / 65535.0
-
-		painter = self.window.cairo_create()
-		painter.set_matrix(cairo.Matrix())
-		painter.set_antialias(cairo.ANTIALIAS_NONE)
-		painter.set_source_rgb(r0, g0, b0)
-		painter.paint()
-		painter.set_source_rgb(r, g, b)
-		painter.set_line_width(1.0)
-		painter.rectangle(0, 0, SIZE, SIZE)
-		painter.stroke()
-
-		coord = self.origin
-		painter.set_source_rgb(0, 0, 0)
-		painter.set_line_width(1.0)
-		for job in SIGN[coord]:
-			if job[0]:
-				painter.set_dash([], 0)
-			else:
-				painter.set_dash([0.2], 0)
-			painter.move_to(job[1], job[2])
-			painter.line_to(job[3], job[4])
-			painter.stroke()
+		return
 
 class Ruler(gtk.DrawingArea):
 
 	exposed = False
+	surface = None
+	ctx = None
 
 	def __init__(self, docarea, orient):
 		gtk.DrawingArea.__init__(self)
+		if not VFONT: load_font()
 		self.docarea = docarea
 		self.app = docarea.app
 		self.mw = docarea.app.mw
@@ -148,13 +105,14 @@ class Ruler(gtk.DrawingArea):
 		self.doc = self.presenter.model
 
 		self.origin = self.presenter.model.doc_origin
+		self.units = self.presenter.model.doc_units
 		self.positions = None
-		self.set_range(0.0, 1.0)
 
+		size = config.ruler_size
 		if self.orient:
-			self.set_size_request(SIZE, -1)
+			self.set_size_request(size, -1)
 		else:
-			self.set_size_request(-1, SIZE)
+			self.set_size_request(-1, size)
 
 		self.default_cursor = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
 		if self.orient == HORIZONTAL:
@@ -179,7 +137,212 @@ class Ruler(gtk.DrawingArea):
 		self.eventloop.connect(self.eventloop.DOC_MODIFIED, self.check_config)
 		events.connect(events.CONFIG_MODIFIED, self.check_config)
 
+	def check_config(self, *args):
+		origin = self.presenter.model.doc_origin
+		units = self.presenter.model.doc_units
+		if not self.origin == origin or not self.units == units:
+			self.origin = origin
+			self.units = units
+			self.queue_draw()
+			return
+		if args[0][0][:6] == 'ruler_': self.queue_draw()
+
+	def update_ruler(self, *args):
+		self.queue_draw()
+
+	def calc_ruler(self):
+		canvas = self.presenter.canvas
+		w, h = self.presenter.get_page_size()
+		x = y = 0
+		dx = dy = uc2const.unit_dict[self.presenter.model.doc_units]
+		origin = self.presenter.model.doc_origin
+		if origin == DOC_ORIGIN_LL:
+			x0, y0 = canvas.point_doc_to_win([x, y])
+		elif origin == DOC_ORIGIN_LU:
+			x0, y0 = canvas.point_doc_to_win([x, -h + y])
+		else:
+			x0, y0 = canvas.point_doc_to_win([w / 2.0 + x, -h / 2.0 + y])
+		dx = dx * canvas.zoom
+		dy = dy * canvas.zoom
+		sdist = config.snap_distance
+
+		i = 0.0
+		while dx < sdist + 3:
+			i = i + 0.5
+			dx = dx * 10.0 * i
+		if dx / 2.0 > sdist + 3:
+			dx = dx / 2.0
+
+		i = 0.0
+		while dy < sdist + 3:
+			i = i + 0.5
+			dy = dy * 10.0 * i
+		if dy / 2.0 > sdist + 3:
+			dy = dy / 2.0
+
+		sx = (x0 / dx - math.floor(x0 / dx)) * dx
+		sy = (y0 / dy - math.floor(y0 / dy)) * dy
+		return (x0, y0, dx, dy, sx, sy)
+
+	def get_ticks(self):
+		canvas = self.presenter.canvas
+		pw, ph = self.presenter.get_page_size()
+		origin = self.presenter.model.doc_origin
+		unit = uc2const.unit_dict[self.presenter.model.doc_units]
+		x, y, w, h = self.allocation
+		x0, y0, dx, dy, sx, sy = self.calc_ruler()
+		small_ticks = []
+		text_ticks = []
+
+		if self.orient == HORIZONTAL:
+			i = -1
+			pos = 0
+			while pos < w:
+				pos = sx + i * dx
+				small_ticks.append(sx + i * dx)
+				if dx > 10:small_ticks.append(pos + dx * .5)
+				i += 1
+
+			coef = round(50.0 / dx)
+			if not coef:coef = 1.0
+			dxt = dx * coef
+			sxt = (x0 / dxt - math.floor(x0 / dxt)) * dxt
+
+			float_flag = False
+			unit_dx = dxt / (unit * canvas.zoom)
+			if unit_dx < 1.0:float_flag = True
+
+			i = -1
+			pos = 0
+			shift = pw / 2.0
+			if origin == DOC_ORIGIN_LL: shift = 0.0
+			while pos < w:
+				pos = sxt + i * dxt
+				doc_pos = canvas.point_win_to_doc((pos, 0))[0] + shift
+				doc_pos *= uc2const.point_dict[self.presenter.model.doc_units]
+				if float_flag:
+					txt = str(round(doc_pos, 4))
+					if not doc_pos:txt = '0'
+				else:txt = str(int(round(doc_pos)))
+				text_ticks.append((sxt + i * dxt, txt))
+				i += 1
+
+		else:
+			i = -1
+			pos = 0
+			while pos < h:
+				pos = sy + i * dy
+				small_ticks.append(sy + i * dy)
+				if dy > 10:small_ticks.append(pos + dy * .5)
+				i += 1
+
+			coef = round(50.0 / dy)
+			if not coef:coef = 1.0
+			dyt = dy * coef
+			syt = (y0 / dyt - math.floor(y0 / dyt)) * dyt
+
+			float_flag = False
+			unit_dy = dyt / (unit * canvas.zoom)
+			if unit_dy < 1.0:float_flag = True
+
+			i = -1
+			pos = 0
+			shift = 0.0
+			if origin == DOC_ORIGIN_CENTER: shift = ph / 2.0
+			if origin == DOC_ORIGIN_LU: shift = -ph / 2.0
+			while pos < h:
+				pos = syt + i * dyt
+				doc_pos = canvas.point_win_to_doc((0, pos))[1] + shift
+				if origin == DOC_ORIGIN_LU:doc_pos *= -1.0
+				doc_pos *= uc2const.point_dict[self.presenter.model.doc_units]
+				if float_flag:
+					txt = str(round(doc_pos, 4))
+					if not doc_pos:txt = '0'
+				else:txt = str(int(round(doc_pos)))
+				text_ticks.append((syt + i * dyt, txt))
+				i += 1
+		return small_ticks, text_ticks
+
+	def repaint(self, *args):
+		if not self.exposed:
+#			self.update_colors()
+			self.exposed = True
+			self.set_cursor(DEFAULT_CURSOR)
+
+		x, y, w, h = self.allocation
+		win_ctx = self.window.cairo_create()
+
+		if self.surface is None:
+			self.surface = cairo.ImageSurface(cairo.FORMAT_RGB24, w, h)
+			self.width = w
+			self.height = h
+		elif self.width <> w or self.height <> h:
+			self.surface = cairo.ImageSurface(cairo.FORMAT_RGB24, w, h)
+			self.width = w
+			self.height = h
+		self.surface.set_device_offset(0, 0)
+		self.ctx = cairo.Context(self.surface)
+		self.ctx.set_matrix(cairo.Matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
+		self.ctx.set_source_rgb(*CAIRO_WHITE)
+		self.ctx.paint()
+		self.ctx.set_antialias(cairo.ANTIALIAS_NONE)
+		self.ctx.set_line_width(1.0)
+		self.ctx.set_dash([])
+		self.ctx.set_source_rgba(*CAIRO_BLACK)
+		if self.orient == HORIZONTAL:
+			self.hrender(w, h)
+		else:
+			self.vrender(w, h)
+
+		win_ctx.set_source_surface(self.surface)
+		win_ctx.paint()
+
+	def hrender(self, w, h):
+		self.ctx.move_to(0, h)
+		self.ctx.line_to(w, h)
+
+		small_ticks, text_ticks = self.get_ticks()
+		for item in small_ticks:
+			self.ctx.move_to(item, h - 5)
+			self.ctx.line_to(item, h - 1)
+
+		for pos, txt in text_ticks:
+			self.ctx.move_to(pos, h - 10)
+			self.ctx.line_to(pos, h - 1)
+
+		self.ctx.stroke()
+
+		for pos, txt in text_ticks:
+			for character in txt:
+				data = HFONT[character]
+				self.ctx.set_source_surface(data[1], int(pos), 3)
+				self.ctx.paint()
+				pos += data[0]
+
+	def vrender(self, w, h):
+		self.ctx.move_to(w, 0)
+		self.ctx.line_to(w, h)
+
+		small_ticks, text_ticks = self.get_ticks()
+		for item in small_ticks:
+			self.ctx.move_to(w - 5, item)
+			self.ctx.line_to(w - 1, item)
+
+		for item, txt in text_ticks:
+			self.ctx.move_to(w - 10, item)
+			self.ctx.line_to(w - 1, item)
+
+		self.ctx.stroke()
+
+		for pos, txt in text_ticks:
+			for character in txt:
+				data = VFONT[character]
+				self.ctx.set_source_surface(data[1], 3, int(pos) - data[0])
+				self.ctx.paint()
+				pos -= data[0]
+
 	#------ Guides creation
+
 	def set_cursor(self, mode=0):
 		if mode == DEFAULT_CURSOR:
 			self.window.set_cursor(self.default_cursor)
@@ -239,266 +402,4 @@ class Ruler(gtk.DrawingArea):
 		self.canvas.renderer.paint_guide_dragging(p_doc, orient)
 		return True
 
-	#------ Guides creation
-
-	def check_config(self, *args):
-		if not self.origin == self.presenter.model.doc_origin:
-			self.origin = self.presenter.model.doc_origin
-			self.queue_draw()
-			return
-		if args[0][0] == 'ruler_coordinates' or args[0][0] == 'default_unit':
-			self.queue_draw()
-
-	def update_ruler(self, *args):
-		self.queue_draw()
-
-	def set_range(self, start, pixel_per_pt):
-		self.start = start
-		self.pixel_per_pt = pixel_per_pt
-		self.positions = None
-
-	def get_positions(self):
-		self.canvas = self.presenter.canvas
-		scale = 1.0
-		x = y = 0
-		if not self.canvas is None:
-			x, y = self.canvas.win_to_doc([0, 0])
-			scale = self.canvas.zoom
-
-		w, h = self.presenter.get_page_size()
-		if self.origin == DOC_ORIGIN_LU:
-			y -= h
-		elif self.origin == DOC_ORIGIN_CENTER:
-			x -= w / 2.0
-			y -= h / 2.0
-
-		if self.orient:
-			self.set_range(y, scale)
-		else:
-			self.set_range(x, scale)
-
-		min_text_step = config.ruler_min_text_step
-		max_text_step = config.ruler_max_text_step
-		min_tick_step = config.ruler_min_tick_step
-		x, y, w, h = self.allocation
-		if self.orient == HORIZONTAL:
-			length = w
-			origin = self.start
-		else:
-			length = h
-			origin = self.start - length / self.pixel_per_pt
-		unit_name = config.default_unit
-		pt_per_unit = unit_dict[unit_name]
-		units_per_pixel = 1.0 / (pt_per_unit * self.pixel_per_pt)
-		factor, subdivisions = tick_config[unit_name]
-		subdivisions = (1,) + subdivisions
-
-		factor = factor * pt_per_unit
-		start_pos = floor(origin / factor) * factor
-		main_tick_step = factor * self.pixel_per_pt
-		num_ticks = floor(length / main_tick_step) + 2
-
-		if main_tick_step < min_tick_step:
-#			tick_step = ceil(min_tick_step / main_tick_step) * main_tick_step
-			tick_step = floor(min_tick_step / main_tick_step) * main_tick_step
-			subdivisions = (1,)
-			ticks = 1
-		else:
-			tick_step = main_tick_step
-			ticks = 1
-			for depth in range(len(subdivisions)):
-				tick_step = tick_step / subdivisions[depth]
-				if tick_step < min_tick_step:
-					tick_step = tick_step * subdivisions[depth]
-					depth = depth - 1
-					break
-				ticks = ticks * subdivisions[depth]
-			subdivisions = subdivisions[:depth + 1]
-
-		positions = range(int(num_ticks * ticks))
-		positions = map(operator.mul, [tick_step] * len(positions), positions)
-		positions = map(operator.add, positions,
-						[(start_pos - origin) * self.pixel_per_pt]
-						* len(positions))
-
-		stride = ticks
-		marks = [None] * len(positions)
-		for depth in range(len(subdivisions)):
-			stride = stride / subdivisions[depth]
-			if depth >= len(tick_lengths):
-				height = tick_lengths[-1]
-			else:
-				height = tick_lengths[depth]
-			for i in range(0, len(positions), stride):
-				if marks[i] is None:
-					marks[i] = (height, int(round(positions[i])))
-
-		texts = []
-		if main_tick_step < min_text_step:
-#			stride = int(ceil(min_text_step / main_tick_step))
-			stride = int(floor(min_text_step / main_tick_step))
-			start_index = stride - (floor(origin / factor) % stride)
-			start_index = int(start_index * ticks)
-			stride = stride * ticks
-		else:
-			start_index = 0
-			stride = ticks
-			step = main_tick_step
-			for div in subdivisions:
-				step = step / div
-				if step < min_text_step:
-					break
-				stride = stride / div
-				if step < max_text_step:
-					break
-
-		for i in range(start_index, len(positions), stride):
-			pos = positions[i] * units_per_pixel + origin / pt_per_unit
-			pos = round(pos, 5)
-			if self.origin == DOC_ORIGIN_LU and self.orient == VERTICAL:
-				pos *= -1
-			if pos == 0.0:
-				pos = 0.0
-			texts.append(("%g" % pos, marks[i][-1]))
-
-		self.positions = marks
-		self.texts = texts
-		return self.positions, self.texts
-
-	def update_colors(self):
-		color = self.mw.get_style().bg[gtk.STATE_ACTIVE]
-		self.border_color = [color.red / 65535.0,
-						color.green / 65535.0,
-						color.blue / 65535.0]
-
-		r, g, b = self.border_color
-
-		if system.get_os_family() == system.WINDOWS:
-			color = self.get_style().base[gtk.STATE_NORMAL]
-		else:
-			color = self.get_style().bg[gtk.STATE_NORMAL]
-		self.bg_color = [color.red / 65535.0,
-					color.green / 65535.0,
-					color.blue / 65535.0]
-
-		r0, g0, b0 = self.bg_color
-
-		if self.orient:
-			self.grad = cairo.LinearGradient(0, 0, SIZE, 0)
-			self.grad.add_color_stop_rgb(0, r0, g0, b0)
-			self.grad.add_color_stop_rgb(1, r, g, b)
-		else:
-			self.grad = cairo.LinearGradient(0, 0, 0, SIZE)
-			self.grad.add_color_stop_rgb(0, r0, g0, b0)
-			self.grad.add_color_stop_rgb(1, r, g, b)
-
-		if not config.ruler_style:
-			self.border_color = [0, 0, 0]
-
-	def repaint(self, *args):
-		if not self.exposed:
-			self.update_colors()
-			self.exposed = True
-			self.set_cursor(DEFAULT_CURSOR)
-
-		r, g, b = self.border_color
-		r0, g0, b0 = self.bg_color
-		x, y, w, h = self.allocation
-
-		win_ctx = self.window.cairo_create()
-		buffer = cairo.ImageSurface(cairo.FORMAT_RGB24, w, h)
-		buffer.set_device_offset(0, 0)
-		painter = cairo.Context(buffer)
-
-		painter.set_antialias(cairo.ANTIALIAS_NONE)
-		painter.set_source_rgb(r0, g0, b0)
-		painter.paint()
-
-		painter.set_line_width(1)
-		if self.orient:
-			if config.ruler_style:
-				painter.set_source(self.grad)
-				painter.rectangle(0, 0, SIZE, h + 1)
-				painter.fill ()
-
-			painter.set_source_rgb(r, g, b)
-			painter.rectangle(0, 0, SIZE, h + 1)
-			painter.stroke()
-
-			painter.set_source_rgb(0, 0, 0)
-			self.draw_vertical(painter)
-		else:
-			if config.ruler_style:
-				painter.set_source(self.grad)
-				painter.rectangle(0, 0, w + 1, SIZE)
-				painter.fill ()
-
-			painter.set_source_rgb(r, g, b)
-			painter.rectangle(0, 0, w + 1 , SIZE)
-			painter.stroke()
-
-			painter.set_source_rgb(0, 0, 0)
-			self.draw_horizontal(painter)
-
-		win_ctx.set_source_surface(buffer)
-		win_ctx.paint()
-
-	def draw_vertical(self, painter):
-		x, y, width, height = self.allocation
-
-		ticks, texts = self.get_positions()
-
-		for h, pos in ticks:
-			pos = height - pos
-			painter.move_to(width - h - 1, pos)
-			painter.line_to(width, pos)
-			painter.stroke()
-			pos += 1
-
-		x = 6
-		for text, pos in texts:
-			pos = height - pos
-			pos -= 1
-			painter.move_to(width - text_tick - 1, pos + 1)
-			painter.line_to(width, pos + 1)
-			painter.stroke()
-
-			for character in str(text):
-				data = FONT[character]
-				points = data[1]
-				for point in points:
-					if not point:
-						painter.stroke()
-						continue
-					painter.line_to(x - point[1], pos - point[0])
-				painter.stroke()
-				pos -= data[0]
-
-	def draw_horizontal(self, painter):
-		x, y, width, height = self.allocation
-
-		ticks, texts = self.get_positions()
-
-		for h, pos in ticks:
-			painter.move_to(pos, height)
-			painter.line_to(pos, height - h - 1)
-			painter.stroke()
-			pos += 1
-
-		y = 6
-		for text, pos in texts:
-			pos += 1
-			painter.move_to(pos - 1 , height)
-			painter.line_to(pos - 1, height - text_tick - 1)
-			painter.stroke()
-
-			for character in str(text):
-				data = FONT[character]
-				points = data[1]
-				for point in points:
-					if not point:
-						painter.stroke()
-						continue
-					painter.line_to(point[0] + pos, y - point[1])
-				painter.stroke()
-				pos += data[0]
+	#------ Guides creation end
