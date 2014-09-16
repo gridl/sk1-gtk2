@@ -18,14 +18,19 @@
 import os, gtk
 from sk1 import config
 
+IMG_APP_ICON = 'sk1-app-icon'
+IMG_CAIRO_BANNER = 'sk1-cairo-banner'
 IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 
-def load_image(image_id):
-	loader = gtk.gdk.pixbuf_new_from_file
+def get_image_path(image_id):
 	imgdir = os.path.join(config.resource_dir, 'images')
 	imgname = image_id + '.png'
-	return loader(os.path.join(imgdir, imgname))
+	return os.path.join(imgdir, imgname)
+
+def load_image(image_id):
+	loader = gtk.gdk.pixbuf_new_from_file
+	return loader(get_image_path(image_id))
 
 def load_stock_image(image_id, size):
 	return gtk.Image().render_icon(image_id, size)
