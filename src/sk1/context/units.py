@@ -20,7 +20,8 @@ import gtk
 from uc2.uc2const import unit_names, unit_full_names
 
 from sk1 import _, config, events
-from sk1.widgets import SimpleListCombo
+from sk1.widgets import SimpleListCombo, ImageLabel
+from sk1.resources import images
 
 class UnitsPlugin(gtk.HBox):
 
@@ -36,9 +37,8 @@ class UnitsPlugin(gtk.HBox):
 		self.build()
 
 	def build(self):
-		label = gtk.Label(_('Units:'))
-		self.pack_start(label, False, False, 3)
-
+		self.pack_start(ImageLabel(images.IMG_CTX_UNITS,
+								_('Units')), False, False, 3)
 		names = []
 		for item in unit_names:
 			names.append(unit_full_names[item])

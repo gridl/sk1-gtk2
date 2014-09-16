@@ -27,6 +27,7 @@ IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 
 IMG_CTX_JUMP = 'sk1-ctx-jump'
+IMG_CTX_UNITS = 'sk1-ctx-units'
 IMG_CTX_LANDSCAPE = 'sk1-ctx-page-landscape'
 IMG_CTX_PORTRAIT = 'sk1-ctx-page-portrait'
 IMG_CTX_ROTATE = 'sk1-ctx-rotate-selection'
