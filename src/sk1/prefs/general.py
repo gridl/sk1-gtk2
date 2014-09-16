@@ -32,6 +32,12 @@ class GeneralPlugin(GenericPrefsPlugin):
 
 	def build(self):
 		GenericPrefsPlugin.build(self)
+
+		txt = _('Store application window size')
+		self.winsize_check = gtk.CheckButton(txt)
+		self.winsize_check.set_active(config.store_win_size)
+		self.pack_start(self.winsize_check, False, True, 5)
+
 		txt = _('Create new document on start')
 		self.newdoc_check = gtk.CheckButton(txt)
 		self.newdoc_check.set_active(config.new_doc_on_start)
@@ -39,7 +45,9 @@ class GeneralPlugin(GenericPrefsPlugin):
 
 	def apply_changes(self):
 		config.new_doc_on_start = self.newdoc_check.get_active()
+		config.store_win_size = self.winsize_check.get_active()
 
 	def restore_defaults(self):
 		defaults = config.get_defaults()
 		self.newdoc_check.set_active(defaults['new_doc_on_start'])
+		self.winsize_check.set_active(defaults['store_win_size'])
