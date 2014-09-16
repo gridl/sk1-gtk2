@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2013 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
 import gtk
 
-from sk1 import _, config, actions
+from sk1 import _, actions
 from sk1.widgets import ActionButton, AngleSpin, ActionToggleButton
+from sk1.widgets import ImageLabel
+from sk1.resources import images
 
 class ActionPlugin(gtk.HBox):
 
@@ -53,13 +54,8 @@ class RotatePlugin(ActionPlugin):
 	name = 'RotatePlugin'
 
 	def build(self):
-		ebox = gtk.EventBox()
-		label = gtk.Image()
-		image_file = os.path.join(config.resource_dir, 'icons', 'rotate-selection.png')
-		label.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_file))
-		ebox.add(label)
-		ebox.set_tooltip_text(_('Rotate selection'))
-		self.pack_start(ebox, False, False, 2)
+		self.pack_start(ImageLabel(images.IMG_CONTEXT_ROTATE,
+								_('Rotate selection')), False, False, 2)
 
 		self.angle_spin = AngleSpin(self.user_update, True)
 		self.pack_start(self.angle_spin, False, False, 0)

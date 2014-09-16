@@ -29,6 +29,7 @@ IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 IMG_CONTEXT_JUMP = 'sk1-context-jump'
 IMG_CONTEXT_LANDSCAPE = 'sk1-context-page-landscape'
 IMG_CONTEXT_PORTRAIT = 'sk1-context-page-portrait'
+IMG_CONTEXT_ROTATE = 'sk1-context-rotate-selection'
 
 def get_image_path(image_id):
 	imgdir = os.path.join(config.resource_dir, 'images')
