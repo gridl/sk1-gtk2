@@ -20,7 +20,7 @@ import gtk, cairo
 from uc2 import uc2const
 from uc2.uc2const import point_dict
 from uc2.formats.pdxf.const import FILL_SOLID
-from sk1 import _, events, config, appconst
+from sk1 import _, events, config, const
 from sk1.widgets.hidable import HidableHBox
 
 FILL_SWATCH = 0
@@ -210,7 +210,7 @@ class ColorSwatch(gtk.DrawingArea):
 		self.set_size_request(self.width, self.height)
 #		self.nofill_color = self.mw.get_style().fg[gtk.STATE_NORMAL]
 #		self.modify_bg(gtk.STATE_NORMAL, self.nodocs_color)
-		self.connect(appconst.EVENT_EXPOSE, self.repaint)
+		self.connect(const.EVENT_EXPOSE, self.repaint)
 
 	def update_from_obj(self, obj):
 		if self.mode == FILL_SWATCH:

@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-#	Copyright (C) 2011-2012 by Igor E. Novikov 
-#	
+#	Copyright (C) 2011-2012 by Igor E. Novikov
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
-#	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import math
 
@@ -23,7 +23,7 @@ import gobject
 from uc2 import libgeom, uc2const
 
 from sk1 import config, modes
-from sk1.appconst import LEFT_BUTTON, MIDDLE_BUTTON, RIGHT_BUTTON, RENDERING_DELAY
+from sk1.const import LEFT_BUTTON, MIDDLE_BUTTON, RIGHT_BUTTON, RENDERING_DELAY
 
 ZOOM_IN = 1.25
 ZOOM_OUT = 0.8
@@ -680,7 +680,7 @@ class TransformController(AbstractController):
 							dy = -(bbox[1] * m22 - bbox[1]) - h * (m22 - 1.0) / 2.0
 							snap[1] = self.snap.active_snap[1]
 					self.snap.active_snap = snap
-					#---- snapping	
+					#---- snapping
 			else:
 				if control:
 					m11 = (w + dx) / w
@@ -738,7 +738,7 @@ class TransformController(AbstractController):
 							dy = -(bbox[1] * m22 - bbox[1])
 							snap[1] = self.snap.active_snap[1]
 					self.snap.active_snap = snap
-					#---- snapping					
+					#---- snapping
 		if mark == 1:
 			dy = end_point[1] - start_point[1]
 			if shift:
@@ -883,7 +883,7 @@ class TransformController(AbstractController):
 							dy = -(bbox[1] * m22 - bbox[1])
 							snap[1] = self.snap.active_snap[1]
 					self.snap.active_snap = snap
-					#---- snapping			
+					#---- snapping
 		if mark == 3:
 			dx = start_point[0] - end_point[0]
 			if shift:
@@ -1054,7 +1054,7 @@ class TransformController(AbstractController):
 							dy = -(bbox[3] * m22 - bbox[3])
 							snap[1] = self.snap.active_snap[1]
 					self.snap.active_snap = snap
-					#---- snapping	
+					#---- snapping
 		if mark == 7:
 			dy = start_point[1] - end_point[1]
 			if shift:

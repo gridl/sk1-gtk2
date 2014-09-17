@@ -15,14 +15,15 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import copy, os
+import copy
 import gtk
 
-from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY, COLOR_DISPLAY
+from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, \
+COLOR_GRAY, COLOR_DISPLAY
 from uc2.cms import gdk_hexcolor_to_rgb
 from uc2 import uc2const
 
-from sk1 import _, config, appconst
+from sk1 import _, config, const
 from sk1.widgets import SimpleListCombo, ImageStockButton, PangoLabel
 from sk1.prefs.generic import GenericPrefsPlugin
 from sk1.prefs.profilemngr import get_profiles_dialog
@@ -116,7 +117,7 @@ class CMSTab(PrefsTab):
 		txt = _('<b>Note:</b> If Color Management is not activated all colors '
 			'will be processed using simple calculation procedures. Therefore '
 			'resulted color values will be not accurate.')
-		note = PangoLabel(txt, appconst.TXT_SMALL, enabled=False, wrap=True)
+		note = PangoLabel(txt, const.TXT_SMALL, enabled=False, wrap=True)
 		note.set_alignment(0, 1)
 		note.set_size_request(450, -1)
 		hbox.pack_start(note, False, True, 10)
@@ -220,14 +221,16 @@ class SettingsTab(PrefsTab):
 		self.rgb_intent_combo = SimpleListCombo(self.intents_names,
 											cmd=self.update_vals)
 		self.rgb_intent_combo.set_active(config.cms_rgb_intent)
-		tab.attach(self.rgb_intent_combo.vbox, 1, 2, 0, 1, gtk.SHRINK, gtk.SHRINK)
+		tab.attach(self.rgb_intent_combo.vbox, 1, 2, 0, 1, gtk.SHRINK,
+				gtk.SHRINK)
 
 		label = gtk.Label(_('Printer/CMYK intent:'))
 		tab.attach(label, 0, 1, 1, 2, gtk.SHRINK, gtk.SHRINK)
 		self.cmyk_intent_combo = SimpleListCombo(self.intents_names,
 												cmd=self.update_vals)
 		self.cmyk_intent_combo.set_active(config.cms_cmyk_intent)
-		tab.attach(self.cmyk_intent_combo.vbox, 1, 2, 1, 2, gtk.SHRINK, gtk.SHRINK)
+		tab.attach(self.cmyk_intent_combo.vbox, 1, 2, 1, 2, gtk.SHRINK,
+				gtk.SHRINK)
 
 		intent_frame.add(tab)
 		self.pack_start(intent_frame, False, True, 0)
@@ -384,7 +387,8 @@ class ProfilesTab(PrefsTab):
 
 			combo = SimpleListCombo()
 			self.cs_widgets[colorspace] = combo
-			tab.attach(combo.vbox, 1, 2, index, index + 1, gtk.FILL | gtk.EXPAND, gtk.SHRINK)
+			tab.attach(combo.vbox, 1, 2, index, index + 1,
+					gtk.FILL | gtk.EXPAND, gtk.SHRINK)
 			self.update_combo(colorspace)
 
 			button = ManageButton(self, colorspace)
@@ -415,7 +419,7 @@ class ProfilesTab(PrefsTab):
 				'hardware you can get either from monitor manufacture or '
 				'calibrating monitor (prefered option) or download '
 				'from ICC Profile Taxi service http://icc.opensuse.org/')
-		note = PangoLabel(text, appconst.TXT_SMALL, enabled=False, wrap=True)
+		note = PangoLabel(text, const.TXT_SMALL, enabled=False, wrap=True)
 		note.set_alignment(0, 1)
 		note.set_size_request(430, -1)
 		tab.attach(note, 0, 2, 8, 9, gtk.FILL | gtk.EXPAND, gtk.SHRINK)

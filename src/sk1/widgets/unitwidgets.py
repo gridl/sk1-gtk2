@@ -21,7 +21,7 @@ from uc2.uc2const import unit_dict, point_dict
 from uc2 import uc2const
 
 from sk1 import config, events
-from sk1.appconst import KEY_KP_ENTER, KEY_RETURN
+from sk1.const import KEY_KP_ENTER, KEY_RETURN
 
 
 class UnitLabel(gtk.Label):

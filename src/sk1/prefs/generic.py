@@ -19,9 +19,8 @@ import os
 
 import gtk
 
-from sk1 import appconst
+from sk1 import const, rc
 from sk1.widgets import PangoLabel
-from sk1.rc import get_pixbuf, get_stock_pixbuf
 
 class GenericPrefsPlugin(gtk.VBox):
 
@@ -32,7 +31,7 @@ class GenericPrefsPlugin(gtk.VBox):
 	icon_stock = gtk.STOCK_FILE
 	icon_file = ''
 	icon = None
-	cid = appconst.PREFS_APP_PLUGIN
+	cid = const.PREFS_APP_PLUGIN
 	childs = []
 	built = False
 	leaf = True
@@ -43,12 +42,12 @@ class GenericPrefsPlugin(gtk.VBox):
 		self.app = app
 		self.dlg = dlg
 		if self.icon_file:
-			self.icon = get_pixbuf(self.icon_file)
+			self.icon = rc.get_pixbuf(self.icon_file)
 		else:
-			self.icon = get_stock_pixbuf(self.icon_stock, gtk.ICON_SIZE_MENU)
+			self.icon = rc.get_stock_pixbuf(self.icon_stock, gtk.ICON_SIZE_MENU)
 
 	def build(self):
-		title = PangoLabel(self.title, appconst.TXT_LARGE, True)
+		title = PangoLabel(self.title, const.TXT_LARGE, True)
 		self.pack_start(title, False, False, 0)
 		self.pack_start(gtk.HSeparator(), False, False, 5)
 		self.built = True

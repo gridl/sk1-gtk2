@@ -19,7 +19,7 @@ import os
 import gtk
 
 from uc2.formats.pdxf.pdxf_config import PDXF_Config
-from sk1 import _, config, appconst
+from sk1 import _, config, const
 from sk1.prefs import test
 from sk1.prefs.cms_prefs import CmsPrefsPlugin
 from sk1.prefs.general import GeneralPlugin
@@ -94,7 +94,7 @@ class PrefsContainer(gtk.HPaned):
 		self.model.childs.append(self.doc_prefs)
 		for item in PLUGINS:
 			plg = item(self.app, self.dlg, self.pdxf_config)
-			if plg.cid == appconst.PREFS_APP_PLUGIN:
+			if plg.cid == const.PREFS_APP_PLUGIN:
 				self.app_prefs.childs.append(plg)
 			else:
 				self.doc_prefs.childs.append(plg)
@@ -207,16 +207,16 @@ class ObjectTreeModel(gtk.TreeStore):
 		for child in self.model.childs:
 			self.scan_model(None, child)
 
-	def scan_model(self, iter, obj):
-		child_iter = self.append(iter)
+	def scan_model(self, itr, obj):
+		child_iter = self.append(itr)
 		self.add_to_dict(obj, child_iter)
 		self.set(child_iter, 0, self.get_icon(obj),
 							1, obj.short_title)
 		for item in obj.childs:
 			self.scan_model(child_iter, item)
 
-	def add_to_dict(self, obj, iter):
-		path_str = self.get_path(iter).__str__()
+	def add_to_dict(self, obj, itr):
+		path_str = self.get_path(itr).__str__()
 		self.model_dict[path_str] = obj
 
 	def get_obj_by_path(self, path):

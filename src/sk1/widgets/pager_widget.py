@@ -17,7 +17,7 @@
 
 import gtk, os
 
-from sk1 import _, config, events, appconst
+from sk1 import _, config, events, const, rc
 from sk1.widgets.hidable import HidableHBox
 from sk1.widgets.generic import PangoLabel
 from sk1.widgets.imagewidgets import ImageButton
@@ -47,7 +47,7 @@ class PagerWidget(HidableHBox):
 		self.hbox.pack_start(self.left, False, False, 0)
 		self.left.connect('clicked', self.goto_left)
 
-		self.label = PangoLabel(size=appconst.TXT_SMALLER)
+		self.label = PangoLabel(size=const.TXT_SMALLER)
 		self.hbox.pack_start(self.label, False, False, 5)
 
 		self.right = PagerButton('pager-arrow-right.png')

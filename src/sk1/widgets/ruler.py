@@ -27,7 +27,7 @@ from uc2.formats.sk1.sk1const import DOC_ORIGIN_CENTER, DOC_ORIGIN_LU, \
 DOC_ORIGIN_LL, ORIGINS
 
 from sk1 import config, events, modes, rc
-from sk1.appconst import RENDERING_DELAY
+from sk1.const import RENDERING_DELAY
 
 HFONT = {}
 VFONT = {}

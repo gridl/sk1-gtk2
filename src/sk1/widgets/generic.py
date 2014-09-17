@@ -17,7 +17,7 @@
 
 import gtk, gobject
 
-from sk1.appconst import EVENT_CHANGED
+from sk1.const import EVENT_CHANGED
 
 class PangoLabel(gtk.Label):
 

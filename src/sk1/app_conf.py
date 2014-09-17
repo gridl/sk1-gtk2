@@ -22,9 +22,8 @@ from uc2 import uc2const
 from uc2.utils import system
 from uc2.utils.fs import expanduser_unicode
 from uc2.formats.pdxf.const import DOC_STRUCTURE
-from uc2.cms import libcms
 
-from sk1 import events, appconst
+from sk1 import events, const
 
 class AppData(UCData):
 
@@ -89,7 +88,7 @@ class AppConfig(UCConfig):
 	hpalette_cell_horizontal = 40
 	vpalette_cell_vertical = 18
 	vpalette_cell_vertical = 18
-	palette_orientation = appconst.HORIZONTAL
+	palette_orientation = const.HORIZONTAL
 
 	mw_maximized = 0
 
@@ -136,10 +135,10 @@ class AppConfig(UCConfig):
 	#============== SNAPPING OPTIONS ================
 
 	snap_distance = 10.0#in pixels
-	snap_order = [appconst.SNAP_TO_GUIDES,
-				appconst.SNAP_TO_GRID,
-				appconst.SNAP_TO_OBJECTS,
-				appconst.SNAP_TO_PAGE]
+	snap_order = [const.SNAP_TO_GUIDES,
+				const.SNAP_TO_GRID,
+				const.SNAP_TO_OBJECTS,
+				const.SNAP_TO_PAGE]
 	snap_to_grid = False
 	snap_to_guides = True
 	snap_to_objects = False
