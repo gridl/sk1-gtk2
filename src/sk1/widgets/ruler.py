@@ -28,6 +28,7 @@ DOC_ORIGIN_LL, ORIGINS
 
 from sk1 import config, events, modes
 from sk1.appconst import RENDERING_DELAY
+from sk1.resources import images
 
 HFONT = {}
 VFONT = {}
@@ -52,11 +53,21 @@ def load_font():
 		surface = cairo.ImageSurface.create_from_png(file_name)
 		VFONT[char] = (surface.get_height(), surface)
 
+def load_bitmaps():
+	file_name = images.get_image_path(images.IMG_RULER_BG)
+	BITMAPS['bg'] = cairo.ImageSurface.create_from_png(file_name)
+	file_name = images.get_image_path(images.IMG_RULER_DO_C)
+	BITMAPS[DOC_ORIGIN_CENTER] = cairo.ImageSurface.create_from_png(file_name)
+	file_name = images.get_image_path(images.IMG_RULER_DO_LU)
+	BITMAPS[DOC_ORIGIN_LU] = cairo.ImageSurface.create_from_png(file_name)
+	file_name = images.get_image_path(images.IMG_RULER_DO_LL)
+	BITMAPS[DOC_ORIGIN_LL] = cairo.ImageSurface.create_from_png(file_name)
 
 class RulerCorner(gtk.DrawingArea):
 
 	def __init__(self, docarea):
 		gtk.DrawingArea.__init__(self)
+		if not BITMAPS:load_bitmaps()
 		self.docarea = docarea
 		self.presenter = docarea.presenter
 		self.eventloop = self.presenter.eventloop
@@ -74,7 +85,7 @@ class RulerCorner(gtk.DrawingArea):
 	def check_coords(self, *args):
 		if not self.origin == self.presenter.model.doc_origin:
 			self.origin = self.presenter.model.doc_origin
-			self.repaint()
+			self.queue_draw()
 
 	def click_event(self, *args):
 		origin = self.presenter.model.doc_origin
@@ -85,7 +96,29 @@ class RulerCorner(gtk.DrawingArea):
 		self.presenter.api.set_doc_origin(origin)
 
 	def repaint(self, *args):
-		return
+		w, h = tuple(self.allocation)[2:]
+		win_ctx = self.window.cairo_create()
+
+		surface = cairo.ImageSurface(cairo.FORMAT_RGB24, w, h)
+		surface.set_device_offset(0, 0)
+		ctx = cairo.Context(surface)
+		ctx.set_matrix(cairo.Matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
+		ctx.set_source_rgb(*CAIRO_WHITE)
+		ctx.paint()
+
+		bmp = BITMAPS['bg']
+		ctx.set_source_surface(bmp, w - bmp.get_width(), h - bmp.get_height())
+		ctx.paint()
+
+		bmp = BITMAPS[self.origin]
+		x = (w - 1 - bmp.get_width()) / 2
+		y = (h - 1 - bmp.get_height()) / 2
+		ctx.set_source_surface(bmp, x, y)
+		ctx.paint()
+
+
+		win_ctx.set_source_surface(surface)
+		win_ctx.paint()
 
 class Ruler(gtk.DrawingArea):
 
@@ -159,9 +192,9 @@ class Ruler(gtk.DrawingArea):
 		if origin == DOC_ORIGIN_LL:
 			x0, y0 = canvas.point_doc_to_win([x, y])
 		elif origin == DOC_ORIGIN_LU:
-			x0, y0 = canvas.point_doc_to_win([x, -h + y])
+			x0, y0 = canvas.point_doc_to_win([x, h + y])
 		else:
-			x0, y0 = canvas.point_doc_to_win([w / 2.0 + x, -h / 2.0 + y])
+			x0, y0 = canvas.point_doc_to_win([w / 2.0 + x, h / 2.0 + y])
 		dx = dx * canvas.zoom
 		dy = dy * canvas.zoom
 		sdist = config.snap_distance
@@ -189,7 +222,7 @@ class Ruler(gtk.DrawingArea):
 		pw, ph = self.presenter.get_page_size()
 		origin = self.presenter.model.doc_origin
 		unit = uc2const.unit_dict[self.presenter.model.doc_units]
-		x, y, w, h = self.allocation
+		w, h = tuple(self.allocation)[2:]
 		x0, y0, dx, dy, sx, sy = self.calc_ruler()
 		small_ticks = []
 		text_ticks = []
@@ -214,8 +247,8 @@ class Ruler(gtk.DrawingArea):
 
 			i = -1
 			pos = 0
-			shift = pw / 2.0
-			if origin == DOC_ORIGIN_LL: shift = 0.0
+			shift = 0.0
+			if origin == DOC_ORIGIN_CENTER: shift = -pw / 2.0
 			while pos < w:
 				pos = sxt + i * dxt
 				doc_pos = canvas.point_win_to_doc((pos, 0))[0] + shift
@@ -248,8 +281,8 @@ class Ruler(gtk.DrawingArea):
 			i = -1
 			pos = 0
 			shift = 0.0
-			if origin == DOC_ORIGIN_CENTER: shift = ph / 2.0
-			if origin == DOC_ORIGIN_LU: shift = -ph / 2.0
+			if origin == DOC_ORIGIN_CENTER: shift = -ph / 2.0
+			if origin == DOC_ORIGIN_LU: shift = -ph
 			while pos < h:
 				pos = syt + i * dyt
 				doc_pos = canvas.point_win_to_doc((0, pos))[1] + shift
@@ -269,7 +302,7 @@ class Ruler(gtk.DrawingArea):
 			self.exposed = True
 			self.set_cursor(DEFAULT_CURSOR)
 
-		x, y, w, h = self.allocation
+		w, h = tuple(self.allocation)[2:]
 		win_ctx = self.window.cairo_create()
 
 		if self.surface is None:
@@ -350,7 +383,7 @@ class Ruler(gtk.DrawingArea):
 			self.window.set_cursor(self.guide_cursor)
 
 	def mouse_down(self, widget, event):
-		x, y, w, h = self.allocation
+		w, h = tuple(self.allocation)[2:]
 		w = float(w)
 		h = float(h)
 		self.width = w
