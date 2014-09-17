@@ -15,9 +15,9 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, os
+import gtk
 
-from sk1 import _, config, events, const, rc
+from sk1 import _, events, const, rc
 from sk1.widgets.hidable import HidableHBox
 from sk1.widgets.generic import PangoLabel
 from sk1.widgets.imagewidgets import ImageButton
