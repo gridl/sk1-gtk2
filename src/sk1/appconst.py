@@ -43,6 +43,8 @@ TXT_LARGER = 'larger'
 
 PROP_RELIEF = 'relief'
 
+EVENT_ACTIVATE = 'activate'
+EVENT_EXPOSE = 'expose_event'
 EVENT_BUTTON_PRESS = 'button-press-event'
 EVENT_CLICKED = 'clicked'
 EVENT_TOGGLED = 'toggled'

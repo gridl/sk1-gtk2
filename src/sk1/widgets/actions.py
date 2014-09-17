@@ -17,7 +17,8 @@
 
 import gtk
 
-from sk1 import events
+from sk1 import events, appconst
+
 
 class AppAction(gtk.Action):
 
@@ -34,7 +35,7 @@ class AppAction(gtk.Action):
 		self.args = args
 		self.icon = icon
 
-		self.connect('activate', self.callback)
+		self.connect(appconst.EVENT_ACTIVATE, self.callback)
 
 		self.channels = channels
 		self.validator = validator
@@ -62,7 +63,7 @@ class AppToggleAction(gtk.ToggleAction):
 		self.args = args
 		self.icon = icon
 
-		self.connect('activate', self.callback)
+		self.connect(appconst.EVENT_ACTIVATE, self.callback)
 
 		self.channels = channels
 		self.validator = validator
