@@ -182,7 +182,7 @@ class AppCanvas(gtk.DrawingArea):
 			self.force_redraw()
 
 	def vscroll(self, *args):
-		m11, m12, m21, m22, dx, dy = self.trafo
+		m11, m12, m21, m22, dx = self.trafo[:5]
 		val = float(self.mw.v_adj.get_value()) * m11
 		dy = -val
 		self.trafo = [m11, m12, m21, m22, dx, dy]
@@ -190,7 +190,7 @@ class AppCanvas(gtk.DrawingArea):
 		self.force_redraw()
 
 	def hscroll(self, *args):
-		m11, m12, m21, m22, dx, dy = self.trafo
+		m11, m12, m21, m22, dy = self.trafo[:4] + self.trafo[5:]
 		val = float(self.mw.h_adj.get_value()) * m11
 		dx = -val
 		self.trafo = [m11, m12, m21, m22, dx, dy]
@@ -216,7 +216,7 @@ class AppCanvas(gtk.DrawingArea):
 		self.mw.v_adj.set_value(-y)
 
 	def _keep_center(self):
-		x, y, w, h = self.allocation
+		w, h = tuple(self.allocation)[2:]
 		w = float(w)
 		h = float(h)
 		if not w == self.width or not h == self.height:
@@ -244,7 +244,7 @@ class AppCanvas(gtk.DrawingArea):
 
 	def doc_to_win(self, point=[0.0, 0.0]):
 		x, y = point
-		m11, m12, m21, m22, dx, dy = self.trafo
+		m11, m22, dx, dy = self.trafo[:1] + self.trafo[3:]
 		x_new = m11 * x + dx
 		y_new = m22 * y + dy
 		return [x_new, y_new]
@@ -262,7 +262,7 @@ class AppCanvas(gtk.DrawingArea):
 		x, y = point
 		x = float(x)
 		y = float(y)
-		m11, m12, m21, m22, dx, dy = self.trafo
+		m11, m22, dx, dy = self.trafo[:1] + self.trafo[3:]
 		x_new = (x - dx) / m11
 		y_new = (y - dy) / m22
 		return [x_new, y_new]
@@ -291,7 +291,7 @@ class AppCanvas(gtk.DrawingArea):
 
 	def _fit_to_page(self):
 		width, height = self.presenter.get_page_size()
-		x, y, w, h = self.allocation
+		w, h = tuple(self.allocation)[2:]
 		w = float(w)
 		h = float(h)
 		self.width = w
@@ -310,7 +310,7 @@ class AppCanvas(gtk.DrawingArea):
 		self.force_redraw()
 
 	def _zoom(self, dzoom=1.0):
-		m11, m12, m21, m22, dx, dy = self.trafo
+		m11, m12, m21, dx, dy = self.trafo[:3] + self.trafo[4:]
 		m11 *= dzoom
 		_dx = (self.width * dzoom - self.width) / 2.0
 		_dy = (self.height * dzoom - self.height) / 2.0
@@ -346,7 +346,7 @@ class AppCanvas(gtk.DrawingArea):
 		self._zoom(zoom)
 
 	def zoom_to_rectangle(self, start, end):
-		x, y, w, h = self.allocation
+		w, h = tuple(self.allocation)[2:]
 		w = float(w)
 		h = float(h)
 		self.width = w
