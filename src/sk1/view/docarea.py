@@ -22,7 +22,7 @@ from uc2 import uc2const
 
 from sk1 import rc
 from sk1.view.canvas import AppCanvas
-from sk1.widgets.ruler import RulerCorner, Ruler
+from sk1.view.ruler import RulerCorner, Ruler
 
 
 class DocArea(gtk.Table):
