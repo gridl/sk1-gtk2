@@ -39,24 +39,20 @@ class PagerWidget(HidableHBox):
 		self.hbox = gtk.HBox()
 		self.box.pack_start(self.hbox, False, False, 0)
 
-		self.start = PagerButton('pager-arrow-start.png')
+		self.start = ImageButton(rc.IMG_PAGER_START, '', True, self.goto_start)
 		self.hbox.pack_start(self.start, False, False, 0)
-		self.start.connect('clicked', self.goto_start)
 
-		self.left = PagerButton('pager-arrow-left.png')
+		self.left = ImageButton(rc.IMG_PAGER_PREV, '', True, self.goto_left)
 		self.hbox.pack_start(self.left, False, False, 0)
-		self.left.connect('clicked', self.goto_left)
 
 		self.label = PangoLabel(size=const.TXT_SMALLER)
 		self.hbox.pack_start(self.label, False, False, 5)
 
-		self.right = PagerButton('pager-arrow-right.png')
+		self.right = ImageButton(rc.IMG_PAGER_NEXT, '', True, self.goto_right)
 		self.hbox.pack_start(self.right, False, False, 0)
-		self.right.connect('clicked', self.goto_right)
 
-		self.end = PagerButton('pager-arrow-end.png')
+		self.end = ImageButton(rc.IMG_PAGER_END, '', True, self.goto_end)
 		self.hbox.pack_start(self.end, False, False, 0)
-		self.end.connect('clicked', self.goto_end)
 
 		self.hbox.pack_start(gtk.VSeparator(), False, False, 0)
 
@@ -115,15 +111,5 @@ class PagerWidget(HidableHBox):
 		pages = self.app.current_doc.get_pages()
 		self.app.current_doc.goto_page(len(pages) - 1)
 
-class PagerButton(gtk.Button):
-	def __init__(self, file_name):
-		gtk.Button.__init__(self)
-		self.set_property('relief', gtk.RELIEF_NONE)
-		image_dir = os.path.join(config.resource_dir, 'icons', 'pager')
-		loader = gtk.gdk.pixbuf_new_from_file
-		image = gtk.Image()
-		pixbuf = loader(os.path.join(image_dir, file_name))
-		image.set_from_pixbuf(pixbuf)
-		self.add(image)
 
 
