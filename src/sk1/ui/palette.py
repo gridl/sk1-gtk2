@@ -38,7 +38,7 @@ class HPalette(HidableHBox):
 		self.no_color = NoColorButton(self)
 		self.pack_start(self.no_color, False, False, 0)
 
-		self.palwidget = HPaletteWidget(self)
+		self.palwidget = HPaletteWidget(self.app)
 		self.pack_start(self.palwidget, True, True, 1)
 
 		self.forward = PalButton('arrow-right.png')

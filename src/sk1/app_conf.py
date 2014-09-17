@@ -83,12 +83,21 @@ class AppConfig(UCConfig):
 	ruler_min_text_step = 50
 	ruler_max_text_step = 100
 
-	#============== UI SECTION ===================
+	#============== PALETTE OPTIONS ================
+	palette_visible = True
+	palette_orientation = const.HORIZONTAL
+	palette_in_use = ''
 	hpalette_cell_vertical = 18
 	hpalette_cell_horizontal = 40
 	vpalette_cell_vertical = 18
-	vpalette_cell_vertical = 18
-	palette_orientation = const.HORIZONTAL
+	vpalette_cell_horizontal = 18
+
+	palette_hcell_vertical = 18
+	palette_hcell_horizontal = 40
+	palette_vcell_vertical = 18
+	palette_vcell_horizontal = 18
+
+	#============== UI SECTION ===================
 
 	mw_maximized = 0
 

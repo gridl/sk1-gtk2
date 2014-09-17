@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-rgb_palette = [
+palette_rgb = [
 ['RGB', [0.0, 0.0, 0.0], 1.0, 'Black'],
 ['RGB', [0.1, 0.1, 0.1], 1.0, '90% Black'],
 ['RGB', [0.2, 0.2, 0.2], 1.0, '80% Black'],

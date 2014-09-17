@@ -21,18 +21,16 @@ import gtk
 import cairo
 
 from sk1 import events, config
-from sk1.rc import cmyk_palette
 
 SHIFT = 15
 
 class HPaletteWidget(gtk.DrawingArea):
 
-	def __init__(self, master):
+	def __init__(self, app):
 
 		gtk.DrawingArea.__init__(self)
-		self.master = master
-		self.app = master.app
-		self.pal = cmyk_palette.palette
+		self.app = app
+		self.pal = self.app.palette_mngr.palette_in_use.colors
 
 		self.set_size_request(-1, config.hpalette_cell_vertical)
 		self.queue_draw()

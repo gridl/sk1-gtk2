@@ -17,3 +17,5 @@
 
 from icons import *
 from images import *
+from cmyk_palette import palette_cmyk
+from rgb_palette import palette_rgb

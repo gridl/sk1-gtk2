@@ -35,6 +35,7 @@ from sk1.ui.mainwindow import MainWindow
 from sk1.actions import create_actions
 from sk1.view.presenter import DocPresenter
 from sk1.ui.clipboard import AppClipboard
+from sk1.app_palettes import AppPaletteManager
 
 
 class Application(UCApplication):
@@ -69,6 +70,7 @@ class Application(UCApplication):
 		self.inspector = DocumentInspector(self)
 		self.proxy = AppProxy(self)
 		self.clipboard = AppClipboard(self)
+		self.palette_mngr = AppPaletteManager(self)
 
 
 		self.accelgroup = gtk.AccelGroup()
