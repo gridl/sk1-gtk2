@@ -116,7 +116,6 @@ class RulerCorner(gtk.DrawingArea):
 		ctx.set_source_surface(bmp, x, y)
 		ctx.paint()
 
-
 		win_ctx.set_source_surface(surface)
 		win_ctx.paint()
 

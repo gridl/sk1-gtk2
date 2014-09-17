@@ -17,6 +17,8 @@
 
 import gtk, gobject
 
+from sk1.appconst import EVENT_CHANGED
+
 class PangoLabel(gtk.Label):
 
 	def __init__(self, text='', size='', bold=False,
@@ -45,12 +47,12 @@ class SimpleListCombo(gtk.ComboBox):
 		self.add_attribute(cell, 'text', 0)
 		self.set_list(listdata)
 		self.vbox.pack_start(self, False, False, 0)
-		if cmd: self.connect('changed', cmd)
+		if cmd: self.connect(EVENT_CHANGED, cmd)
 
 	def clear(self):
 		self.liststore.clear()
 
-	def set_list(self, list=[]):
-		if list:
-			for item in list:
+	def set_list(self, datalist=[]):
+		if datalist:
+			for item in datalist:
 				self.append_text(item)

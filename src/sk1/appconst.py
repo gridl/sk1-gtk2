@@ -41,3 +41,10 @@ TXT_MEDIUM = 'medium'
 TXT_LARGE = 'large'
 TXT_LARGER = 'larger'
 
+PROP_RELIEF = 'relief'
+
+EVENT_BUTTON_PRESS = 'button-press-event'
+EVENT_CLICKED = 'clicked'
+EVENT_TOGGLED = 'toggled'
+EVENT_CHANGED = 'changed'
+
