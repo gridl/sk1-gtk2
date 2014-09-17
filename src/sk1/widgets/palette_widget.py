@@ -63,7 +63,7 @@ class HPaletteWidget(gtk.DrawingArea):
 		return loader(os.path.join(image_dir, file_name))
 
 	def max_position(self):
-		x, y, w, h = self.allocation
+		w, h = tuple(self.allocation)[2:]
 		if w and h:
 			size = float(config.hpalette_cell_horizontal)
 			self.max_pos = len(self.pal) * size / w - 1.0
