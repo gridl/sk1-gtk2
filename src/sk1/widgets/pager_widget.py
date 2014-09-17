@@ -20,6 +20,7 @@ import gtk, os
 from sk1 import _, config, events, appconst
 from sk1.widgets.hidable import HidableHBox
 from sk1.widgets.generic import PangoLabel
+from sk1.widgets.imagewidgets import ImageButton
 
 class PagerWidget(HidableHBox):
 

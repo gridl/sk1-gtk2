@@ -26,6 +26,11 @@ IMG_RULER_DO_LL = 'sk1-ruler-docorigin-ll'
 IMG_RULER_DO_LU = 'sk1-ruler-docorigin-lu'
 IMG_RULER_DO_C = 'sk1-ruler-docorigin-c'
 
+IMG_PAGER_END = 'sk1-pager-end'
+IMG_PAGER_NEXT = 'sk1-pager-next'
+IMG_PAGER_PREV = 'sk1-pager-prev'
+IMG_PAGER_START = 'sk1-pager-start'
+
 IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 
