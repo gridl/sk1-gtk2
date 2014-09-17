@@ -42,10 +42,13 @@ TXT_LARGE = 'large'
 TXT_LARGER = 'larger'
 
 PROP_RELIEF = 'relief'
+PROP_CAN_FOCUS = 'can-focus'
 
 EVENT_ACTIVATE = 'activate'
 EVENT_EXPOSE = 'expose_event'
 EVENT_BUTTON_PRESS = 'button-press-event'
+EVENT_BUTTON_RELEASE = 'button-release-event'
+EVENT_MOUSE_MOTION = 'motion_notify_event'
 EVENT_CLICKED = 'clicked'
 EVENT_TOGGLED = 'toggled'
 EVENT_CHANGED = 'changed'

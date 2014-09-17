@@ -26,7 +26,7 @@ from uc2.uc2const import HORIZONTAL, VERTICAL
 from uc2.formats.sk1.sk1const import DOC_ORIGIN_CENTER, DOC_ORIGIN_LU, \
 DOC_ORIGIN_LL, ORIGINS
 
-from sk1 import config, events, modes, rc
+from sk1 import config, events, modes, rc, const
 from sk1.const import RENDERING_DELAY
 
 HFONT = {}
@@ -77,14 +77,25 @@ class RulerCorner(gtk.DrawingArea):
 
 		size = config.ruler_size
 		self.set_size_request(size, size)
-		self.connect('expose_event', self.repaint)
-		self.connect('button-release-event', self.click_event)
+		self.connect(const.EVENT_EXPOSE, self.repaint)
+		self.connect(const.EVENT_BUTTON_RELEASE, self.click_event)
 		self.eventloop.connect(self.eventloop.DOC_MODIFIED, self.check_coords)
+		events.connect(events.CONFIG_MODIFIED, self.check_config)
 
 	def close(self):
+		events.disconnect(events.CONFIG_MODIFIED, self.check_config)
 		fields = self.__dict__
 		items = fields.keys()
 		for item in items: fields[item] = None
+
+	def check_config(self, *args):
+		if args[0][0] == 'ruler_size':
+			size = config.ruler_size
+			if self.orient: self.set_size_request(size, -1)
+			else: self.set_size_request(-1, size)
+			return
+		if args[0][0][:6] == 'ruler_':
+			self.queue_draw()
 
 	def check_coords(self, *args):
 		if not self.origin == self.presenter.model.doc_origin:
@@ -156,7 +167,7 @@ class Ruler(gtk.DrawingArea):
 		else:
 			self.guide_cursor = self.app.cursors[modes.VGUIDE_MODE]
 
-		self.set_property("can-focus", True)
+		self.set_property(const.PROP_CAN_FOCUS, True)
 
 		self.add_events(gtk.gdk.BUTTON_PRESS_MASK |
 					gtk.gdk.POINTER_MOTION_MASK |
@@ -165,28 +176,36 @@ class Ruler(gtk.DrawingArea):
 		self.pointer = []
 		self.draw_guide = False
 
-		self.connect('expose_event', self.repaint)
-		self.connect('button_press_event', self.mouse_down)
-		self.connect('motion_notify_event', self.mouse_move)
-		self.connect('button_release_event', self.mouse_up)
+		self.connect(const.EVENT_EXPOSE, self.repaint)
+		self.connect(const.EVENT_BUTTON_PRESS, self.mouse_down)
+		self.connect(const.EVENT_MOUSE_MOTION, self.mouse_move)
+		self.connect(const.EVENT_BUTTON_RELEASE, self.mouse_up)
 		self.eventloop.connect(self.eventloop.VIEW_CHANGED, self.repaint)
-		self.eventloop.connect(self.eventloop.DOC_MODIFIED, self.check_config)
+		self.eventloop.connect(self.eventloop.DOC_MODIFIED, self.check_doc)
 		events.connect(events.CONFIG_MODIFIED, self.check_config)
 
 	def close(self):
+		events.disconnect(events.CONFIG_MODIFIED, self.check_config)
 		fields = self.__dict__
 		items = fields.keys()
 		for item in items: fields[item] = None
 
-	def check_config(self, *args):
+	def check_doc(self, *args):
 		origin = self.presenter.model.doc_origin
 		units = self.presenter.model.doc_units
 		if not self.origin == origin or not self.units == units:
 			self.origin = origin
 			self.units = units
 			self.queue_draw()
+
+	def check_config(self, *args):
+		if args[0][0] == 'ruler_size':
+			size = config.ruler_size
+			if self.orient: self.set_size_request(size, -1)
+			else: self.set_size_request(-1, size)
 			return
-		if args[0][0][:6] == 'ruler_': self.queue_draw()
+		if args[0][0][:6] == 'ruler_':
+			self.queue_draw()
 
 	def update_ruler(self, *args):
 		self.queue_draw()
