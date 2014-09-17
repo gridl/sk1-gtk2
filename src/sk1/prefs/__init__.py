@@ -76,9 +76,10 @@ class PrefsContainer(gtk.HPaned):
 	def __init__(self, app, dlg):
 		self.app = app
 		self.dlg = dlg
-		self.pdxf_config = PDXF_Config()
-		config_file = os.path.join(self.app.appdata.app_config_dir, 'pdxf_config.xml')
-		self.pdxf_config.load(config_file)
+		self.fmt_config = PDXF_Config()
+		config_dir = self.app.appdata.app_config_dir
+		config_file = os.path.join(config_dir, 'pdxf_config.xml')
+		self.fmt_config.load(config_file)
 		gtk.HPaned.__init__(self)
 		self.set_size_request(700, 400)
 		self.build_model()
@@ -93,7 +94,7 @@ class PrefsContainer(gtk.HPaned):
 		self.doc_prefs = PrefsNode(_('New document'), gtk.STOCK_NEW)
 		self.model.childs.append(self.doc_prefs)
 		for item in PLUGINS:
-			plg = item(self.app, self.dlg, self.pdxf_config)
+			plg = item(self.app, self.dlg, self.fmt_config)
 			if plg.cid == const.PREFS_APP_PLUGIN:
 				self.app_prefs.childs.append(plg)
 			else:

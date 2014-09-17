@@ -38,15 +38,15 @@ class CmsPrefsPlugin(GenericPrefsPlugin):
 	short_title = _('Color Management')
 	icon_file = IMG_PREFS_CMS
 
-	def __init__(self, app, dlg, pdxf_config):
-		GenericPrefsPlugin.__init__(self, app, dlg, pdxf_config)
+	def __init__(self, app, dlg, fmt_config):
+		GenericPrefsPlugin.__init__(self, app, dlg, fmt_config)
 
 	def build(self):
 		GenericPrefsPlugin.build(self)
 		self.nb = gtk.Notebook()
-		self.tabs = [CMSTab(self, self.app, self.dlg, self.pdxf_config),
-					ProfilesTab(self.app, self.dlg, self.pdxf_config),
-					SettingsTab(self.app, self.dlg, self.pdxf_config)]
+		self.tabs = [CMSTab(self, self.app, self.dlg, self.fmt_config),
+					ProfilesTab(self.app, self.dlg, self.fmt_config),
+					SettingsTab(self.app, self.dlg, self.fmt_config)]
 		self.set_tabs(config.cms_use)
 		self.pack_end(self.nb, True, True, 0)
 
@@ -78,12 +78,12 @@ class PrefsTab(gtk.VBox):
 	name = 'Tab'
 	label = None
 
-	def __init__(self, app, dlg, pdxf_config):
+	def __init__(self, app, dlg, fmt_config):
 		gtk.VBox.__init__(self)
 		self.app = app
 		self.dlg = dlg
 		self.label = gtk.Label(self.name)
-		self.pdxf_config = pdxf_config
+		self.fmt_config = fmt_config
 		self.set_border_width(10)
 
 	def apply_changes(self):pass
@@ -93,9 +93,9 @@ class CMSTab(PrefsTab):
 
 	name = _('Color Management')
 
-	def __init__(self, owner, app, dlg, pdxf_config):
+	def __init__(self, owner, app, dlg, fmt_config):
 		self.owner = owner
-		PrefsTab.__init__(self, app, dlg, pdxf_config)
+		PrefsTab.__init__(self, app, dlg, fmt_config)
 		self.set_border_width(0)
 		self.use_cms = config.cms_use
 
@@ -198,8 +198,8 @@ class SettingsTab(PrefsTab):
 	bpc_flag = False
 	bpt_flag = False
 
-	def __init__(self, app, dlg, pdxf_config):
-		PrefsTab.__init__(self, app, dlg, pdxf_config)
+	def __init__(self, app, dlg, fmt_config):
+		PrefsTab.__init__(self, app, dlg, fmt_config)
 
 		self.get_config_vals()
 
@@ -358,8 +358,8 @@ class ProfilesTab(PrefsTab):
 
 	name = _('Color profiles')
 
-	def __init__(self, app, dlg, pdxf_config):
-		PrefsTab.__init__(self, app, dlg, pdxf_config)
+	def __init__(self, app, dlg, fmt_config):
+		PrefsTab.__init__(self, app, dlg, fmt_config)
 
 		title = PangoLabel(_('Document related profiles'), bold=True)
 		self.pack_start(title, False, False, 0)
@@ -373,10 +373,10 @@ class ProfilesTab(PrefsTab):
 		self.cs_profiles = {}
 		self.cs_config_profiles = {}
 
-		self.cs_config = {COLOR_RGB:self.pdxf_config.default_rgb_profile,
-					COLOR_CMYK:self.pdxf_config.default_cmyk_profile,
-					COLOR_LAB:self.pdxf_config.default_lab_profile,
-					COLOR_GRAY:self.pdxf_config.default_gray_profile,
+		self.cs_config = {COLOR_RGB:config.default_rgb_profile,
+					COLOR_CMYK:config.default_cmyk_profile,
+					COLOR_LAB:config.default_lab_profile,
+					COLOR_GRAY:config.default_gray_profile,
 					COLOR_DISPLAY:config.cms_display_profile}
 
 		index = 0
