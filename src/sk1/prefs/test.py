@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from sk1 import _, const
+from sk1 import _, config, const, rc
 
 from sk1.prefs.generic import GenericPrefsPlugin
 
@@ -24,30 +24,21 @@ class TestPlugin(GenericPrefsPlugin):
 	name = 'TestPlugin'
 	title = _('Test Preference Plugin')
 	short_title = _('Test Plugin')
-
-	def __init__(self, app, dlg, fmt_config):
-		GenericPrefsPlugin.__init__(self, app, dlg, fmt_config)
-
-class Test1Plugin(GenericPrefsPlugin):
-
-	name = 'Test1Plugin'
-	title = _('Test1 Preference Plugin')
-	short_title = _('Test1 Plugin')
-
-	def __init__(self, app, dlg, fmt_config):
-		GenericPrefsPlugin.__init__(self, app, dlg, fmt_config)
-
-class Test2Plugin(GenericPrefsPlugin):
-
-	name = 'Test2Plugin'
-	title = _('Test2 Preference Plugin')
-	short_title = _('Test2 Plugin')
+	image_id = rc.IMG_CTX_PORTRAIT
 	cid = const.PREFS_DOC_PLUGIN
 
 	def __init__(self, app, dlg, fmt_config):
 		GenericPrefsPlugin.__init__(self, app, dlg, fmt_config)
 
-class Test3Plugin(GenericPrefsPlugin):
+	def build(self):
+		GenericPrefsPlugin.build(self)
+
+	def apply_changes(self):pass
+
+	def restore_defaults(self):pass
+
+
+class Test2Plugin(GenericPrefsPlugin):
 
 	name = 'Test3Plugin'
 	title = _('Test3 Preference Plugin')

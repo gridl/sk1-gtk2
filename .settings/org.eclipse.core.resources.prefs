@@ -31,6 +31,7 @@ encoding//src/sk1/prefs/__init__.py=utf-8
 encoding//src/sk1/prefs/cms_prefs.py=utf-8
 encoding//src/sk1/prefs/general.py=utf-8
 encoding//src/sk1/prefs/generic.py=utf-8
+encoding//src/sk1/prefs/palette.py=utf-8
 encoding//src/sk1/prefs/profilemngr.py=utf-8
 encoding//src/sk1/prefs/ruler.py=utf-8
 encoding//src/sk1/prefs/test.py=utf-8

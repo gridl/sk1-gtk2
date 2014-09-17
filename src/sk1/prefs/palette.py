@@ -20,12 +20,12 @@ import gtk
 from sk1 import _, config, rc
 from sk1.prefs.generic import GenericPrefsPlugin
 
-class RulerPlugin(GenericPrefsPlugin):
+class PalettePlugin(GenericPrefsPlugin):
 
-	name = 'RulerPlugin'
-	title = _('Ruler Preferences')
-	short_title = _('Ruler')
-	image_id = rc.IMG_PREFS_RULER
+	name = 'PalettePlugin'
+	title = _('Palette Preferences')
+	short_title = _('Palette')
+	image_id = rc.IMG_PREFS_PALETTE
 
 	def __init__(self, app, dlg, fmt_config):
 		GenericPrefsPlugin.__init__(self, app, dlg, fmt_config)

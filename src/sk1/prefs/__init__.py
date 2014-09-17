@@ -23,9 +23,11 @@ from sk1 import _, config, const
 from sk1.prefs import test
 from sk1.prefs.cms_prefs import CmsPrefsPlugin
 from sk1.prefs.general import GeneralPlugin
+from sk1.prefs.ruler import RulerPlugin
+from sk1.prefs.palette import PalettePlugin
 
-PLUGINS = [GeneralPlugin, CmsPrefsPlugin,
-		test.Test2Plugin, test.Test3Plugin]
+PLUGINS = [GeneralPlugin, CmsPrefsPlugin, RulerPlugin, PalettePlugin,
+		test.TestPlugin, test.Test2Plugin]
 
 def get_prefs_dialog(app):
 	parent = app.mw

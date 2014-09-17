@@ -36,7 +36,7 @@ class CmsPrefsPlugin(GenericPrefsPlugin):
 	name = 'CmsPrefsPlugin'
 	title = _('Color management and color profiles')
 	short_title = _('Color Management')
-	icon_file = IMG_PREFS_CMS
+	image_id = IMG_PREFS_CMS
 
 	def __init__(self, app, dlg, fmt_config):
 		GenericPrefsPlugin.__init__(self, app, dlg, fmt_config)
