@@ -20,8 +20,6 @@ from sk1 import config
 
 IMG_APP_ICON = 'sk1-app-icon'
 IMG_CAIRO_BANNER = 'sk1-cairo-banner'
-IMG_KEEP_RATIO = 'sk1-keep-ratio'
-IMG_DONT_KEEP_RATIO = 'sk1-dont-keep-ratio'
 
 IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
@@ -31,6 +29,8 @@ IMG_CTX_UNITS = 'sk1-ctx-units'
 IMG_CTX_LANDSCAPE = 'sk1-ctx-page-landscape'
 IMG_CTX_PORTRAIT = 'sk1-ctx-page-portrait'
 IMG_CTX_ROTATE = 'sk1-ctx-rotate-selection'
+IMG_KEEP_RATIO = 'sk1-ctx-keep-ratio'
+IMG_DONT_KEEP_RATIO = 'sk1-ctx-dont-keep-ratio'
 
 def get_image_path(image_id):
 	imgdir = os.path.join(config.resource_dir, 'images')
