@@ -78,6 +78,8 @@ class AppConfig(UCConfig):
 
 	#============== RULER OPTIONS ================
 	ruler_size = 20
+	ruler_bgcolor = (1.0, 1.0, 1.0)
+	ruler_fgcolor = (0.0, 0.0, 0.0)
 	ruler_min_tick_step = 3
 	ruler_min_text_step = 50
 	ruler_max_text_step = 100

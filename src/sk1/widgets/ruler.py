@@ -27,17 +27,10 @@ from uc2.formats.sk1.sk1const import DOC_ORIGIN_CENTER, DOC_ORIGIN_LU, \
 DOC_ORIGIN_LL, ORIGINS
 
 from sk1 import config, events, modes, rc, const
-from sk1.const import RENDERING_DELAY
 
 HFONT = {}
 VFONT = {}
-
 BITMAPS = {}
-
-CAIRO_WHITE = [1.0, 1.0, 1.0]
-CAIRO_BLACK = [0.0, 0.0, 0.0]
-
-DEFAULT_CURSOR = -1
 
 def load_font():
 	fntdir = os.path.join(config.resource_dir, 'ruler-font')
@@ -91,8 +84,7 @@ class RulerCorner(gtk.DrawingArea):
 	def check_config(self, *args):
 		if args[0][0] == 'ruler_size':
 			size = config.ruler_size
-			if self.orient: self.set_size_request(size, -1)
-			else: self.set_size_request(-1, size)
+			self.set_size_request(size, size)
 			return
 		if args[0][0][:6] == 'ruler_':
 			self.queue_draw()
@@ -118,7 +110,7 @@ class RulerCorner(gtk.DrawingArea):
 		surface.set_device_offset(0, 0)
 		ctx = cairo.Context(surface)
 		ctx.set_matrix(cairo.Matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
-		ctx.set_source_rgb(*CAIRO_WHITE)
+		ctx.set_source_rgb(*config.ruler_bgcolor)
 		ctx.paint()
 
 		bmp = BITMAPS['bg']
@@ -327,7 +319,7 @@ class Ruler(gtk.DrawingArea):
 		if not self.exposed:
 #			self.update_colors()
 			self.exposed = True
-			self.set_cursor(DEFAULT_CURSOR)
+			self.set_cursor(const.DEFAULT_CURSOR)
 
 		w, h = tuple(self.allocation)[2:]
 		win_ctx = self.window.cairo_create()
@@ -343,12 +335,12 @@ class Ruler(gtk.DrawingArea):
 		self.surface.set_device_offset(0, 0)
 		self.ctx = cairo.Context(self.surface)
 		self.ctx.set_matrix(cairo.Matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
-		self.ctx.set_source_rgb(*CAIRO_WHITE)
+		self.ctx.set_source_rgb(*config.ruler_bgcolor)
 		self.ctx.paint()
 		self.ctx.set_antialias(cairo.ANTIALIAS_NONE)
 		self.ctx.set_line_width(1.0)
 		self.ctx.set_dash([])
-		self.ctx.set_source_rgba(*CAIRO_BLACK)
+		self.ctx.set_source_rgba(*config.ruler_fgcolor)
 		if self.orient == HORIZONTAL:
 			self.hrender(w, h)
 		else:
@@ -404,7 +396,7 @@ class Ruler(gtk.DrawingArea):
 	#------ Guides creation
 
 	def set_cursor(self, mode=0):
-		if mode == DEFAULT_CURSOR:
+		if mode == const.DEFAULT_CURSOR:
 			self.window.set_cursor(self.default_cursor)
 		else:
 			self.window.set_cursor(self.guide_cursor)
@@ -417,7 +409,8 @@ class Ruler(gtk.DrawingArea):
 		self.height = h
 		self.draw_guide = True
 		self.set_cursor()
-		self.timer = gobject.timeout_add(RENDERING_DELAY, self.repaint_guide)
+		self.timer = gobject.timeout_add(const.RENDERING_DELAY,
+										self.repaint_guide)
 
 	def mouse_up(self, widget, event):
 		self.pointer = [event.x, event.y]
@@ -434,7 +427,7 @@ class Ruler(gtk.DrawingArea):
 				p, p_doc = self.presenter.snap.snap_point(p, snap_y=False)[1:]
 				self.presenter.api.create_guides([[p_doc[0], VERTICAL], ])
 
-		self.set_cursor(DEFAULT_CURSOR)
+		self.set_cursor(const.DEFAULT_CURSOR)
 		if not  self.timer is None:
 			gobject.source_remove(self.timer)
 		self.draw_guide = False
