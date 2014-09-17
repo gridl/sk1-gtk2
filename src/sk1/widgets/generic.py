@@ -17,7 +17,14 @@
 
 import gtk, gobject
 
-from sk1.const import EVENT_CHANGED
+from sk1 import const
+
+class CheckButton(gtk.CheckButton):
+
+	def __init__(self, text, state=False, cmd=None):
+		gtk.CheckButton.__init__(self, text)
+		self.set_active(state)
+		if cmd: self.connect(const.EVENT_TOGGLED, cmd)
 
 class PangoLabel(gtk.Label):
 
@@ -47,7 +54,7 @@ class SimpleListCombo(gtk.ComboBox):
 		self.add_attribute(cell, 'text', 0)
 		self.set_list(listdata)
 		self.vbox.pack_start(self, False, False, 0)
-		if cmd: self.connect(EVENT_CHANGED, cmd)
+		if cmd: self.connect(const.EVENT_CHANGED, cmd)
 
 	def clear(self):
 		self.liststore.clear()

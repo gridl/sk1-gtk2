@@ -19,6 +19,7 @@ import gtk
 
 from sk1 import _, config
 from sk1.prefs.generic import GenericPrefsPlugin
+from sk1.widgets import CheckButton
 
 class GeneralPlugin(GenericPrefsPlugin):
 
@@ -34,13 +35,11 @@ class GeneralPlugin(GenericPrefsPlugin):
 		GenericPrefsPlugin.build(self)
 
 		txt = _('Store application window size')
-		self.winsize_check = gtk.CheckButton(txt)
-		self.winsize_check.set_active(config.store_win_size)
+		self.winsize_check = CheckButton(txt, config.store_win_size)
 		self.pack_start(self.winsize_check, False, True, 5)
 
 		txt = _('Create new document on start')
-		self.newdoc_check = gtk.CheckButton(txt)
-		self.newdoc_check.set_active(config.new_doc_on_start)
+		self.newdoc_check = CheckButton(txt, config.new_doc_on_start)
 		self.pack_start(self.newdoc_check, False, True, 5)
 
 	def apply_changes(self):
