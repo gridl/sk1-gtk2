@@ -26,9 +26,8 @@ from uc2.uc2const import HORIZONTAL, VERTICAL
 from uc2.formats.sk1.sk1const import DOC_ORIGIN_CENTER, DOC_ORIGIN_LU, \
 DOC_ORIGIN_LL, ORIGINS
 
-from sk1 import config, events, modes
+from sk1 import config, events, modes, rc
 from sk1.appconst import RENDERING_DELAY
-from sk1.resources import images
 
 HFONT = {}
 VFONT = {}
@@ -54,13 +53,13 @@ def load_font():
 		VFONT[char] = (surface.get_height(), surface)
 
 def load_bitmaps():
-	file_name = images.get_image_path(images.IMG_RULER_BG)
+	file_name = rc.get_image_path(rc.IMG_RULER_BG)
 	BITMAPS['bg'] = cairo.ImageSurface.create_from_png(file_name)
-	file_name = images.get_image_path(images.IMG_RULER_DO_C)
+	file_name = rc.get_image_path(rc.IMG_RULER_DO_C)
 	BITMAPS[DOC_ORIGIN_CENTER] = cairo.ImageSurface.create_from_png(file_name)
-	file_name = images.get_image_path(images.IMG_RULER_DO_LU)
+	file_name = rc.get_image_path(rc.IMG_RULER_DO_LU)
 	BITMAPS[DOC_ORIGIN_LU] = cairo.ImageSurface.create_from_png(file_name)
-	file_name = images.get_image_path(images.IMG_RULER_DO_LL)
+	file_name = rc.get_image_path(rc.IMG_RULER_DO_LL)
 	BITMAPS[DOC_ORIGIN_LL] = cairo.ImageSurface.create_from_png(file_name)
 
 class RulerCorner(gtk.DrawingArea):

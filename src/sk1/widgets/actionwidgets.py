@@ -18,14 +18,14 @@
 
 import gtk
 
-from sk1.resources import icons
+from sk1 import rc
 from sk1.appconst import PROP_RELIEF
 
 class ActionButton(gtk.Button):
 	def __init__(self, action):
 		gtk.Button.__init__(self)
 		if action.icon:
-			icon = gtk.image_new_from_stock(action.icon, icons.FIXED16)
+			icon = gtk.image_new_from_stock(action.icon, rc.FIXED16)
 			self.add(icon)
 		self.set_property(PROP_RELIEF, gtk.RELIEF_NONE)
 		self.set_tooltip_text(action.tooltip)
@@ -35,7 +35,7 @@ class ActionToggleButton(gtk.ToggleButton):
 	def __init__(self, action):
 		gtk.ToggleButton.__init__(self)
 		if action.icon:
-			icon = gtk.image_new_from_stock(action.icon, icons.FIXED16)
+			icon = gtk.image_new_from_stock(action.icon, rc.FIXED16)
 			self.add(icon)
 		self.set_property(PROP_RELIEF, gtk.RELIEF_NONE)
 		self.set_tooltip_text(action.tooltip)

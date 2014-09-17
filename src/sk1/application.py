@@ -23,7 +23,7 @@ from uc2.application import UCApplication
 from uc2.utils import system
 from uc2 import uc2const
 
-from sk1 import _, config, events
+from sk1 import _, config, events, rc
 from sk1.dialogs import msg_dialog, get_open_file_name, get_save_file_name
 from sk1.dialogs import warning_dialog
 from sk1 import modes
@@ -35,7 +35,6 @@ from sk1.ui.mainwindow import MainWindow
 from sk1.actions import create_actions
 from sk1.view.presenter import DocPresenter
 from sk1.ui.clipboard import AppClipboard
-from sk1.resources import icons
 
 
 class Application(UCApplication):
@@ -64,7 +63,7 @@ class Application(UCApplication):
 
 		self.default_cms = AppColorManager(self)
 
-		icons.load_icons()
+		rc.load_icons()
 
 		self.cursors = modes.get_cursors()
 		self.inspector = DocumentInspector(self)
@@ -133,7 +132,7 @@ class Application(UCApplication):
 			second = _('Do you want to save your changes?')
 			ret = warning_dialog(self.mw, self.appdata.app_name,
 					first, second,
-					[(icons.STOCK_DONT_SAVE , gtk.RESPONSE_NO,),
+					[(rc.STOCK_DONT_SAVE , gtk.RESPONSE_NO,),
 					(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL),
 					(gtk.STOCK_SAVE, gtk.RESPONSE_OK)])
 

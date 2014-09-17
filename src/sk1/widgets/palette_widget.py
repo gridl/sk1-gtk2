@@ -21,7 +21,7 @@ import gtk
 import cairo
 
 from sk1 import events, config
-from sk1.resources import cmyk_palette
+from sk1.rc import cmyk_palette
 
 SHIFT = 15
 

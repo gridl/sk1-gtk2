@@ -20,7 +20,7 @@ import gtk
 from uc2.utils import system
 from uc2 import uc2const
 
-from sk1.resources import icons
+from sk1 import rc
 from sk1.view.canvas import AppCanvas
 from sk1.widgets.ruler import RulerCorner, Ruler
 
@@ -105,7 +105,7 @@ class TabCaption(gtk.HBox):
 
 		self.label = gtk.Label('')
 		self.tab_icon = gtk.Image()
-		self.tab_icon.set_from_stock(icons.STOCK_SK1_DOC, gtk.ICON_SIZE_MENU)
+		self.tab_icon.set_from_stock(rc.STOCK_SK1_DOC, gtk.ICON_SIZE_MENU)
 		self.but_icon = gtk.Image()
 		self.but_icon.set_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
 

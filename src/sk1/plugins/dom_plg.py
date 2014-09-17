@@ -19,15 +19,14 @@ import os
 import gtk
 
 from uc2.formats.sk1 import model
-from sk1 import _, events, config
-from sk1.resources import icons
+from sk1 import _, events, config, rc
 from sk1.plugins.plg_caption import PluginTabCaption
 
 class DOMPlugin(gtk.VBox):
 
 	name = 'DOMPlugin'
 	title = _('Object browser')
-	icon = icons.STOCK_PLUGIN_DOM_VIEWER
+	icon = rc.STOCK_PLUGIN_DOM_VIEWER
 	loaded = False
 	active = False
 

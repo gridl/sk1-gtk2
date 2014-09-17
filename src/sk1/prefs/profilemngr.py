@@ -21,9 +21,8 @@ import gtk
 from uc2.utils.fs import expanduser_unicode
 from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY
 from uc2.cms import get_profile_name, get_profile_info
-from sk1 import _, config, dialogs
+from sk1 import _, config, dialogs, rc
 from sk1.widgets import ImageStockButton
-from sk1.resources.images import get_pixbuf, IMG_PREFS_CMS
 
 def get_profiles_dialog(app, parent, owner, colorspace):
 	title = _('%s profiles') % (colorspace)
@@ -318,6 +317,6 @@ class ProfileListModel(gtk.ListStore):
 
 	def __init__(self, objs):
 		gtk.ListStore.__init__(self, gtk.gdk.Pixbuf, str)
-		icon = get_pixbuf(IMG_PREFS_CMS)
+		icon = rc.get_pixbuf(rc.IMG_PREFS_CMS)
 		for item in objs:
 			self.append((icon, item))

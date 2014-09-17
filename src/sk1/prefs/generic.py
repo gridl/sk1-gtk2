@@ -21,7 +21,7 @@ import gtk
 
 from sk1 import appconst
 from sk1.widgets import PangoLabel
-from sk1.resources.images import get_pixbuf, get_stock_pixbuf
+from sk1.rc import get_pixbuf, get_stock_pixbuf
 
 class GenericPrefsPlugin(gtk.VBox):
 

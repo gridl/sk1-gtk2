@@ -1,31 +1,30 @@
 # -*- coding: utf-8 -*-
 #
 #	Copyright (C) 2012 by Igor E. Novikov
-#	
+#
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
-#	
+#
 #	This program is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #	GNU General Public License for more details.
-#	
+#
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
 
-from sk1 import _, events
-from sk1.resources import icons
+from sk1 import _, rc
 from sk1.plugins.plg_caption import PluginTabCaption
 
 class LayersPlugin(gtk.VBox):
 
 	name = 'LayersPlugin'
 	title = _('Layers')
-	icon = icons.STOCK_PLUGIN_LAYERS
+	icon = rc.STOCK_PLUGIN_LAYERS
 	loaded = False
 	active = False
 

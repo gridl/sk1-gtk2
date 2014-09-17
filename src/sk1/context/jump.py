@@ -17,9 +17,8 @@
 
 import gtk
 
-from sk1 import _, events, config
+from sk1 import _, events, config, rc
 from sk1.widgets import UnitLabel, UnitSpin, ImageLabel
-from sk1.resources import images
 
 class JumpPlugin(gtk.HBox):
 
@@ -36,7 +35,7 @@ class JumpPlugin(gtk.HBox):
 		events.connect(events.CONFIG_MODIFIED, self.config_changed)
 
 	def build(self):
-		label = ImageLabel(images.IMG_CTX_JUMP, _('Default object jump'))
+		label = ImageLabel(rc.IMG_CTX_JUMP, _('Default object jump'))
 		self.pack_start(label, False, False, 2)
 
 		self.jump_spin = UnitSpin(self.user_changes)

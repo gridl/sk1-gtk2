@@ -17,10 +17,9 @@
 
 import gtk
 
-from sk1 import _, actions
+from sk1 import _, actions, rc
 from sk1.widgets import ActionButton, AngleSpin, ActionToggleButton
 from sk1.widgets import ImageLabel
-from sk1.resources import images
 
 class ActionPlugin(gtk.HBox):
 
@@ -54,7 +53,7 @@ class RotatePlugin(ActionPlugin):
 	name = 'RotatePlugin'
 
 	def build(self):
-		self.pack_start(ImageLabel(images.IMG_CTX_ROTATE,
+		self.pack_start(ImageLabel(rc.IMG_CTX_ROTATE,
 								_('Rotate selection')), False, False, 2)
 
 		self.angle_spin = AngleSpin(self.user_update, True)
