@@ -24,7 +24,7 @@ class GeneralPlugin(GenericPrefsPlugin):
 
 	name = 'GeneralPlugin'
 	title = _('General Application Preferences')
-	short_title = _('General Preferences')
+	short_title = _('General')
 	icon_stock = gtk.STOCK_PROPERTIES
 
 	def __init__(self, app, dlg, fmt_config):

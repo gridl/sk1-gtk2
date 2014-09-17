@@ -29,7 +29,7 @@ class GenericPrefsPlugin(gtk.VBox):
 	title = ''
 	short_title = ''
 	icon_stock = gtk.STOCK_FILE
-	icon_file = ''
+	image_id = ''
 	icon = None
 	cid = const.PREFS_APP_PLUGIN
 	childs = []
@@ -41,8 +41,8 @@ class GenericPrefsPlugin(gtk.VBox):
 		self.fmt_config = fmt_config
 		self.app = app
 		self.dlg = dlg
-		if self.icon_file:
-			self.icon = rc.get_pixbuf(self.icon_file)
+		if self.image_id:
+			self.icon = rc.get_pixbuf(self.image_id)
 		else:
 			self.icon = rc.get_stock_pixbuf(self.icon_stock, gtk.ICON_SIZE_MENU)
 

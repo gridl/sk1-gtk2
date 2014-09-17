@@ -1,0 +1,53 @@
+# -*- coding: utf-8 -*-
+#
+#	Copyright (C) 2014 by Igor E. Novikov
+#
+#	This program is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 3 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import gtk
+
+from sk1 import _, config, rc
+from sk1.prefs.generic import GenericPrefsPlugin
+
+class RulerPlugin(GenericPrefsPlugin):
+
+	name = 'RulerPlugin'
+	title = _('Ruler Preferences')
+	short_title = _('Ruler')
+	image_id = rc.IMG_PREFS_RULER
+
+	def __init__(self, app, dlg, fmt_config):
+		GenericPrefsPlugin.__init__(self, app, dlg, fmt_config)
+
+	def build(self):
+		GenericPrefsPlugin.build(self)
+
+		txt = _('Store application window size')
+		self.winsize_check = gtk.CheckButton(txt)
+		self.winsize_check.set_active(config.store_win_size)
+		self.pack_start(self.winsize_check, False, True, 5)
+
+		txt = _('Create new document on start')
+		self.newdoc_check = gtk.CheckButton(txt)
+		self.newdoc_check.set_active(config.new_doc_on_start)
+		self.pack_start(self.newdoc_check, False, True, 5)
+
+	def apply_changes(self):
+		config.new_doc_on_start = self.newdoc_check.get_active()
+		config.store_win_size = self.winsize_check.get_active()
+
+	def restore_defaults(self):
+		defaults = config.get_defaults()
+		self.newdoc_check.set_active(defaults['new_doc_on_start'])
+		self.winsize_check.set_active(defaults['store_win_size'])

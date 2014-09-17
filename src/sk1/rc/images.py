@@ -33,6 +33,7 @@ IMG_PAGER_START = 'sk1-pager-start'
 
 IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
+IMG_PREFS_RULER = 'sk1-prefs-ruler'
 
 IMG_CTX_JUMP = 'sk1-ctx-jump'
 IMG_CTX_UNITS = 'sk1-ctx-units'
