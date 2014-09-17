@@ -108,6 +108,7 @@ class DocPresenter:
 		self.eventloop.connect(self.eventloop.DOC_MODIFIED, self.modified)
 		self.snap = SnapManager(self)
 		self.traced_objects = [
+							self.doc_presenter,
 							self.eventloop,
 							self.api,
 							self.docarea.hruler,
@@ -118,18 +119,15 @@ class DocPresenter:
 							self.canvas,
 							self.selection,
 							self.snap,
-							self
 							]
 
 	def close(self):
 		if not self.docarea is None:
 			self.app.mw.remove_tab(self.docarea)
-		self.doc_presenter.close()
-		for obj in self.traced_objects:
-			fields = obj.__dict__
-			items = fields.keys()
-			for item in items:
-				fields[item] = None
+		for obj in self.traced_objects: obj.close()
+		fields = self.__dict__
+		items = fields.keys()
+		for item in items: fields[item] = None
 
 	def modified(self, *args):
 		self.saved = False

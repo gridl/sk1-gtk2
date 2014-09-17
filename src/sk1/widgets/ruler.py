@@ -81,6 +81,11 @@ class RulerCorner(gtk.DrawingArea):
 		self.connect('button-release-event', self.click_event)
 		self.eventloop.connect(self.eventloop.DOC_MODIFIED, self.check_coords)
 
+	def close(self):
+		fields = self.__dict__
+		items = fields.keys()
+		for item in items: fields[item] = None
+
 	def check_coords(self, *args):
 		if not self.origin == self.presenter.model.doc_origin:
 			self.origin = self.presenter.model.doc_origin
@@ -167,6 +172,11 @@ class Ruler(gtk.DrawingArea):
 		self.eventloop.connect(self.eventloop.VIEW_CHANGED, self.repaint)
 		self.eventloop.connect(self.eventloop.DOC_MODIFIED, self.check_config)
 		events.connect(events.CONFIG_MODIFIED, self.check_config)
+
+	def close(self):
+		fields = self.__dict__
+		items = fields.keys()
+		for item in items: fields[item] = None
 
 	def check_config(self, *args):
 		origin = self.presenter.model.doc_origin

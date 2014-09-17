@@ -95,6 +95,11 @@ class AppCanvas(gtk.DrawingArea):
 		self.kb_proc = KeyboardProcessor(self.app, self)
 		self.connect('key_press_event', self.on_key_press_event)
 
+	def close(self):
+		fields = self.__dict__
+		items = fields.keys()
+		for item in items: fields[item] = None
+
 	def on_key_press_event(self, widget, event):
 		if self.kb_proc.check_keypress(event.keyval):
 			return True

@@ -89,6 +89,12 @@ class DocArea(gtk.Table):
 					gtk.EXPAND | gtk.FILL, gtk.EXPAND | gtk.FILL,
 					xpadding=xpad, ypadding=ypad)
 
+	def close(self):
+		fields = self.__dict__
+		items = fields.keys()
+		for item in items: fields[item] = None
+
+
 	def set_caption(self, caption):
 		self.caption = caption
 		self.tab_caption.set_caption(self.caption)

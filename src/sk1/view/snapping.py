@@ -66,6 +66,11 @@ class SnapManager:
 		el.connect(el.DOC_MODIFIED, self.update)
 		el.connect(el.PAGE_CHANGED, self.update)
 
+	def close(self):
+		fields = self.__dict__
+		items = fields.keys()
+		for item in items: fields[item] = None
+
 	def update(self, *args):
 		if self.snap_to_guides:
 			self.update_guides_grid()
