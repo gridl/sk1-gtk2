@@ -21,6 +21,11 @@ from sk1 import config
 IMG_APP_ICON = 'sk1-app-icon'
 IMG_CAIRO_BANNER = 'sk1-cairo-banner'
 
+IMG_RULER_BG = 'sk1-ruler-corner-bg'
+IMG_RULER_DO_LL = 'sk1-ruler-docorigin-ll'
+IMG_RULER_DO_LU = 'sk1-ruler-docorigin-lu'
+IMG_RULER_DO_C = 'sk1-ruler-docorigin-c'
+
 IMG_PREFS_CMS = 'sk1-prefs-cms'
 IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 
