@@ -66,10 +66,9 @@ class AppConfig(UCConfig):
 		return defaults
 
 	#============== GENERIC SECTION ===================
-	system_encoding = 'utf-8'# default encoding (GUI uses utf-8 only)
 	new_doc_on_start = False
 
-	store_win_size = True
+	mw_store_size = True
 	mw_maximized = False
 	mw_width = 1000
 	mw_height = 700

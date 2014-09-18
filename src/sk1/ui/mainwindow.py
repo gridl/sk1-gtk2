@@ -84,7 +84,7 @@ class MainWindow(gtk.Window):
 		self.add(vbox)
 		self.set_win_title()
 		self.set_size_request(config.mw_min_width, config.mw_min_height)
-		if config.store_win_size:
+		if config.mw_store_size:
 			self.set_default_size(config.mw_width, config.mw_height)
 		self.set_position(gtk.WIN_POS_CENTER)
 		self.connect("delete-event", self.exit)

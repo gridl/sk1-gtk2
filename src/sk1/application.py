@@ -264,12 +264,12 @@ class Application(UCApplication):
 
 	def update_config(self):
 		config.resource_dir = ''
+		if config.mw_maximized:return
 		w, h = self.mw.get_size()
-		if config.store_win_size:
+		if config.mw_store_size:
 			state = self.mw.window.get_state()
 			if state == gtk.gdk.WINDOW_STATE_MAXIMIZED:
-				if config.os != system.MACOSX:
-					config.mw_maximized = True
+				config.mw_maximized = True
 			else:
 				config.mw_maximized = False
 
