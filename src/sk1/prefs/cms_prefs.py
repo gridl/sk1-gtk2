@@ -154,11 +154,10 @@ class CMSSplash(gtk.DrawingArea):
 		self.connect('expose_event', self.repaint)
 
 	def repaint(self, *args):
-		if config.show_splash:
-			_x, _y, w, h = self.allocation
-			self.composite(self.cms_banner,
-						w / 2 - self.cms_banner.get_width() / 2,
-						(h - self.cms_banner.get_height()) / 2)
+		_x, _y, w, h = self.allocation
+		self.composite(self.cms_banner,
+					w / 2 - self.cms_banner.get_width() / 2,
+					(h - self.cms_banner.get_height()) / 2)
 
 	def composite(self, banner, x, y):
 		frame = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB,

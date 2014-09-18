@@ -156,7 +156,7 @@ class SplashArea(gtk.DrawingArea):
 		self.connect('expose_event', self.repaint)
 
 	def repaint(self, *args):
-		if config.show_splash:
+		if config.show_cairo_splash:
 			h = self.allocation[3]
 			self.composite(self.banner, 5, h - self.banner.get_height() - 5)
 

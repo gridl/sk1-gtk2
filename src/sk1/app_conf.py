@@ -67,6 +67,7 @@ class AppConfig(UCConfig):
 
 	#============== GENERIC SECTION ===================
 	new_doc_on_start = False
+	show_cairo_splash = True
 
 	mw_store_size = True
 	mw_maximized = False
@@ -96,12 +97,6 @@ class AppConfig(UCConfig):
 	palette_hcell_horizontal = 40
 	palette_vcell_vertical = 18
 	palette_vcell_horizontal = 18
-
-	#============== UI SECTION ===================
-
-	show_splash = 1
-
-	set_doc_icon = 1
 
 	#============== CANVAS SECTION ===================
 	default_unit = uc2const.UNIT_MM
