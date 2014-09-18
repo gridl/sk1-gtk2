@@ -16,6 +16,7 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from generic import CheckButton, PangoLabel, SimpleListCombo
+from generic import SpinButton, SpinButtonInt, ColorButton
 from imagewidgets import ImageButton, ImageStockButton, ImageToggleButton
 from imagewidgets import KeepRatioLabel, ImageLabel
 from unitwidgets import UnitLabel, UnitSpin, AngleSpin

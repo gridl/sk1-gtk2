@@ -17,6 +17,7 @@
 
 import gtk, gobject
 
+from uc2.cms import gdk_hexcolor_to_rgb, rgb_to_gdk_hexcolor
 from sk1 import const
 
 class CheckButton(gtk.CheckButton):
@@ -25,6 +26,40 @@ class CheckButton(gtk.CheckButton):
 		gtk.CheckButton.__init__(self, text)
 		self.set_active(state)
 		if cmd: self.connect(const.EVENT_TOGGLED, cmd)
+
+class SpinButton(gtk.SpinButton):
+
+	def __init__(self, val=0.0, valrange=[0.0, 1.0], step_incr=0.1, cmd=None):
+		#value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0
+		self.adj = gtk.Adjustment(val, valrange[0], valrange[1], step_incr, 1.0, 0.0)
+		gtk.SpinButton.__init__(self, self.adj, 0.1, 2)
+		self.set_numeric(True)
+		if cmd: self.connect(const.EVENT_VALUE_CHANGED, cmd)
+
+class SpinButtonInt(SpinButton):
+
+	def __init__(self, val=0, valrange=[0, 10], step_incr=1, cmd=None):
+		SpinButton.__init__(self, val, valrange, step_incr, cmd)
+		self.set_digits(0)
+
+	def get_value(self):
+		return self.get_value_as_int()
+
+class ColorButton(gtk.ColorButton):
+
+	def __init__(self, color, title='', cmd=None):
+		gtk.ColorButton.__init__(self)
+		self.set_color(color)
+		if cmd:self.connect(const.EVENT_COLOR_SET, cmd)
+		if title:self.set_title(title)
+
+	def set_color(self, color):
+		color = gtk.gdk.Color(rgb_to_gdk_hexcolor(color))
+		gtk.ColorButton.set_color(self, color)
+
+	def get_color(self):
+		color = gtk.ColorButton.get_color(self)
+		return tuple(gdk_hexcolor_to_rgb(color.to_string()))
 
 class PangoLabel(gtk.Label):
 
