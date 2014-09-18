@@ -33,7 +33,8 @@ VFONT = {}
 BITMAPS = {}
 
 def load_font():
-	fntdir = os.path.join(config.resource_dir, 'ruler-font')
+	fntdir = 'ruler-font%dpx' % (config.ruler_font_size,)
+	fntdir = os.path.join(config.resource_dir, 'fonts', fntdir)
 	for char in '.,-0123456789':
 		if char in '.,': file_name = os.path.join(fntdir, 'hdot.png')
 		else: file_name = os.path.join(fntdir, 'h%s.png' % char)
@@ -191,13 +192,14 @@ class Ruler(gtk.DrawingArea):
 			self.queue_draw()
 
 	def check_config(self, *args):
+		if not args[0][0][:6] == 'ruler_': return
 		if args[0][0] == 'ruler_size':
 			size = config.ruler_size
 			if self.orient: self.set_size_request(size, -1)
 			else: self.set_size_request(-1, size)
 			return
-		if args[0][0][:6] == 'ruler_':
-			self.queue_draw()
+		if args[0][0] == 'ruler_font_size': load_font()
+		self.queue_draw()
 
 	def update_ruler(self, *args):
 		self.queue_draw()
@@ -353,21 +355,27 @@ class Ruler(gtk.DrawingArea):
 		self.ctx.move_to(0, h)
 		self.ctx.line_to(w, h)
 
+		ruler_size = config.ruler_size
+		ruler_font_size = config.ruler_font_size
+		ruler_text_tick = config.ruler_text_tick
+		ruler_small_tick = config.ruler_small_tick
+
 		small_ticks, text_ticks = self.get_ticks()
 		for item in small_ticks:
-			self.ctx.move_to(item, h - 5)
+			self.ctx.move_to(item, h - ruler_small_tick)
 			self.ctx.line_to(item, h - 1)
 
 		for pos, txt in text_ticks:
-			self.ctx.move_to(pos, h - 10)
+			self.ctx.move_to(pos, h - ruler_text_tick)
 			self.ctx.line_to(pos, h - 1)
 
 		self.ctx.stroke()
 
+		shift = ruler_size - ruler_font_size - ruler_text_tick - 1
 		for pos, txt in text_ticks:
 			for character in txt:
 				data = HFONT[character]
-				self.ctx.set_source_surface(data[1], int(pos), 3)
+				self.ctx.set_source_surface(data[1], int(pos), shift)
 				self.ctx.paint()
 				pos += data[0]
 
@@ -375,21 +383,27 @@ class Ruler(gtk.DrawingArea):
 		self.ctx.move_to(w, 0)
 		self.ctx.line_to(w, h)
 
+		ruler_size = config.ruler_size
+		ruler_font_size = config.ruler_font_size
+		ruler_text_tick = config.ruler_text_tick
+		ruler_small_tick = config.ruler_small_tick
+
 		small_ticks, text_ticks = self.get_ticks()
 		for item in small_ticks:
-			self.ctx.move_to(w - 5, item)
+			self.ctx.move_to(w - ruler_small_tick, item)
 			self.ctx.line_to(w - 1, item)
 
 		for item, txt in text_ticks:
-			self.ctx.move_to(w - 10, item)
+			self.ctx.move_to(w - ruler_text_tick, item)
 			self.ctx.line_to(w - 1, item)
 
 		self.ctx.stroke()
 
+		shift = ruler_size - ruler_font_size - ruler_text_tick - 1
 		for pos, txt in text_ticks:
 			for character in txt:
 				data = VFONT[character]
-				self.ctx.set_source_surface(data[1], 3, int(pos) - data[0])
+				self.ctx.set_source_surface(data[1], shift, int(pos) - data[0])
 				self.ctx.paint()
 				pos -= data[0]
 
