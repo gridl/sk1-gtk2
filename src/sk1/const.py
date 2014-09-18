@@ -53,4 +53,6 @@ EVENT_MOUSE_MOTION = 'motion_notify_event'
 EVENT_CLICKED = 'clicked'
 EVENT_TOGGLED = 'toggled'
 EVENT_CHANGED = 'changed'
+EVENT_VALUE_CHANGED = 'value-changed'
+EVENT_COLOR_SET = 'color-set'
 

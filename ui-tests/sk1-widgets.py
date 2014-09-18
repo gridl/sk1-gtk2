@@ -1,5 +1,6 @@
 
 import gtk
+from sk1.widgets import SpinButton, SpinButtonInt
 
 class TestWin:
 
@@ -23,6 +24,10 @@ class Content(gtk.VBox):
 	def __init__(self):
 		gtk.VBox.__init__(self)
 
+		spin = SpinButton(10, (0, 40), 0.2)
+		self.pack_start(spin, False, False, 5)
 
+		spin = SpinButtonInt(10, (0, 40), 2)
+		self.pack_start(spin, False, False, 5)
 
 TestWin().run()

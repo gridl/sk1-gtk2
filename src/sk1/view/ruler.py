@@ -359,6 +359,7 @@ class Ruler(gtk.DrawingArea):
 		ruler_font_size = config.ruler_font_size
 		ruler_text_tick = config.ruler_text_tick
 		ruler_small_tick = config.ruler_small_tick
+		text_shift = config.ruler_text_shift
 
 		small_ticks, text_ticks = self.get_ticks()
 		for item in small_ticks:
@@ -375,7 +376,8 @@ class Ruler(gtk.DrawingArea):
 		for pos, txt in text_ticks:
 			for character in txt:
 				data = HFONT[character]
-				self.ctx.set_source_surface(data[1], int(pos), shift)
+				self.ctx.set_source_surface(data[1],
+										int(pos) + text_shift, shift)
 				self.ctx.paint()
 				pos += data[0]
 
@@ -387,6 +389,7 @@ class Ruler(gtk.DrawingArea):
 		ruler_font_size = config.ruler_font_size
 		ruler_text_tick = config.ruler_text_tick
 		ruler_small_tick = config.ruler_small_tick
+		text_shift = config.ruler_text_shift
 
 		small_ticks, text_ticks = self.get_ticks()
 		for item in small_ticks:
@@ -403,7 +406,8 @@ class Ruler(gtk.DrawingArea):
 		for pos, txt in text_ticks:
 			for character in txt:
 				data = VFONT[character]
-				self.ctx.set_source_surface(data[1], shift, int(pos) - data[0])
+				self.ctx.set_source_surface(data[1],
+										shift, int(pos) - data[0] - text_shift)
 				self.ctx.paint()
 				pos -= data[0]
 

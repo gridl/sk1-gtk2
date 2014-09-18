@@ -83,6 +83,7 @@ class AppConfig(UCConfig):
 	ruler_font_size = 5
 	ruler_text_tick = 10
 	ruler_small_tick = 5
+	ruler_text_shift = 0
 
 	#============== PALETTE OPTIONS ================
 	palette_visible = True
