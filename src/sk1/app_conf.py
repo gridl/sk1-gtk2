@@ -80,6 +80,8 @@ class AppConfig(UCConfig):
 	ruler_bgcolor = (1.0, 1.0, 1.0)
 	ruler_fgcolor = (0.0, 0.0, 0.0)
 	ruler_font_size = 5
+	ruler_text_tick = 10
+	ruler_small_tick = 5
 
 	#============== PALETTE OPTIONS ================
 	palette_visible = True
@@ -97,22 +99,10 @@ class AppConfig(UCConfig):
 
 	#============== UI SECTION ===================
 
-	mw_maximized = 0
-
-	mw_width = 1000
-	mw_height = 700
-
-	mw_min_width = 1000
-	mw_min_height = 700
-
 	show_splash = 1
 
 	set_doc_icon = 1
 
-	ruler_style = 0
-	ruler_min_tick_step = 3
-	ruler_min_text_step = 50
-	ruler_max_text_step = 100
 	#============== CANVAS SECTION ===================
 	default_unit = uc2const.UNIT_MM
 
