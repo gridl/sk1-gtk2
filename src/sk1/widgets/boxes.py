@@ -24,3 +24,62 @@ class HBox(Gtk.HBox):
 class VBox(Gtk.VBox):
 
 	def __init__(self):Gtk.VBox.__init__(self)
+
+class HidableArea(Gtk.VBox):
+
+	visibility = False
+
+	def __init__(self):
+		Gtk.VBox.__init__(self)
+
+		self.box = Gtk.VBox()
+		self.box2 = Gtk.VBox()
+		self.pack_start(self.box2, True, True, 0)
+
+	def set_visible(self, visible):
+		if visible and not self.visibility:
+			self.remove(self.box2)
+			self.pack_start(self.box, True, True, 0)
+			self.visibility = True
+			self.show_all()
+		elif not visible and self.visibility:
+			self.remove(self.box)
+			self.pack_start(self.box2, True, True, 0)
+			self.visibility = False
+			self.show_all()
+
+class HidableHBox(Gtk.HBox):
+
+	visibility = False
+
+	def __init__(self):
+		Gtk.HBox.__init__(self)
+
+		self.box = Gtk.HBox()
+
+	def set_visible(self, visible):
+		if visible and not self.visibility:
+			self.pack_start(self.box, False, False, 0)
+			self.visibility = True
+			self.show_all()
+		elif not visible and self.visibility:
+			self.remove(self.box)
+			self.visibility = False
+
+class HidableVBox(Gtk.VBox):
+
+	visibility = False
+
+	def __init__(self):
+		Gtk.VBox.__init__(self)
+
+		self.box = Gtk.VBox()
+
+	def set_visible(self, visible):
+		if visible and not self.visibility:
+			self.pack_start(self.box, False, False, 0)
+			self.visibility = True
+			self.show_all()
+		elif not visible and self.visibility:
+			self.remove(self.box)
+			self.visibility = False
