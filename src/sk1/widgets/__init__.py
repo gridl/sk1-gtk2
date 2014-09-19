@@ -20,4 +20,5 @@ from actions import AppAction, AppToggleAction
 from menubar import MenuBar
 from toolbar import ToolBar
 from generic import VLine, HLine
-from boxes import HBox, VBox
+from boxes import HBox, VBox, HidableArea, HidableHBox, HidableVBox
+from canvas import Canvas

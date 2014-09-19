@@ -19,43 +19,63 @@ from gi.repository import Gtk
 
 class HBox(Gtk.HBox):
 
-	def __init__(self):Gtk.HBox.__init__(self)
+	def __init__(self):
+		Gtk.HBox.__init__(self)
+
+	def pack_start(self, child, expand=False, fill=False, padding=0):
+		Gtk.HBox.pack_start(self, child, expand, fill, padding)
+
+	def pack_end(self, child, expand=False, fill=False, padding=0):
+		Gtk.HBox.pack_end(child, expand, fill, padding)
+
+	def remove(self, child):
+		Gtk.HBox.remove(child)
 
 class VBox(Gtk.VBox):
-
-	def __init__(self):Gtk.VBox.__init__(self)
-
-class HidableArea(Gtk.VBox):
-
-	visibility = False
 
 	def __init__(self):
 		Gtk.VBox.__init__(self)
 
-		self.box = Gtk.VBox()
-		self.box2 = Gtk.VBox()
-		self.pack_start(self.box2, True, True, 0)
+	def pack_start(self, child, expand=False, fill=False, padding=0):
+		Gtk.VBox.pack_start(self, child, expand, fill, padding)
 
-	def set_visible(self, visible):
-		if visible and not self.visibility:
-			self.remove(self.box2)
-			self.pack_start(self.box, True, True, 0)
-			self.visibility = True
-			self.show_all()
-		elif not visible and self.visibility:
-			self.remove(self.box)
-			self.pack_start(self.box2, True, True, 0)
-			self.visibility = False
-			self.show_all()
+	def pack_end(self, child, expand=False, fill=False, padding=0):
+		Gtk.VBox.pack_end(child, expand, fill, padding)
 
-class HidableHBox(Gtk.HBox):
+	def remove(self, child):
+		Gtk.VBox.remove(child)
+
+class HidableArea(VBox):
 
 	visibility = False
 
 	def __init__(self):
-		Gtk.HBox.__init__(self)
+		VBox.__init__(self)
 
-		self.box = Gtk.HBox()
+		self.vbox = VBox()
+		self.vbox2 = VBox()
+		self.pack_start(self.vbox2, True, True, 0)
+
+	def set_visible(self, visible):
+		if visible and not self.visibility:
+			self.remove(self.vbox2)
+			self.pack_start(self.box, True, True, 0)
+			self.visibility = True
+			self.show_all()
+		elif not visible and self.visibility:
+			self.remove(self.vbox)
+			self.pack_start(self.vbox2, True, True, 0)
+			self.visibility = False
+			self.show_all()
+
+class HidableHBox(HBox):
+
+	visibility = False
+
+	def __init__(self):
+		HBox.__init__(self)
+
+		self.box = HBox()
 
 	def set_visible(self, visible):
 		if visible and not self.visibility:
@@ -66,14 +86,14 @@ class HidableHBox(Gtk.HBox):
 			self.remove(self.box)
 			self.visibility = False
 
-class HidableVBox(Gtk.VBox):
+class HidableVBox(VBox):
 
 	visibility = False
 
 	def __init__(self):
-		Gtk.VBox.__init__(self)
+		VBox.__init__(self)
 
-		self.box = Gtk.VBox()
+		self.box = VBox()
 
 	def set_visible(self, visible):
 		if visible and not self.visibility:

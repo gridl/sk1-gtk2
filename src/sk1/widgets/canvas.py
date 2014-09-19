@@ -17,29 +17,9 @@
 
 from gi.repository import Gtk
 
-from sk1 import const
-from boxes import VBox
-
-class Window(Gtk.Window):
-
-	box = None
+class Canvas(Gtk.DrawingArea):
 
 	def __init__(self):
+		Gtk.DrawingArea.__init__(self)
 
-		Gtk.Window.__init__(self)
-		self.box = VBox()
-		self.build()
-		self.add(self.box)
-		self.show_all()
 
-		self.connect(const.EVENT_DELETE, self.exit)
-
-	def build(self):pass
-
-	def exit(self, *args):pass
-
-	def center(self):
-		self.set_position(Gtk.WindowPosition.CENTER)
-
-	def maximize(self):
-		self.window.maximize()
