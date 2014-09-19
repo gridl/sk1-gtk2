@@ -23,10 +23,6 @@ class AppStub(Canvas):
 	def __init__(self, mw):
 		self.mw = mw
 		Canvas.__init__(self)
-#		self.nodocs_color = self.mw.get_style().fg[Gtk.StateType.INSENSITIVE]
-#		self.modify_bg(Gtk.StateType.NORMAL, self.nodocs_color)
 		context = self.mw.get_style_context()
 		color = context.get_color(Gtk.StateFlags.INSENSITIVE).to_color()
-		print color
-#		color = Gdk.Color.from_floats(0.1, 0.1, 0.1)
 		self.modify_bg(Gtk.StateType.NORMAL, color)

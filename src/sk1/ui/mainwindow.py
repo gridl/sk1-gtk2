@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from sk1 import config
+from sk1 import config, rc
 from sk1.widgets import Window, HLine, HidableArea
 from sk1.ui.menubar import AppMenuBar
 from sk1.ui.toolbar import AppToolBar
@@ -45,11 +45,13 @@ class MainWindow(Window):
 		self.stub = AppStub(self)
 		self.switcher.vbox2.pack_start(self.stub, True, True)
 
-
+		#--- Main window configuration
 		self.set_win_title()
 		self.set_size_request(config.mw_min_width, config.mw_min_height)
 		self.center()
 		if config.mw_maximized: self.maximize()
+		self.set_icon_from_file(rc.get_image_path(rc.IMG_APP_ICON))
+		self.add_accel_group(self.app.accelgroup)
 
 	def exit(self, *args):
 		if self.app.exit():

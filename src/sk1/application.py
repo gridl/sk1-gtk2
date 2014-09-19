@@ -48,7 +48,7 @@ class SK1Application(UCApplication):
 		UCApplication.__init__(self, config.resource_dir)
 		self.appdata = AppData()
 		config.load(self.appdata.app_config)
-		config.resource_dir = os.path.join(self.path, 'share')
+#		config.resource_dir = os.path.join(self.path, 'share')
 		self.default_cms = AppColorManager(self)
 
 		self.inspector = DocumentInspector(self)

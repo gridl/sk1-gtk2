@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/sk1/app_conf.py=utf-8
+encoding//src/sk1/application.py=utf-8
 encoding//src/sk1/const.py=utf-8
 encoding//src/sk1/ui/mainwindow.py=utf-8
 encoding//src/sk1/ui/stub.py=utf-8
