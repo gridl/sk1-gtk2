@@ -8,4 +8,5 @@ encoding//src/sk1/ui/workingarea.py=utf-8
 encoding//src/sk1/widgets/__init__.py=utf-8
 encoding//src/sk1/widgets/boxes.py=utf-8
 encoding//src/sk1/widgets/canvas.py=utf-8
+encoding//src/sk1/widgets/toolbar.py=utf-8
 encoding//src/sk1/widgets/window.py=utf-8
