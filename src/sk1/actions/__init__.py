@@ -16,7 +16,7 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from sk1.events import CLIPBOARD, DOC_CHANGED, PAGE_CHANGED, \
-DOC_CLOSED, DOC_MODIFIED, DOC_SAVED, NO_DOCS, SELECTION_CHANGED
+DOC_CLOSED, DOC_MODIFIED, DOC_SAVED, NO_DOCS, SELECTION_CHANGED, connect
 from sk1.widgets import AppAction, AppToggleAction
 
 from action_ids import *
@@ -28,10 +28,10 @@ def create_actions(app):
 	insp = app.inspector
 	proxy = app.proxy
 	actions = []
-	doc_chnl = [NO_DOCS, DOC_CHANGED]
-	docm_chnl = [NO_DOCS, DOC_CHANGED, DOC_MODIFIED]
+	doc_chnl = [connect, NO_DOCS, DOC_CHANGED]
+	docm_chnl = [connect, NO_DOCS, DOC_CHANGED, DOC_MODIFIED]
 	page_chnl = docm_chnl + [PAGE_CHANGED]
-	sel_chnl = [NO_DOCS, DOC_CHANGED, SELECTION_CHANGED]
+	sel_chnl = [connect, NO_DOCS, DOC_CHANGED, SELECTION_CHANGED]
 	entries = [
 #	id, callable, [channels], validator, args
 #	name, label, tooltip, icon, shortcut, callable, [channels], validator, args
@@ -67,9 +67,9 @@ def create_actions(app):
 [CUT2, proxy.cut, sel_chnl, insp.is_selection],
 [CUT3, proxy.cut, sel_chnl, insp.is_selection],
 [COPY, proxy.copy, sel_chnl, insp.is_selection],
-[PASTE, proxy.paste, [NO_DOCS, CLIPBOARD], insp.is_clipboard],
-[PASTE2, proxy.paste, [NO_DOCS, CLIPBOARD], insp.is_clipboard],
-[PASTE3, proxy.paste, [NO_DOCS, CLIPBOARD], insp.is_clipboard],
+[PASTE, proxy.paste, [connect, NO_DOCS, CLIPBOARD], insp.is_clipboard],
+[PASTE2, proxy.paste, [connect, NO_DOCS, CLIPBOARD], insp.is_clipboard],
+[PASTE3, proxy.paste, [connect, NO_DOCS, CLIPBOARD], insp.is_clipboard],
 [DELETE, proxy.delete, sel_chnl, insp.is_selection],
 [DELETE2, proxy.delete, sel_chnl, insp.is_selection],
 [SELECT_ALL, proxy.select_all, doc_chnl, insp.is_doc],

@@ -17,9 +17,6 @@
 
 import gtk, gconst
 
-from sk1 import events
-
-
 class AppAction(gtk.Action):
 
 	def __init__(self, name, label, tooltip, icon, shortcut,
@@ -30,7 +27,6 @@ class AppAction(gtk.Action):
 		self.tooltip = tooltip
 		self.shortcut = shortcut
 		self.callback = callback
-		self.events = events
 		self.validator = validator
 		self.args = args
 		self.icon = icon
@@ -41,8 +37,9 @@ class AppAction(gtk.Action):
 		self.validator = validator
 
 		if channels:
-			for channel in channels:
-				events.connect(channel, self.receiver)
+			connector = channels[0]
+			for channel in channels[1:]:
+				connector(channel, self.receiver)
 
 	def receiver(self, *args):
 		self.set_sensitive(self.validator())
@@ -57,7 +54,6 @@ class AppToggleAction(gtk.ToggleAction):
 		self.tooltip = tooltip
 		self.shortcut = shortcut
 		self.callback = callback
-		self.events = events
 		self.validator = validator
 		self.checker = checker
 		self.args = args
@@ -69,8 +65,9 @@ class AppToggleAction(gtk.ToggleAction):
 		self.validator = validator
 
 		if channels:
-			for channel in channels:
-				events.connect(channel, self.receiver)
+			connector = channels[0]
+			for channel in channels[1:]:
+				connector(channel, self.receiver)
 
 	def receiver(self, *args):
 		self.set_sensitive(self.validator())
