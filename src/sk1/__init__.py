@@ -40,7 +40,8 @@ def sk1_run():
 	config.load(appdata.app_config)
 	config.resource_dir = os.path.join(_pkgdir, 'share')
 
-	os.environ["UBUNTU_MENUPROXY"] = "0"
+	if config.mw_disable_global_menu:
+		os.environ["UBUNTU_MENUPROXY"] = "0"
 
 	from sk1.application import Application
 

@@ -71,6 +71,7 @@ class AppConfig(UCConfig):
 	new_doc_on_start = False
 	show_cairo_splash = True
 
+	mw_disable_global_menu = True
 	mw_store_size = True
 	mw_maximized = False
 	mw_keep_maximized = False
