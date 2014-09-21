@@ -53,16 +53,18 @@ class AppData(UCData):
 
 class AppConfig(UCConfig):
 
+	def __init__(self, path):
+		UCConfig.__init__(self)
+
 	def __setattr__(self, attr, value):
 		if attr == 'filename': return
 		if not hasattr(self, attr) or getattr(self, attr) != value:
 			self.__dict__[attr] = value
 			events.emit(events.CONFIG_MODIFIED, attr, value)
 
-
 	def get_defaults(self):
 		defaults = AppConfig.__dict__
-		defaults.update(UCConfig.__dict__)
+		defaults.update(UCConfig.get_defaults(self))
 		return defaults
 
 	#============== GENERIC SECTION ===================
@@ -194,10 +196,6 @@ class AppConfig(UCConfig):
 	default_cmyk_profile = ''
 	default_lab_profile = ''
 	default_gray_profile = ''
-
-	def __init__(self, path):
-		pass
-#		self.resource_dir = os.path.join(path, 'share')
 
 
 
