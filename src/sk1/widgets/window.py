@@ -19,16 +19,23 @@ import sys
 
 import gtk, gconst
 
+from actions import AppAction, AppToggleAction
 from boxes import VBox, HBox
+
 
 class MainWindow(gtk.Window):
 
-	def __init__(self, horizontal=False):
+	accelgroup = None
+	actiongroup = None
+	actions = {}
+
+	def __init__(self, action_entries=[], horizontal=False):
 		gtk.Window.__init__(self)
-		if horizontal:
-			self.box = HBox()
-		else:
-			self.box = VBox()
+
+		self.create_actions(action_entries)
+
+		self.box = VBox()
+		if horizontal: self.box = HBox()
 		self.build()
 		self.add(self.box)
 		self.connect(gconst.EVENT_DELETE, self.event_close)
@@ -53,3 +60,21 @@ class MainWindow(gtk.Window):
 	def is_maximized(self):
 		return self.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED
 
+	def create_actions(self, entries):
+		if not entries: return
+		self.accelgroup = gtk.AccelGroup()
+		self.actiongroup = gtk.ActionGroup('MW_Actions')
+		self.actions = {}
+		for entry in entries:
+			if len(entry) == 8:
+				action = AppAction(*entry)
+			else:
+				action = AppToggleAction(*entry)
+
+			self.actions[entry[0]] = action
+			if not action.shortcut is None:
+				self.actiongroup.add_action_with_accel(action, action.shortcut)
+				action.set_accel_group(self.accelgroup)
+			else:
+				self.actiongroup.add_action(action)
+		self.add_accel_group(self.accelgroup)

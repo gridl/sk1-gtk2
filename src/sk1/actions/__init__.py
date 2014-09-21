@@ -27,9 +27,7 @@ from action_accelkey import get_action_accelkey
 def create_actions(app):
 	insp = app.inspector
 	proxy = app.proxy
-	accelgroup = app.accelgroup
-	actiongroup = app.actiongroup
-	actions = {}
+	actions = []
 	doc_chnl = [NO_DOCS, DOC_CHANGED]
 	docm_chnl = [NO_DOCS, DOC_CHANGED, DOC_MODIFIED]
 	page_chnl = docm_chnl + [PAGE_CHANGED]
@@ -130,22 +128,11 @@ def create_actions(app):
 	]
 
 	for entry in entries:
-		aid = entry[0]
-		entry = [aid,
-				get_action_text(aid),
-				get_action_tooltip_text(aid),
-				get_action_icon(aid),
-				get_action_accelkey(aid)] + entry[1:]
-		if len(entry) == 8:
-			action = AppAction(*entry)
-		else:
-			action = AppToggleAction(*entry)
+		actions.append([entry[0],
+				get_action_text(entry[0]),
+				get_action_tooltip_text(entry[0]),
+				get_action_icon(entry[0]),
+				get_action_accelkey(entry[0])] + entry[1:])
 
-		actions[entry[0]] = action
-		if not action.shortcut is None:
-			actiongroup.add_action_with_accel(action, action.shortcut)
-			action.set_accel_group(accelgroup)
-		else:
-			actiongroup.add_action(action)
 
 	return actions

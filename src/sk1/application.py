@@ -62,12 +62,7 @@ class Application(UCApplication):
 		self.proxy = AppProxy(self)
 		self.clipboard = AppClipboard(self)
 		self.palette_mngr = AppPaletteManager(self)
-
-		self.accelgroup = gtk.AccelGroup()
-		self.actiongroup = gtk.ActionGroup('BasicAction')
-
-		self.actions = create_actions(self)
-		self.mw = AppMainWindow(self)
+		self.mw = AppMainWindow(self, create_actions(self))
 		self.proxy.update_references()
 
 	def run(self):

@@ -32,11 +32,12 @@ class AppMainWindow(MainWindow):
 	canvas = None
 	doc_index = 1
 
-	def __init__(self, app):
+	def __init__(self, app, action_entries):
 		self.app = app
-		MainWindow.__init__(self)
+		MainWindow.__init__(self, action_entries)
 
 	def build(self):
+		self.app.actions = self.actions
 
 		self.mb = AppMenubar(self)
 		self.pack(self.mb)
@@ -83,7 +84,6 @@ class AppMainWindow(MainWindow):
 		self.set_min_size(*config.mw_min_size)
 		if config.mw_store_size: self.set_size(*config.mw_size)
 
-		self.add_accel_group(self.app.accelgroup)
 		self.set_icon_from_file(rc.get_image_path(rc.IMG_APP_ICON))
 
 		if config.mw_maximized: self.maximize()
