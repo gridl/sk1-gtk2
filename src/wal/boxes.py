@@ -19,7 +19,8 @@ import gtk
 
 class VBox(gtk.VBox):
 
-	def __init__(self):
+	def __init__(self, master):
+		self.master = master
 		gtk.VBox.__init__(self)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
@@ -29,7 +30,8 @@ class VBox(gtk.VBox):
 
 class HBox(gtk.HBox):
 
-	def __init__(self):
+	def __init__(self, master):
+		self.master = master
 		gtk.HBox.__init__(self)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
@@ -40,10 +42,10 @@ class HidableVBox(VBox):
 
 	visibility = False
 
-	def __init__(self):
-		VBox.__init__(self)
+	def __init__(self, master):
+		VBox.__init__(self, master)
 
-		self.box = VBox()
+		self.box = VBox(self)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
 		self.box.pack(child, expand, fill, padding, end)
@@ -65,10 +67,10 @@ class HidableHBox(HBox):
 
 	visibility = False
 
-	def __init__(self):
-		HBox.__init__(self)
+	def __init__(self, master):
+		HBox.__init__(self, master)
 
-		self.box = HBox()
+		self.box = HBox(self)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
 		self.box.pack(child, expand, fill, padding, end)
@@ -90,11 +92,11 @@ class HidableVArea(VBox):
 
 	visibility = False
 
-	def __init__(self):
-		VBox.__init__(self)
+	def __init__(self, master):
+		VBox.__init__(self, master)
 
-		self.box = VBox()
-		self.box2 = VBox()
+		self.box = VBox(self)
+		self.box2 = VBox(self)
 		self.pack(self.box2)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
