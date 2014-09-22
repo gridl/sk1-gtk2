@@ -16,5 +16,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from actions import AppAction, AppToggleAction
 from window import MainWindow
+from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
 

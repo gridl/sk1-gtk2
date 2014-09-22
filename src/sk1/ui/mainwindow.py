@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import gtk, wal
 
 from sk1 import config, events, rc
 from sk1.ui.menubar import AppMenubar
@@ -25,16 +25,16 @@ from sk1.ui.palette import HPalette
 from sk1.ui.statusbar import AppStatusbar
 from sk1.context import ContextPanel
 from sk1.plugins import PluginPanel
-from sk1.widgets import HidableArea, MainWindow, HLine
+from sk1.widgets import HidableArea, HLine
 
-class AppMainWindow(MainWindow):
+class AppMainWindow(wal.MainWindow):
 
 	canvas = None
 	doc_index = 1
 
 	def __init__(self, app, action_entries):
 		self.app = app
-		MainWindow.__init__(self, action_entries)
+		wal.MainWindow.__init__(self, action_entries)
 
 	def build(self):
 		self.app.actions = self.actions
