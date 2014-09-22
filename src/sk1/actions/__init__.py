@@ -17,7 +17,6 @@
 
 from sk1.events import CLIPBOARD, DOC_CHANGED, PAGE_CHANGED, \
 DOC_CLOSED, DOC_MODIFIED, DOC_SAVED, NO_DOCS, SELECTION_CHANGED, connect
-from sk1.widgets import AppAction, AppToggleAction
 
 from action_ids import *
 from action_icons import get_action_icon
