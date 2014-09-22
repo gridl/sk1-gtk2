@@ -18,8 +18,8 @@
 import gtk
 
 from sk1 import _, actions, rc
-from sk1.widgets import ActionButton, AngleSpin, ActionToggleButton
-from sk1.widgets import ImageLabel
+from sk1.widgets import ActionButton, ImageLabel, ActionToggleButton
+from sk1.parts import AngleSpin
 
 class ActionPlugin(gtk.HBox):
 

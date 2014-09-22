@@ -18,7 +18,8 @@
 import gtk
 
 from sk1 import _, events, config, rc
-from sk1.widgets import UnitLabel, UnitSpin, ImageLabel
+from sk1.parts import UnitLabel, UnitSpin
+from sk1.widgets import ImageLabel
 
 class JumpPlugin(gtk.HBox):
 

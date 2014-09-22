@@ -20,7 +20,8 @@ import gtk
 from uc2.uc2const import PAGE_FORMATS, PAGE_FORMAT_NAMES, PORTRAIT, LANDSCAPE
 
 from sk1 import _, events, rc
-from sk1.widgets import UnitSpin, ImageToggleButton, SimpleListCombo
+from sk1.widgets import ImageToggleButton, SimpleListCombo
+from sk1.parts import UnitSpin
 
 
 class PageFormatPlugin(gtk.HBox):

@@ -18,7 +18,8 @@
 import gtk
 
 from sk1 import events
-from sk1.widgets import UnitLabel, UnitSpin, KeepRatioLabel
+from sk1.parts import UnitLabel, UnitSpin
+from sk1.widgets import KeepRatioLabel
 
 class ResizePlugin(gtk.HBox):
 

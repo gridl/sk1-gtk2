@@ -19,8 +19,8 @@
 import gtk
 
 from sk1 import events, const
-from sk1.widgets import ColorMonitorWidget
-from sk1.widgets import PagerWidget, PangoLabel
+from sk1.parts import PagerWidget, ColorMonitorWidget
+from sk1.widgets import PangoLabel
 
 class AppStatusbar(gtk.HBox):
 
