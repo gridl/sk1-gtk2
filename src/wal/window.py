@@ -34,8 +34,8 @@ class MainWindow(gtk.Window):
 
 		self.create_actions(action_entries)
 
-		self.box = VBox()
-		if horizontal: self.box = HBox()
+		self.box = VBox(self)
+		if horizontal: self.box = HBox(self)
 		self.build()
 		self.add(self.box)
 		self.connect(gconst.EVENT_DELETE, self.event_close)
