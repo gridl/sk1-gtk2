@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#   Gtk+ 2.0 Widgetset Abstract Layer
+#   Gtk+ 2.0 Widgetset Abstraction Layer
 #	Copyright (C) 2014 by Igor E. Novikov
 #
 #	This program is free software: you can redistribute it and/or modify
