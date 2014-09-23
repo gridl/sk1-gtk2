@@ -85,6 +85,7 @@ class AppMainWindow(wal.MainWindow):
 		if config.mw_store_size: self.set_size(*config.mw_size)
 
 		self.set_icon_from_file(rc.get_image_path(rc.IMG_APP_ICON))
+		self.center()
 
 		if config.mw_maximized: self.maximize()
 
