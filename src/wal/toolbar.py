@@ -19,13 +19,13 @@ import gtk
 
 class MW_Toolbar(gtk.Toolbar):
 
-	def __init__(self, mw):
-		self.master = mw
-		self.actions = mw.actions
+	def __init__(self, master):
+		self.master = master
+		self.actions = master.actions
 		gtk.Toolbar.__init__(self)
 		self.set_style(gtk.TOOLBAR_ICONS)
 		self.build()
-		mw.pack(self)
+		master.pack(self)
 
 	def build(self):pass
 

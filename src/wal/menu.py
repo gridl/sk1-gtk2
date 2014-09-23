@@ -19,12 +19,12 @@ import gtk
 
 class MW_Menu(gtk.MenuBar):
 
-	def __init__(self, mw):
-		self.master = mw
-		self.actions = mw.actions
+	def __init__(self, master):
+		self.master = master
+		self.actions = master.actions
 		gtk.MenuBar.__init__(self)
 		self.build()
-		mw.pack(self)
+		master.pack(self)
 
 	def build(self):pass
 
