@@ -40,9 +40,7 @@ class AppMainWindow(wal.MainWindow):
 		self.app.actions = self.actions
 
 		self.mb = AppMenubar(self)
-
 		self.toolbar = AppToolbar(self)
-		self.pack(self.toolbar)
 
 		#---CENTRAL PART
 		self.workarea = HidableArea()

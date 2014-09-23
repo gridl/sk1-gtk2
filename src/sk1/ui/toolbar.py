@@ -15,22 +15,17 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import wal
+
 from sk1 import actions
 
-class AppToolbar(gtk.Toolbar):
+class AppToolbar(wal.MW_Toolbar):
 
 	def __init__(self, mw):
-		gtk.Toolbar.__init__(self)
-		self.mw = mw
-		self.app = mw.app
-		self.actions = self.app.actions
+		wal.MW_Toolbar.__init__(self, mw)
 
-		self.set_style(gtk.TOOLBAR_ICONS)
-		self.build()
-
-	def create_entries(self):
-		return [
+	def build(self):
+		entries = [
 				actions.NEW, None, actions.OPEN, actions.SAVE, actions.SAVE_AS,
 				actions.CLOSE, None, actions.PRINT, None, actions.UNDO,
 				actions.REDO, None, actions.CUT, actions.COPY, actions.PASTE,
@@ -39,15 +34,4 @@ class AppToolbar(gtk.Toolbar):
 				actions.ZOOM_100, actions.ZOOM_SELECTED, None,
 				actions.PROPERTIES, actions.PREFERENCES,
 			   ]
-
-	def build(self):
-		entries = self.create_entries()
-		index = 0
-		for entry in entries:
-			if entry is None:
-				button = gtk.SeparatorToolItem()
-			else:
-				action = self.actions[entry]
-				button = action.create_tool_item()
-			self.insert(button, index)
-			index += 1
+		self.add_toolbar_items(entries)
