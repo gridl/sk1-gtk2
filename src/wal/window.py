@@ -39,13 +39,17 @@ class MainWindow(gtk.Window):
 		self.build()
 		self.add(self.box)
 		self.connect(gconst.EVENT_DELETE, self.event_close)
-		self.show_all()
 
 	def build(self):pass
 
-	def event_close(self, *args):return True
+	def event_close(self, *args):
+		self.exit()
+		return False
 
-	def run(self):gtk.main()
+	def run(self):
+		self.show_all()
+		gtk.main()
+
 	def exit(self):gtk.main_quit();sys.exit()
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
@@ -53,7 +57,7 @@ class MainWindow(gtk.Window):
 
 	def center(self): self.set_position(gtk.WIN_POS_CENTER)
 	def set_title(self, title): gtk.Window.set_title(self, title)
-	def set_size(self, w, h): self.set_default_size(w, h)
+	def set_size(self, w, h): gtk.Window.set_default_size(self, w, h)
 	def get_size(self): return tuple(gtk.Window.get_size(self))
 	def set_min_size(self, w, h): self.set_size_request(w, h)
 	def maximize(self): gtk.Window.maximize(self)
