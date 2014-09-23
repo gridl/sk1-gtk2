@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-#   Gtk+ 2.0 Widgetset Abstraction Layer
 #	Copyright (C) 2014 by Igor E. Novikov
 #
 #	This program is free software: you can redistribute it and/or modify
@@ -16,8 +15,27 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from actions import AppAction, AppToggleAction
-from window import MainWindow
-from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
-from menu import MW_Menu
-from toolbar import MW_Toolbar
+import gtk
+
+class MW_Toolbar(gtk.Toolbar):
+
+	def __init__(self, mw):
+		self.master = mw
+		self.actions = mw.actions
+		gtk.Toolbar.__init__(self)
+		self.set_style(gtk.TOOLBAR_ICONS)
+		self.build()
+		mw.pack(self)
+
+	def build(self):pass
+
+	def add_toolbar_items(self, entries):
+		index = 0
+		for entry in entries:
+			if entry is None:
+				button = gtk.SeparatorToolItem()
+			else:
+				action = self.actions[entry]
+				button = action.create_tool_item()
+			self.insert(button, index)
+			index += 1

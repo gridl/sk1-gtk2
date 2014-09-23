@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#	Copyright (C) 2011-2014 by Igor E. Novikov
+#	Copyright (C) 2014 by Igor E. Novikov
 #
 #	This program is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -21,8 +21,7 @@ class MW_Menu(gtk.MenuBar):
 
 	def __init__(self, mw):
 		self.master = mw
-		self.app = mw.app
-		self.actions = self.app.actions
+		self.actions = mw.actions
 		gtk.MenuBar.__init__(self)
 		self.build()
 		mw.pack(self)
