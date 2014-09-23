@@ -19,4 +19,4 @@
 from actions import AppAction, AppToggleAction
 from window import MainWindow
 from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
-
+from menu import MW_Menu
