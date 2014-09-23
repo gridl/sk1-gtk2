@@ -15,17 +15,16 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import wal
 
 from sk1 import _, actions
 
-class AppMenubar(gtk.MenuBar):
+class AppMenubar(wal.MW_Menu):
 
 	def __init__(self, mw):
-		gtk.MenuBar.__init__(self)
-		self.mw = mw
-		self.app = mw.app
-		self.actions = self.app.actions
+		wal.MW_Menu.__init__(self, mw)
+
+	def build(self):
 
 		#----FILE MENU
 		self.file_item, self.file_menu = self.create_menu(_("_File"))
@@ -186,21 +185,3 @@ class AppMenubar(gtk.MenuBar):
 		self.append(self.tools_item)
 		self.append(self.help_item)
 #		self.append(self.hidden_item)
-
-	def create_menu(self, text):
-		menu = gtk.Menu()
-		item = gtk.MenuItem(text)
-		item.set_submenu(menu)
-		return item, menu
-
-	def add_items(self, parent, items):
-		for item in items:
-			if item is None:
-				parent.append(gtk.SeparatorMenuItem())
-			elif isinstance(item, int):
-				action = self.actions[item]
-				menuitem = action.create_menu_item()
-				action.menuitem = menuitem
-				parent.append(menuitem)
-			else:
-				parent.append(item)

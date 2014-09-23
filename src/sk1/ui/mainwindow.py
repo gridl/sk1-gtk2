@@ -40,7 +40,6 @@ class AppMainWindow(wal.MainWindow):
 		self.app.actions = self.actions
 
 		self.mb = AppMenubar(self)
-		self.pack(self.mb)
 
 		self.toolbar = AppToolbar(self)
 		self.pack(self.toolbar)
