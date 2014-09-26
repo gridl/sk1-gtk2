@@ -105,13 +105,11 @@ class Application(UCApplication):
 		events.emit(events.APP_STATUS, _('New document created'))
 
 	def close(self, doc=None):
-		if not self.docs:
-			return
-		if doc is None:
-			doc = self.current_doc
-
-		if not self.mw.nb.page_num(doc.docarea) == self.mw.nb.get_current_page():
-			self.mw.set_active_tab(doc.docarea)
+		if not self.docs: return
+		if doc is None: doc = self.current_doc
+		if not doc == self.current_doc: self.set_current_doc(doc)
+#		if not self.mw.nb.page_num(doc.docarea) == self.mw.nb.get_current_page():
+#			self.mw.set_active_tab(doc.docarea)
 
 		if self.inspector.is_doc_not_saved(doc):
 			first = _("Document '%s' has been modified.") % (doc.doc_name)
