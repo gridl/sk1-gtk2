@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-#   Gtk+ 2.0 Widgetset Abstraction Layer
 #	Copyright (C) 2014 by Igor E. Novikov
 #
 #	This program is free software: you can redistribute it and/or modify
@@ -16,9 +15,16 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from actions import AppAction, AppToggleAction
-from window import MainWindow
-from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
-from menu import MW_Menu
-from toolbar import MW_Toolbar
-from widgets import HLine, VLine
+import gtk
+
+class HLine(gtk.HSeparator):
+
+	def __init__(self, master):
+		self.master = master
+		gtk.HSeparator.__init__(self)
+
+class VLine(gtk.VSeparator):
+
+	def __init__(self, master):
+		self.master = master
+		gtk.VSeparator.__init__(self)
