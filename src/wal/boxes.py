@@ -97,7 +97,7 @@ class HidableVArea(VBox):
 
 		self.box = VBox(self)
 		self.box2 = VBox(self)
-		self.pack(self.box2)
+		VBox.pack(self, self.box2, True, True, 0)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
 		self.box.pack(child, expand, fill, padding, end)
@@ -114,12 +114,12 @@ class HidableVArea(VBox):
 	def set_visible(self, visible):
 		if visible and not self.visibility:
 			VBox.remove(self, self.box2)
-			VBox.pack(self.box)
+			VBox.pack(self, self.box, True, True, 0)
 			self.visibility = True
 			self.show_all()
 		elif not visible and self.visibility:
 			VBox.remove(self, self.box)
-			VBox.pack(self.box2)
+			VBox.pack(self, self.box2, True, True, 0)
 			self.visibility = False
 			self.show_all()
 
