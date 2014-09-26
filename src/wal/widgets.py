@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import gtk, gconst
 
 class HLine(gtk.HSeparator):
 
@@ -28,3 +28,10 @@ class VLine(gtk.VSeparator):
 	def __init__(self, master):
 		self.master = master
 		gtk.VSeparator.__init__(self)
+
+class Button(gtk.Button):
+
+	def __init__(self, master, text=None, stock=None, cmd=None):
+		self.master = master
+		gtk.Button.__init__(self, text, stock)
+		if cmd: self.connect(gconst.EVENT_CLICKED, cmd)
