@@ -82,5 +82,5 @@ class HPalette(wal.HidableVBox, PaletteTemplate):
 
 		box.pack(wal.FImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_RIGHT,
 								cmd=self.action_dforward, repeat=True))
-		self.pack(box, True, True, 2)
+		self.pack(box, True, True)
 
