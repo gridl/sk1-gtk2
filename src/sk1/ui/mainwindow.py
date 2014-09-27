@@ -25,7 +25,6 @@ from sk1.ui.palette import HPalette
 from sk1.ui.statusbar import AppStatusbar
 from sk1.context import ContextPanel
 from sk1.plugins import PluginPanel
-from sk1.widgets import HidableArea, HLine
 
 class AppMainWindow(wal.MainWindow):
 
@@ -43,14 +42,14 @@ class AppMainWindow(wal.MainWindow):
 		self.toolbar = AppToolbar(self)
 
 		#---CENTRAL PART
-		self.workarea = HidableArea()
+		self.workarea = wal.HidableVArea(self)
 
-		self.workarea.box.pack_start(HLine(), False, False, 0)
+		self.workarea.pack(wal.HLine(self.workarea))
 		self.ctx_bar = ContextPanel(self)
-		self.workarea.box.pack_start(self.ctx_bar, False, False, 0)
-		self.workarea.box.pack_start(HLine(), False, False, 0)
+		self.workarea.pack(self.ctx_bar)
+		self.workarea.pack(wal.HLine(self.workarea))
 
-		hbox = gtk.HBox(False, 0)
+		hbox = wal.HBox(self.workarea)
 		self.tools = AppTools(self)
 		hbox.pack_start(self.tools, False, False, 1)
 		self.inner_hpaned = gtk.HPaned()
@@ -62,20 +61,23 @@ class AppMainWindow(wal.MainWindow):
 		self.plugin_panel = PluginPanel(self)
 
 		hbox.pack_start(self.inner_hpaned, True, True, 1)
-		self.workarea.box.pack_start(hbox , True, True, 0)
-		self.pack(self.workarea , True, True, 0)
+		self.workarea.pack(hbox, True, True)
 
 		#---SPLASH
 		self.nb_splash = SplashArea(self)
-		self.workarea.box2.pack_start(self.nb_splash , True, True, 0)
-		#---CENTRAL PART END
+		self.workarea.pack2(self.nb_splash, True, True)
 
 		self.hpalette = HPalette(self)
-		self.workarea.box.pack_start(self.hpalette, False, False, 2)
+		self.workarea.pack(self.hpalette, padding=2)
+
+		self.workarea.pack(wal.HLine(self.workarea))
 
 		self.statusbar = AppStatusbar(self)
-		self.workarea.box.pack_end(self.statusbar, False, False, 0)
-		self.workarea.box.pack_end(HLine(), False, False, 0)
+		self.workarea.pack(self.statusbar)
+
+		#---CENTRAL PART END
+
+		self.pack(self.workarea, True, True)
 
 		self.set_win_title()
 		self.set_min_size(*config.mw_min_size)
