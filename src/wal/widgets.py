@@ -105,7 +105,8 @@ class Button(gtk.Button):
 
 	def _mouse_pressed(self, widget, event):
 		if not event.button == gconst.LEFT_BUTTON: return
-		self.timer_id = gobject.timeout_add(50, self._do_callback)
+		if not self.timer_id:
+			self.timer_id = gobject.timeout_add(50, self._do_callback)
 
 	def _do_callback(self, *args):
 		self.cmd()
