@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, gconst
+import gtk, gconst, rc
 
 class HLine(gtk.HSeparator):
 
@@ -35,3 +35,16 @@ class Button(gtk.Button):
 		self.master = master
 		gtk.Button.__init__(self, text, stock)
 		if cmd: self.connect(gconst.EVENT_CLICKED, cmd)
+
+class ImageButton(Button):
+
+	def __init__(self, master, image_id, tooltip='', cmd=None):
+		Button.__init__(self, master, cmd=cmd)
+		self.add(rc.get_image(image_id))
+		if tooltip:self.set_tooltip_text(tooltip)
+
+class FlatImageButton(ImageButton):
+
+	def __init__(self, master, image_id, tooltip='', cmd=None):
+		ImageButton.__init__(self, master, image_id, tooltip, cmd)
+		self.set_property('relief', gtk.RELIEF_NONE)
