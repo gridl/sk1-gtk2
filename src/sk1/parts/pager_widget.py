@@ -15,15 +15,11 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import wal
 
-from sk1 import _, events, rc
-from sk1.widgets import gconst
-from sk1.widgets.hidable import HidableHBox
-from sk1.widgets.generic import PangoLabel
-from sk1.widgets.imagewidgets import ImageButton
+from sk1 import _, events
 
-class PagerWidget(HidableHBox):
+class PagerWidget(wal.HBox):
 
 	start = None
 	left = None
@@ -31,31 +27,28 @@ class PagerWidget(HidableHBox):
 	right = None
 	end = None
 
-	def __init__(self, app):
+	def __init__(self, app, master):
 
-		HidableHBox.__init__(self)
+		wal.HBox.__init__(self, master)
 		self.app = app
 		self.insp = app.inspector
 
-		self.hbox = gtk.HBox()
-		self.box.pack_start(self.hbox, False, False, 0)
+		self.start = wal.FImgButton(self, wal.IMG_PAGER_START, cmd=self.first_page)
+		self.pack(self.start)
 
-		self.start = ImageButton(rc.IMG_PAGER_START, '', True, self.goto_start)
-		self.hbox.pack_start(self.start, False, False, 0)
+		self.left = wal.FImgButton(self, wal.IMG_PAGER_PREV, cmd=self.prev_page)
+		self.pack(self.left)
 
-		self.left = ImageButton(rc.IMG_PAGER_PREV, '', True, self.goto_left)
-		self.hbox.pack_start(self.left, False, False, 0)
+		self.label = wal.DecorLabel(self, size=-1)
+		self.pack(self.label, False, False, 5)
 
-		self.label = PangoLabel(size=gconst.TXT_SMALLER)
-		self.hbox.pack_start(self.label, False, False, 5)
+		self.right = wal.FImgButton(self, wal.IMG_PAGER_NEXT, cmd=self.next_page)
+		self.pack(self.right)
 
-		self.right = ImageButton(rc.IMG_PAGER_NEXT, '', True, self.goto_right)
-		self.hbox.pack_start(self.right, False, False, 0)
+		self.end = wal.FImgButton(self, wal.IMG_PAGER_END, cmd=self.last_page)
+		self.pack(self.end)
 
-		self.end = ImageButton(rc.IMG_PAGER_END, '', True, self.goto_end)
-		self.hbox.pack_start(self.end, False, False, 0)
-
-		self.hbox.pack_start(gtk.VSeparator(), False, False, 0)
+		self.pack(wal.VLine(self))
 
 		self.update_pager()
 		events.connect(events.DOC_CHANGED, self.update_pager)
@@ -63,13 +56,9 @@ class PagerWidget(HidableHBox):
 		events.connect(events.DOC_CLOSED, self.update_pager)
 		events.connect(events.NO_DOCS, self.update_pager)
 
-		self.show_all()
 
 	def update_pager(self, *args):
-		if not self.insp.is_doc():
-			self.set_visible(False)
-			return
-		self.set_visible(True)
+		if not self.insp.is_doc():return
 
 		presenter = self.app.current_doc
 
@@ -92,15 +81,15 @@ class PagerWidget(HidableHBox):
 			self.end.set_sensitive(True)
 		self.show_all()
 
-	def goto_start(self, *args):
+	def first_page(self, *args):
 		self.app.current_doc.goto_page(0)
 
-	def goto_left(self, *args):
+	def prev_page(self, *args):
 		pages = self.app.current_doc.get_pages()
 		current_index = pages.index(self.app.current_doc.active_page)
 		self.app.current_doc.goto_page(current_index - 1)
 
-	def goto_right(self, *args):
+	def next_page(self, *args):
 		pages = self.app.current_doc.get_pages()
 		current_index = pages.index(self.app.current_doc.active_page)
 		if current_index < len(pages) - 1:
@@ -108,7 +97,7 @@ class PagerWidget(HidableHBox):
 		else:
 			self.app.current_doc.app.proxy.insert_page()
 
-	def goto_end(self, *args):
+	def last_page(self, *args):
 		pages = self.app.current_doc.get_pages()
 		self.app.current_doc.goto_page(len(pages) - 1)
 
