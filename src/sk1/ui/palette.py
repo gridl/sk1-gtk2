@@ -20,30 +20,9 @@ import wal
 from sk1 import _, const
 from sk1.parts import HPaletteWidget
 
-class HPalette(wal.HidableHBox):
+class PaletteTemplate:
 
-	def __init__(self, app, master):
-		self.app = app
-		wal.HidableHBox.__init__(self, master)
-
-		self.pack(wal.FImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_LEFT,
-								cmd=self.action_dback, repeat=True))
-
-		self.pack(wal.FImgButton(self, wal.IMG_PALETTE_ARROW_LEFT,
-								cmd=self.action_back, repeat=True))
-
-		self.pack(wal.ActiveImage(self, wal.IMG_PALETTE_NO_COLOR,
-				tooltip=_('Empthy pattern'), cmd=self.action_nocolor))
-
-		self.pw = HPaletteWidget(self.app)
-		self.pack(self.pw, True, True, 1)
-
-		self.pack(wal.FImgButton(self, wal.IMG_PALETTE_ARROW_RIGHT,
-								cmd=self.action_forward, repeat=True))
-
-		self.pack(wal.FImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_RIGHT,
-								cmd=self.action_dforward, repeat=True))
-
+	pw = None
 
 	def action_dforward(self, *args):
 		self.pw.position -= 20
@@ -74,3 +53,34 @@ class HPalette(wal.HidableHBox):
 			self.app.proxy.fill_selected([])
 		if button == const.RIGHT_BUTTON:
 			self.app.proxy.stroke_selected([])
+
+
+class HPalette(wal.HidableVBox, PaletteTemplate):
+
+	def __init__(self, app, master):
+		self.app = app
+		wal.HidableVBox.__init__(self, master)
+
+		self.pack(wal.HLine(self))
+
+		box = wal.HBox(self)
+
+		box.pack(wal.FImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_LEFT,
+								cmd=self.action_dback, repeat=True))
+
+		box.pack(wal.FImgButton(self, wal.IMG_PALETTE_ARROW_LEFT,
+								cmd=self.action_back, repeat=True))
+
+		box.pack(wal.ActiveImage(self, wal.IMG_PALETTE_NO_COLOR,
+				tooltip=_('Empthy pattern'), cmd=self.action_nocolor))
+
+		self.pw = HPaletteWidget(self.app)
+		box.pack(self.pw, True, True, 1)
+
+		box.pack(wal.FImgButton(self, wal.IMG_PALETTE_ARROW_RIGHT,
+								cmd=self.action_forward, repeat=True))
+
+		box.pack(wal.FImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_RIGHT,
+								cmd=self.action_dforward, repeat=True))
+		self.pack(box, True, True, 2)
+
