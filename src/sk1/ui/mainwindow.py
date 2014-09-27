@@ -72,7 +72,7 @@ class AppMainWindow(wal.MainWindow):
 
 		self.workarea.pack(wal.HLine(self.workarea))
 
-		self.statusbar = AppStatusbar(self)
+		self.statusbar = AppStatusbar(self.app, self.workarea)
 		self.workarea.pack(self.statusbar)
 
 		#---CENTRAL PART END

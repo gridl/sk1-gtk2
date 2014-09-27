@@ -16,36 +16,28 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import gtk
+import wal
 
-from sk1 import events, const
+from sk1 import events
 from sk1.parts import PagerWidget, ColorMonitorWidget
-from sk1.widgets import PangoLabel
 
-class AppStatusbar(gtk.HBox):
+class AppStatusbar(wal.HBox):
 
 	plugins_dict = {}
 	plugins = []
 
-	def __init__(self, mw):
-		gtk.HBox.__init__(self)
+	def __init__(self, app, master):
+		self.app = app
+		wal.HBox.__init__(self, master)
 
-		self.mw = mw
-		self.app = mw.app
+		self.pager = PagerWidget(self.app, self)
+		self.pack(self.pager, padding=5)
 
-		self.pager = PagerWidget(self.app)
-		self.pack_start(self.pager, False, False, 5)
-
-		self.msg_label = PangoLabel(size=const.TXT_SMALLER)
-		self.pack_start(self.msg_label, False, False, 0)
+		self.msg_label = wal.DecorLabel(self, size=-1)
+		self.pack(self.msg_label)
 
 		self.cmw = ColorMonitorWidget(self.app)
-		self.pack_end(self.cmw, False, False, 0)
-
-		vbox = gtk.VBox()
-		spacer = gtk.EventBox()
-		vbox.pack_start(spacer, False, False, 10)
-		self.pack_end(vbox, False, False, 0)
+		self.pack(self.cmw, end=True)
 
 		events.connect(events.APP_STATUS, self.show_message)
 
