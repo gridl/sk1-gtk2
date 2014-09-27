@@ -29,6 +29,44 @@ class VLine(gtk.VSeparator):
 		self.master = master
 		gtk.VSeparator.__init__(self)
 
+class Label(gtk.Label):
+
+	def __init__(self, master, text=''):
+		self.master = master
+		gtk.Label.__init__(self, text)
+
+	def set_text(self, text):gtk.Label.set_text(self, text)
+	def get_text(self, text):return gtk.Label.get_text(self)
+	def set_sensitive(self, val): gtk.Label.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.Label.get_sensitive(self)
+
+class DecorLabel(Label):
+
+	text = ''
+	markup = ''
+
+	def __init__(self, master, text='', size='', bold=False,
+				italic=False, enabled=True, wrap=False):
+		self.text = text
+		Label.__init__(self, master)
+		markup = '%s'
+		if italic:markup = '<i>%s</i>' % (markup)
+		if bold:markup = '<b>%s</b>' % (markup)
+		if size:
+			if size == -1:size = 'smaller'
+			else:size = 'larger'
+			markup = '<span size="%s">%s</span>' % (size, markup)
+		self.markup = markup
+		self.set_markup(markup % (text))
+		if not enabled: self.set_sensitive(False)
+		if wrap: self.set_line_wrap(True)
+
+	def set_text(self, text):
+		self.text = text
+		self.set_markup(self.markup % (text))
+
+	def get_text(self): return self.text
+
 class Button(gtk.Button):
 
 	timer_id = None
@@ -39,18 +77,21 @@ class Button(gtk.Button):
 		gtk.Button.__init__(self, text, stock)
 		if cmd: self.connect(gconst.EVENT_CLICKED, cmd)
 		if cmd and repeat:
-			self.connect(gconst.EVENT_BUTTON_PRESS, self.mouse_pressed)
-			self.connect(gconst.EVENT_BUTTON_RELEASE, self.mouse_released)
+			self.connect(gconst.EVENT_BUTTON_PRESS, self._mouse_pressed)
+			self.connect(gconst.EVENT_BUTTON_RELEASE, self._mouse_released)
 
-	def mouse_pressed(self, widget, event):
+	def set_sensitive(self, val): gtk.Button.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.Button.get_sensitive(self)
+
+	def _mouse_pressed(self, widget, event):
 		if not event.button == gconst.LEFT_BUTTON: return
-		self.timer_id = gobject.timeout_add(50, self.do_callback)
+		self.timer_id = gobject.timeout_add(50, self._do_callback)
 
-	def do_callback(self, *args):
+	def _do_callback(self, *args):
 		self.cmd()
 		return True
 
-	def mouse_released(self, widget, event):
+	def _mouse_released(self, widget, event):
 		if not event.button == gconst.LEFT_BUTTON: return
 		if self.timer_id:
 			gobject.source_remove(self.timer_id)
