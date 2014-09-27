@@ -5,7 +5,7 @@ class MW(wal.MainWindow):
 	def __init__(self):
 		wal.MainWindow.__init__(self)
 		but = wal.Button(self, 'Test button', cmd=self.test)
-		self.pack(but)
+		self.pack(but, padding=10)
 
 	def test(self, *args):print 'CLICKED!'
 
