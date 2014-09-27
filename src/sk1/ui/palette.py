@@ -15,39 +15,37 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+import os, wal
 import gtk
 
 from sk1 import _, config
-from sk1.widgets import HidableHBox
 from sk1.parts import HPaletteWidget
 
-class HPalette(HidableHBox):
+class HPalette(wal.HidableHBox):
 
 	def __init__(self, mw):
-		gtk.HBox.__init__(self, False, 0)
+		wal.HidableHBox.__init__(self, mw)
 		self.mw = mw
 		self.app = mw.app
 
-		self.dback = PalButton('double-arrow-left.png')
-		self.pack_start(self.dback, False, False, 0)
-		self.dback.connect('clicked', self.action_dback)
-		self.back = PalButton('arrow-left.png')
-		self.pack_start(self.back, False, False, 0)
-		self.back.connect('clicked', self.action_back)
+		self.pack(wal.FImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_LEFT,
+								cmd=self.action_dback, repeat=True))
+
+		self.pack(wal.FImgButton(self, wal.IMG_PALETTE_ARROW_LEFT,
+								cmd=self.action_back, repeat=True))
 
 		self.no_color = NoColorButton(self)
-		self.pack_start(self.no_color, False, False, 0)
+		self.pack(self.no_color)
 
 		self.palwidget = HPaletteWidget(self.app)
-		self.pack_start(self.palwidget, True, True, 1)
+		self.pack(self.palwidget, True, True, 1)
 
-		self.forward = PalButton('arrow-right.png')
-		self.pack_start(self.forward, False, False, 0)
-		self.forward.connect('clicked', self.action_forward)
-		self.dforward = PalButton('double-arrow-right.png')
-		self.pack_start(self.dforward, False, False, 0)
-		self.dforward.connect('clicked', self.action_dforward)
+		self.pack(wal.FImgButton(self, wal.IMG_PALETTE_ARROW_RIGHT,
+								cmd=self.action_forward, repeat=True))
+
+		self.pack(wal.FImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_RIGHT,
+								cmd=self.action_dforward, repeat=True))
+
 
 	def action_dforward(self, *args):
 		self.palwidget.position -= 20

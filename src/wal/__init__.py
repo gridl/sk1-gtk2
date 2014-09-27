@@ -21,6 +21,6 @@ from window import MainWindow
 from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
 from menu import MW_Menu
 from toolbar import MW_Toolbar
-from widgets import HLine, VLine, Button, ImageButton, FlatImageButton
+from widgets import HLine, VLine, Button, ImgButton, FImgButton
 
 from image_ids import *

@@ -27,6 +27,9 @@ class VBox(gtk.VBox):
 		if end: self.pack_end(child, expand, fill, padding)
 		else: self.pack_start(child, expand, fill, padding)
 
+	def remove(self, child):
+		gtk.VBox.remove(self, child)
+
 
 class HBox(gtk.HBox):
 
@@ -38,14 +41,18 @@ class HBox(gtk.HBox):
 		if end: self.pack_end(child, expand, fill, padding)
 		else: self.pack_start(child, expand, fill, padding)
 
+	def remove(self, child):
+		gtk.HBox.remove(self, child)
+
 class HidableVBox(VBox):
 
-	visibility = False
+	visibility = True
 
 	def __init__(self, master):
 		VBox.__init__(self, master)
 
 		self.box = VBox(self)
+		VBox.pack(self, self.box, True, True)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
 		self.box.pack(child, expand, fill, padding, end)
@@ -55,22 +62,23 @@ class HidableVBox(VBox):
 
 	def set_visible(self, visible):
 		if visible and not self.visibility:
-			VBox.pack(self, self.box)
+			VBox.pack(self, self.box, True, True)
 			self.visibility = True
 			self.show_all()
 		elif not visible and self.visibility:
-			VBox.remove(self, self.box)
+			VBox.remove(self, self.box, True, True)
 			self.visibility = False
 			self.show_all()
 
 class HidableHBox(HBox):
 
-	visibility = False
+	visibility = True
 
 	def __init__(self, master):
 		HBox.__init__(self, master)
 
 		self.box = HBox(self)
+		HBox.pack(self, self.box, True, True)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
 		self.box.pack(child, expand, fill, padding, end)
@@ -80,11 +88,11 @@ class HidableHBox(HBox):
 
 	def set_visible(self, visible):
 		if visible and not self.visibility:
-			HBox.pack(self, self.box)
+			HBox.pack(self, self.box, True, True)
 			self.visibility = True
 			self.show_all()
 		elif not visible and self.visibility:
-			HBox.remove(self, self.box)
+			HBox.remove(self, self.box, True, True)
 			self.visibility = False
 			self.show_all()
 
@@ -97,7 +105,7 @@ class HidableVArea(VBox):
 
 		self.box = VBox(self)
 		self.box2 = VBox(self)
-		VBox.pack(self, self.box2, True, True, 0)
+		VBox.pack(self, self.box2, True, True)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
 		self.box.pack(child, expand, fill, padding, end)
@@ -114,12 +122,12 @@ class HidableVArea(VBox):
 	def set_visible(self, visible):
 		if visible and not self.visibility:
 			VBox.remove(self, self.box2)
-			VBox.pack(self, self.box, True, True, 0)
+			VBox.pack(self, self.box, True, True)
 			self.visibility = True
 			self.show_all()
 		elif not visible and self.visibility:
 			VBox.remove(self, self.box)
-			VBox.pack(self, self.box2, True, True, 0)
+			VBox.pack(self, self.box2, True, True)
 			self.visibility = False
 			self.show_all()
 
