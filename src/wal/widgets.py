@@ -67,6 +67,26 @@ class DecorLabel(Label):
 
 	def get_text(self): return self.text
 
+class Image(gtk.Image):
+	def __init__(self, master, image_id, size=rc.FIXED16):
+		self.master = master
+		gtk.Image.__init__(self)
+		self.set_from_pixbuf(rc.get_pixbuf(image_id, size))
+
+class ActiveImage(gtk.EventBox):
+
+	def __init__(self, master, image_id, size=rc.FIXED16, tooltip='', cmd=None):
+		self.master = master
+		self.cmd = cmd
+		gtk.EventBox.__init__(self)
+		self.add(Image(self, image_id, size))
+		if tooltip: self.set_tooltip_text(tooltip)
+		if cmd: self.connect('button-press-event', self._mouse_pressed)
+
+	def _mouse_pressed(self, widget, event):
+		if event.button == gconst.LEFT_BUTTON:self.cmd(gconst.LEFT_BUTTON)
+		if event.button == gconst.RIGHT_BUTTON:self.cmd(gconst.RIGHT_BUTTON)
+
 class Button(gtk.Button):
 
 	timer_id = None

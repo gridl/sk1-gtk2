@@ -67,7 +67,7 @@ class AppMainWindow(wal.MainWindow):
 		self.nb_splash = SplashArea(self)
 		self.workarea.pack2(self.nb_splash, True, True)
 
-		self.hpalette = HPalette(self)
+		self.hpalette = HPalette(self.app, self.workarea)
 		self.workarea.pack(self.hpalette, padding=2)
 
 		self.workarea.pack(wal.HLine(self.workarea))
