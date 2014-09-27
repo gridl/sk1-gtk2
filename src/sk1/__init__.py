@@ -42,6 +42,7 @@ def sk1_run():
 
 	if config.mw_disable_global_menu:
 		os.environ["UBUNTU_MENUPROXY"] = "0"
+#		os.environ["LIBOVERLAY_SCROLLBAR"] = "0"
 
 	from sk1.application import Application
 
