@@ -91,7 +91,8 @@ class Button(gtk.Button):
 
 	timer_id = None
 
-	def __init__(self, master, text=None, stock=None, cmd=None, repeat=False):
+	def __init__(self, master, text=None, stock=None, cmd=None,
+				repeat=False, flat=False):
 		self.master = master
 		self.cmd = cmd
 		gtk.Button.__init__(self, text, stock)
@@ -99,6 +100,7 @@ class Button(gtk.Button):
 		if cmd and repeat:
 			self.connect(gconst.EVENT_BUTTON_PRESS, self._mouse_pressed)
 			self.connect(gconst.EVENT_BUTTON_RELEASE, self._mouse_released)
+		if flat:self.set_property(gconst.PROP_RELIEF, gtk.RELIEF_NONE)
 
 	def set_sensitive(self, val): gtk.Button.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.Button.get_sensitive(self)
@@ -118,56 +120,49 @@ class Button(gtk.Button):
 			gobject.source_remove(self.timer_id)
 			self.timer_id = None
 
-class FButton(Button):
-
-	def __init__(self, master, text=None, stock=None, cmd=None, repeat=False):
-		Button.__init__(self, master, text, stock, cmd, repeat)
-		self.set_property('relief', gtk.RELIEF_NONE)
-
 class ImgButton(Button):
 
 	def __init__(self, master, image_id, image_size=rc.FIXED16, tooltip='',
-				cmd=None, repeat=False):
-		Button.__init__(self, master, cmd=cmd, repeat=repeat)
+				cmd=None, repeat=False, flat=False):
+		Button.__init__(self, master, cmd=cmd, repeat=repeat, flat=flat)
 		self.add(rc.get_image(image_id, image_size))
 		if tooltip:self.set_tooltip_text(tooltip)
 
-class FImgButton(ImgButton):
-
-	def __init__(self, master, image_id, image_size=rc.FIXED16, tooltip='',
-				cmd=None, repeat=False):
-		ImgButton.__init__(self, master, image_id, image_size, tooltip, cmd, repeat)
-		self.set_property('relief', gtk.RELIEF_NONE)
-
 class ToggleButton(gtk.ToggleButton):
 
-	def __init__(self, master, text=None, cmd=None):
+	def __init__(self, master, text=None, cmd=None, flat=True):
 		self.master = master
 		gtk.ToggleButton.__init__(self, text)
 		if cmd: self.connect(gconst.EVENT_TOGGLED, cmd)
+		if flat:self.set_property(gconst.PROP_RELIEF, gtk.RELIEF_NONE)
 
 	def set_sensitive(self, val): gtk.ToggleButton.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.ToggleButton.get_sensitive(self)
 	def set_active(self, val):gtk.ToggleButton.set_active(self, val)
 	def get_active(self):return gtk.ToggleButton.get_active(self)
 
-class FToggleButton(ToggleButton):
-
-	def __init__(self, master, text=None, cmd=None):
-		ToggleButton.__init__(self, master, text, cmd)
-		self.set_property('relief', gtk.RELIEF_NONE)
-
 class ImgToggleButton(ToggleButton):
 
 	def __init__(self, master, image_id, image_size=rc.FIXED16,
-				tooltip='', cmd=None):
-		ToggleButton.__init__(self, master, cmd=cmd)
+				tooltip='', cmd=None, flat=True):
+		ToggleButton.__init__(self, master, cmd=cmd, flat=flat)
 		self.add(rc.get_image(image_id, image_size))
 		if tooltip:self.set_tooltip_text(tooltip)
 
-class FImgToggleButton(ImgToggleButton):
+class ActionButton(Button):
+	def __init__(self, master, action, image_size=rc.FIXED16, flat=True):
+		Button.__init__(self)
+		if action.icon:
+			self.add(rc.get_image(action.icon, image_size))
+		self.set_tooltip_text(action.tooltip)
+		if flat:self.set_property(gconst.PROP_RELIEF, gtk.RELIEF_NONE)
+		action.connect_proxy(self)
 
-	def __init__(self, master, image_id, image_size=rc.FIXED16,
-				tooltip='', cmd=None):
-		ImgToggleButton.__init__(self, master, image_id, image_size, tooltip, cmd)
-		self.set_property('relief', gtk.RELIEF_NONE)
+class ActionToggleButton(ToggleButton):
+	def __init__(self, master, action, image_size=rc.FIXED16, flat=True):
+		ToggleButton.__init__(self, master)
+		if action.icon:
+			self.add(rc.get_image(action.icon, image_size))
+		self.set_tooltip_text(action.tooltip)
+		if flat:self.set_property(gconst.PROP_RELIEF, gtk.RELIEF_NONE)
+		action.connect_proxy(self)

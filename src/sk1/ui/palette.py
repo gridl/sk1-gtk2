@@ -65,11 +65,11 @@ class HPalette(wal.HidableVBox, PaletteTemplate):
 
 		box = wal.HBox(self)
 
-		box.pack(wal.FImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_LEFT,
-								cmd=self.action_dback, repeat=True))
+		box.pack(wal.ImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_LEFT,
+						cmd=self.action_dback, repeat=True, flat=True))
 
-		box.pack(wal.FImgButton(self, wal.IMG_PALETTE_ARROW_LEFT,
-								cmd=self.action_back, repeat=True))
+		box.pack(wal.ImgButton(self, wal.IMG_PALETTE_ARROW_LEFT,
+						cmd=self.action_back, repeat=True, flat=True))
 
 		box.pack(wal.ActiveImage(self, wal.IMG_PALETTE_NO_COLOR,
 				tooltip=_('Empthy pattern'), cmd=self.action_nocolor))
@@ -77,10 +77,10 @@ class HPalette(wal.HidableVBox, PaletteTemplate):
 		self.pw = HPaletteWidget(self.app)
 		box.pack(self.pw, True, True, 1)
 
-		box.pack(wal.FImgButton(self, wal.IMG_PALETTE_ARROW_RIGHT,
-								cmd=self.action_forward, repeat=True))
+		box.pack(wal.ImgButton(self, wal.IMG_PALETTE_ARROW_RIGHT,
+						cmd=self.action_forward, repeat=True, flat=True))
 
-		box.pack(wal.FImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_RIGHT,
-								cmd=self.action_dforward, repeat=True))
+		box.pack(wal.ImgButton(self, wal.IMG_PALETTE_DOUBLE_ARROW_RIGHT,
+						cmd=self.action_dforward, repeat=True, flat=True))
 		self.pack(box, True, True)
 
