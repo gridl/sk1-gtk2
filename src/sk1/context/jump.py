@@ -38,7 +38,7 @@ class JumpPlugin(GenericPlugin):
 		self.pack(self.jump_spin)
 		self.jump_spin.set_point_value(config.obj_jump)
 
-		self.pack(UnitLabel(), padding=2)
+		self.pack(UnitLabel(self), padding=2)
 
 	def user_changes(self, *args):
 		val = self.jump_spin.get_point_value()

@@ -15,9 +15,9 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import wal
 
-from sk1 import events
+from sk1 import _, events
 from sk1.parts import UnitLabel, UnitSpin
 from sk1.widgets import KeepRatioLabel
 from sk1.context.generic import GenericPlugin
@@ -34,23 +34,20 @@ class ResizePlugin(GenericPlugin):
 		events.connect(events.SELECTION_CHANGED, self.set_state)
 
 	def build(self):
-		label = gtk.Label('Size:')
-		self.pack_start(label, False, False, 2)
+		self.pack(wal.Label(self, _('Size:')), padding=2)
 
 		self.width_spin = UnitSpin(self.user_changes)
-		self.pack_start(self.width_spin, False, False, 0)
+		self.pack(self.width_spin)
 
-		label = gtk.Label('x')
-		self.pack_start(label, False, False, 0)
+		self.pack(wal.Image(self, wal.IMG_CTX_W_ON_H))
 
 		self.height_spin = UnitSpin(self.user_changes)
-		self.pack_start(self.height_spin, False, False, 0)
+		self.pack(self.height_spin)
 
-		label = UnitLabel()
-		self.pack_start(label, False, False, 2)
+		self.pack(UnitLabel(self), padding=2)
 
 		self.keep_ratio = KeepRatioLabel()
-		self.pack_start(self.keep_ratio, False, False, 5)
+		self.pack(self.keep_ratio, padding=5)
 
 	def set_state(self, *args):
 		if self.app.current_doc is None:
