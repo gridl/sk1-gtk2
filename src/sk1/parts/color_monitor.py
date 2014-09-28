@@ -15,18 +15,17 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, cairo
+import gtk, cairo, wal
 
 from uc2 import uc2const
 from uc2.uc2const import point_dict
 from uc2.formats.pdxf.const import FILL_SOLID
 from sk1 import _, events, config, const
-from sk1.widgets.hidable import HidableHBox
 
 FILL_SWATCH = 0
 OUTLINE_SWATCH = 1
 
-class ColorMonitorWidget(HidableHBox):
+class ColorMonitorWidget(wal.HidableHBox):
 
 	start = None
 	left = None
@@ -34,25 +33,23 @@ class ColorMonitorWidget(HidableHBox):
 	right = None
 	end = None
 
-	def __init__(self, app):
+	def __init__(self, app, master):
 
-		HidableHBox.__init__(self)
+		wal.HidableHBox.__init__(self, master)
 		self.app = app
 		self.insp = app.inspector
 
-		self.set_border_width(2)
-
 		self.fill_label = FillLabel(self.app)
-		self.box.pack_start(self.fill_label, False, False, 5)
+		self.pack(self.fill_label, padding=5)
 
 		self.fill_swatch = ColorSwatch(self.app, FILL_SWATCH)
-		self.box.pack_start(self.fill_swatch, False, False, 0)
+		self.pack(self.fill_swatch)
 
 		self.outline_label = OutlineLabel(self.app)
-		self.box.pack_start(self.outline_label, False, False, 5)
+		self.pack(self.outline_label, padding=5)
 
 		self.outline_swatch = ColorSwatch(self.app, OUTLINE_SWATCH)
-		self.box.pack_start(self.outline_swatch, False, False, 0)
+		self.pack(self.outline_swatch)
 
 		events.connect(events.NO_DOCS, self.update)
 		events.connect(events.DOC_CHANGED, self.update)
