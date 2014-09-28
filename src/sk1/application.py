@@ -39,6 +39,7 @@ from sk1.app_palettes import AppPaletteManager
 class Application(UCApplication):
 
 	appdata = None
+	mw = None
 
 	actions = {}
 	docs = []
