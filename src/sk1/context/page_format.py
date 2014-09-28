@@ -15,31 +15,28 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import gtk, wal
 
 from uc2.uc2const import PAGE_FORMATS, PAGE_FORMAT_NAMES, PORTRAIT, LANDSCAPE
 
 from sk1 import _, events, rc
 from sk1.widgets import ImageToggleButton, SimpleListCombo
 from sk1.parts import UnitSpin
+from sk1.context.generic import GenericPlugin
 
 
-class PageFormatPlugin(gtk.HBox):
+class PageFormatPlugin(GenericPlugin):
 
 	name = 'PageFormatPlugin'
 	my_changes = False
 	update_flag = False
 	format = []
 
-	def __init__(self, mw):
-		gtk.HBox.__init__(self)
-		self.mw = mw
-		self.app = mw.app
-		self.insp = self.app.inspector
-		self.actions = self.app.actions
-		self.sep = gtk.VSeparator()
-		self.pack_end(self.sep, False, False, 2)
-		self.build()
+
+	def __init__(self, app, master):
+		GenericPlugin.__init__(self, app, master)
+		events.connect(events.DOC_CHANGED, self.update)
+		events.connect(events.DOC_MODIFIED, self.update)
 
 	def build(self):
 
@@ -64,9 +61,6 @@ class PageFormatPlugin(gtk.HBox):
 		self.landscape = ImageToggleButton(rc.IMG_CTX_LANDSCAPE,
 							_('Landscape'), self.landscape_toggled)
 		self.pack_start(self.landscape, False, False, 0)
-
-		events.connect(events.DOC_CHANGED, self.update)
-		events.connect(events.DOC_MODIFIED, self.update)
 
 	def combo_changed(self, *args):
 		if self.update_flag: return

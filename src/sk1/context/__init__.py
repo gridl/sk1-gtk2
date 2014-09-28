@@ -50,11 +50,10 @@ class ContextPanel(wal.HBox):
 		wal.HBox.__init__(self, master)
 
 		self.app = app
-		self.mw = app.mw
 		self.insp = self.app.inspector
 
 		for item in PLUGINS:
-			plg = item(self.mw)
+			plg = item(self.app, self)
 			self.plugins_dict[plg.name] = plg
 
 		events.connect(events.NO_DOCS, self.rebuild)

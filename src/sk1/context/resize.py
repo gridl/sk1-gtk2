@@ -20,19 +20,15 @@ import gtk
 from sk1 import events
 from sk1.parts import UnitLabel, UnitSpin
 from sk1.widgets import KeepRatioLabel
+from sk1.context.generic import GenericPlugin
 
-class ResizePlugin(gtk.HBox):
+class ResizePlugin(GenericPlugin):
 
 	name = 'ResizePlugin'
 
-	def __init__(self, mw):
-		gtk.HBox.__init__(self)
-		self.mw = mw
-		self.app = mw.app
-		self.actions = self.app.actions
-		self.sep = gtk.VSeparator()
-		self.pack_end(self.sep, False, False, 2)
-		self.build()
+
+	def __init__(self, app, master):
+		GenericPlugin.__init__(self, app, master)
 		events.connect(events.NO_DOCS, self.set_state)
 		events.connect(events.DOC_CHANGED, self.set_state)
 		events.connect(events.SELECTION_CHANGED, self.set_state)
