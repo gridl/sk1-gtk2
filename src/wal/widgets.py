@@ -151,7 +151,7 @@ class ImgToggleButton(ToggleButton):
 
 class ActionButton(Button):
 	def __init__(self, master, action, image_size=rc.FIXED16, flat=True):
-		Button.__init__(self)
+		Button.__init__(self, master)
 		if action.icon:
 			self.add(rc.get_image(action.icon, image_size))
 		self.set_tooltip_text(action.tooltip)

@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import gtk, rc
 
 class MW_Menu(gtk.MenuBar):
 
@@ -40,7 +40,14 @@ class MW_Menu(gtk.MenuBar):
 				parent.append(gtk.SeparatorMenuItem())
 			elif isinstance(item, int):
 				action = self.actions[item]
-				menuitem = action.create_menu_item()
+				if not action.icon:
+					menuitem = action.create_menu_item()
+				else:
+					menuitem = gtk.ImageMenuItem()
+					menuitem.set_label(action.get_label())
+					menuitem.set_image(rc.get_image(action.icon, rc.FIXED16))
+					menuitem.set_accel_path(action.get_accel_path())
+					action.connect_proxy(menuitem)
 				action.menuitem = menuitem
 				parent.append(menuitem)
 			else:

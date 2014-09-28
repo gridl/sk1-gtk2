@@ -11,6 +11,7 @@ encoding//src/sk1/app_palettes.py=utf-8
 encoding//src/sk1/application.py=utf-8
 encoding//src/sk1/const.py=utf-8
 encoding//src/sk1/context/__init__.py=utf-8
+encoding//src/sk1/context/generic.py=utf-8
 encoding//src/sk1/context/jump.py=utf-8
 encoding//src/sk1/context/page_format.py=utf-8
 encoding//src/sk1/context/resize.py=utf-8
