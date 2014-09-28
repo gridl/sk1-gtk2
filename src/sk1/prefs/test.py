@@ -15,8 +15,9 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from sk1 import _, config, const, rc
+import wal
 
+from sk1 import _, const
 from sk1.prefs.generic import GenericPrefsPlugin
 
 class TestPlugin(GenericPrefsPlugin):
@@ -24,7 +25,7 @@ class TestPlugin(GenericPrefsPlugin):
 	name = 'TestPlugin'
 	title = _('Test Preference Plugin')
 	short_title = _('Test Plugin')
-	image_id = rc.IMG_CTX_PORTRAIT
+	image_id = wal.IMG_CTX_PORTRAIT
 	cid = const.PREFS_DOC_PLUGIN
 
 	def __init__(self, app, dlg, fmt_config):
