@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, math
+import gtk, math, wal
 
 from uc2.uc2const import unit_dict, point_dict
 from uc2 import uc2const
@@ -24,10 +24,10 @@ from sk1 import config, events
 from sk1.const import KEY_KP_ENTER, KEY_RETURN
 
 
-class UnitLabel(gtk.Label):
+class UnitLabel(wal.Label):
 
-	def __init__(self):
-		gtk.Label.__init__(self, config.default_unit)
+	def __init__(self, master):
+		wal.Label.__init__(self, master, config.default_unit)
 		events.connect(events.CONFIG_MODIFIED, self.update_label)
 
 	def update_label(self, *args):
