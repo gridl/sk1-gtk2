@@ -68,6 +68,7 @@ IMG_CTX_SNAP_TO_PAGE = 'sk1-ctx-snap-to-page'
 IMG_CTX_VERT_MIRROR = 'sk1-ctx-vert-mirror'
 IMG_KEEP_RATIO = 'sk1-ctx-keep-ratio'
 IMG_DONT_KEEP_RATIO = 'sk1-ctx-dont-keep-ratio'
+IMG_CTX_W_ON_H = 'sk1-ctx-w-on-h'
 
 IMG_PALETTE_ARROW_BOTTOM = 'sk1-palette-arrow-bottom'
 IMG_PALETTE_ARROW_LEFT = 'sk1-palette-arrow-left'
