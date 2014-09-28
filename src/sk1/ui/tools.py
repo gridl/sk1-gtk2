@@ -17,7 +17,7 @@
 
 import wal
 
-from sk1 import actions, modes
+from sk1 import modes
 
 class AppTools(wal.HidableHBox):
 

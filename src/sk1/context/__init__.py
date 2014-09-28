@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, gtk
+import wal
 
 from sk1 import _, config, events
 from sk1.context.transform import GroupPlugin, MirrorPlugin, RotatePlugin, \
@@ -41,20 +41,17 @@ TEXT = []
 PIXMAP = []
 
 
-class ContextPanel(gtk.HBox):
+class ContextPanel(wal.HBox):
 
 	plugins_dict = {}
 	plugins = []
 
-	def __init__(self, mw):
-		gtk.HBox.__init__(self)
+	def __init__(self, app, master):
+		wal.HBox.__init__(self, master)
 
-		self.mw = mw
-		self.app = mw.app
+		self.app = app
+		self.mw = app.mw
 		self.insp = self.app.inspector
-
-		self.set_border_width(2)
-		self.set_size_request(-1, 33)
 
 		for item in PLUGINS:
 			plg = item(self.mw)
@@ -72,7 +69,7 @@ class ContextPanel(gtk.HBox):
 		mode = self.get_mode()
 		if mode:
 			for item in mode:
-				self.pack_start(self.plugins_dict[item], False, False, 0)
+				self.pack(self.plugins_dict[item])
 				self.plugins.append(self.plugins_dict[item])
 				self.plugins_dict[item].show_all()
 

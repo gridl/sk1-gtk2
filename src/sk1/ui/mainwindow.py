@@ -37,6 +37,7 @@ class AppMainWindow(wal.MainWindow):
 
 	def build(self):
 		self.app.actions = self.actions
+		self.app.mw = self
 
 		self.mb = AppMenubar(self)
 		self.toolbar = AppToolbar(self)
@@ -45,8 +46,7 @@ class AppMainWindow(wal.MainWindow):
 		self.workarea = wal.HidableVArea(self)
 
 		self.workarea.pack(wal.HLine(self.workarea))
-		self.ctx_bar = ContextPanel(self)
-		self.workarea.pack(self.ctx_bar)
+		self.workarea.pack(ContextPanel(self.app, self.workarea))
 		self.workarea.pack(wal.HLine(self.workarea))
 
 		hbox = wal.HBox(self.workarea)
