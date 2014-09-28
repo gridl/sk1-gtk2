@@ -19,7 +19,7 @@ import sys
 
 import gtk, gconst
 
-from actions import AppAction, AppToggleAction
+from actions import AppAction, AppToggleAction, AppModeAction
 from boxes import VBox, HBox
 
 
@@ -68,14 +68,22 @@ class MainWindow(gtk.Window):
 		if not entries: return
 		self.accelgroup = gtk.AccelGroup()
 		self.actiongroup = gtk.ActionGroup('MW_Actions')
+		self.modegroup = None
 		self.actions = {}
 		for entry in entries:
-			if len(entry) == 8:
+			if entry[0] < 100:
+				action = AppModeAction(*entry)
+			elif len(entry) == 8:
 				action = AppAction(*entry)
 			else:
 				action = AppToggleAction(*entry)
 
 			self.actions[entry[0]] = action
+			if entry[0] < 100:
+				if self.modegroup is None:
+					self.modegroup = action
+				else:
+					action.set_group(self.modegroup)
 			if not action.shortcut is None:
 				self.actiongroup.add_action_with_accel(action, action.shortcut)
 				action.set_accel_group(self.accelgroup)

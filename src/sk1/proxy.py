@@ -41,68 +41,29 @@ class AppProxy:
 	def update_references(self):
 		self.mw = self.app.mw
 
-	def exit(self, *args):
-		self.app.exit()
 
-	def new(self, *args):
-		self.app.new()
-
-	def open(self, *args):
-		self.app.open()
-
-	def import_image(self, *args):
-		self.app.import_image()
-
-	def save(self, *args):
-		self.app.save()
-
-	def save_as(self, *args):
-		self.app.save_as()
-
-	def save_all(self, *args):
-		self.app.save_all()
-
-	def close(self, *args):
-		self.app.close()
-
-	def close_all(self, *args):
-		self.app.close_all()
-
-	def insert_doc(self, *args):
-		self.app.insert_doc()
-
-	def do_print(self, *args):
-		pass
-
-	def do_print_setup(self, *args):
-		pass
-
-	def undo(self, *args):
-		self.app.current_doc.api.do_undo()
-
-	def redo(self, *args):
-		self.app.current_doc.api.do_redo()
-
-	def clear_history(self, *args):
-		self.app.current_doc.api.clear_history()
-
-	def cut(self, *args):
-		self.app.current_doc.api.cut_selected()
-
-	def copy(self, *args):
-		self.app.current_doc.api.copy_selected()
-
-	def paste(self, *args):
-		self.app.current_doc.api.paste_selected()
-
-	def delete(self, *args):
-		self.app.current_doc.api.delete_selected()
-
-	def select_all(self, *args):
-		self.app.current_doc.selection.select_all()
-
-	def deselect(self, *args):
-		self.app.current_doc.selection.clear()
+	def set_mode(self, mode): self.app.current_doc.canvas.set_mode(mode)
+	def exit(self, *args): self.app.exit()
+	def new(self, *args): self.app.new()
+	def open(self, *args): self.app.open()
+	def import_image(self, *args): self.app.import_image()
+	def save(self, *args): self.app.save()
+	def save_as(self, *args): self.app.save_as()
+	def save_all(self, *args): self.app.save_all()
+	def close(self, *args): self.app.close()
+	def close_all(self, *args): self.app.close_all()
+	def insert_doc(self, *args): self.app.insert_doc()
+	def do_print(self, *args): pass
+	def do_print_setup(self, *args): pass
+	def undo(self, *args): self.app.current_doc.api.do_undo()
+	def redo(self, *args): self.app.current_doc.api.do_redo()
+	def clear_history(self, *args): self.app.current_doc.api.clear_history()
+	def cut(self, *args): self.app.current_doc.api.cut_selected()
+	def copy(self, *args): self.app.current_doc.api.copy_selected()
+	def paste(self, *args): self.app.current_doc.api.paste_selected()
+	def delete(self, *args): self.app.current_doc.api.delete_selected()
+	def select_all(self, *args): self.app.current_doc.selection.select_all()
+	def deselect(self, *args): self.app.current_doc.selection.clear()
 
 	def stroke_view(self, action):
 		if self.insp.is_doc():
@@ -289,47 +250,6 @@ class AppProxy:
 
 	def about(self, *args):
 		dialogs.about_dialog(self.mw)
-
-	#----Canvas modes
-
-	def set_select_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.SELECT_MODE)
-
-	def set_shaper_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.SHAPER_MODE)
-
-	def set_zoom_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.ZOOM_MODE)
-
-	def set_fleur_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.FLEUR_MODE)
-
-	def set_line_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.LINE_MODE)
-
-	def set_curve_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.CURVE_MODE)
-
-	def set_rect_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.RECT_MODE)
-
-	def set_ellipse_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.ELLIPSE_MODE)
-
-	def set_text_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.TEXT_MODE)
-
-	def set_polygon_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.POLYGON_MODE)
-
-	def set_zoom_out_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.ZOOM_OUT_MODE)
-
-	def set_move_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.MOVE_MODE)
-
-	def set_copy_mode(self, *args):
-		self.app.current_doc.canvas.set_mode(modes.COPY_MODE)
 
 	#-------
 

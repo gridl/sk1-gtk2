@@ -15,8 +15,10 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from sk1.events import CLIPBOARD, DOC_CHANGED, PAGE_CHANGED, \
-DOC_CLOSED, DOC_MODIFIED, DOC_SAVED, NO_DOCS, SELECTION_CHANGED, connect
+from sk1 import modes
+from sk1.events import CLIPBOARD, DOC_CHANGED, PAGE_CHANGED, MODE_CHANGED
+from sk1.events import DOC_CLOSED, DOC_MODIFIED, DOC_SAVED, NO_DOCS
+from sk1.events import SELECTION_CHANGED, connect
 
 from action_ids import *
 from action_icons import get_action_icon
@@ -27,6 +29,7 @@ def create_actions(app):
 	insp = app.inspector
 	proxy = app.proxy
 	actions = []
+	mod_chnl = [connect, MODE_CHANGED, DOC_CHANGED]
 	doc_chnl = [connect, NO_DOCS, DOC_CHANGED]
 	docm_chnl = [connect, NO_DOCS, DOC_CHANGED, DOC_MODIFIED]
 	page_chnl = docm_chnl + [PAGE_CHANGED]
@@ -35,19 +38,21 @@ def create_actions(app):
 #	id, callable, [channels], validator, args
 #	name, label, tooltip, icon, shortcut, callable, [channels], validator, args
 #gtk.accelerator_name(ord('+'),gtk.gdk.CONTROL_MASK)
-[SELECT_MODE, proxy.set_select_mode, doc_chnl, insp.is_doc],
-[SHAPER_MODE, proxy.set_shaper_mode, doc_chnl, insp.is_doc],
-[ZOOM_MODE, proxy.set_zoom_mode, doc_chnl, insp.is_doc],
-[FLEUR_MODE, proxy.set_fleur_mode, doc_chnl, insp.is_doc],
-[LINE_MODE, proxy.set_line_mode, doc_chnl, insp.is_doc],
-[CURVE_MODE, proxy.set_curve_mode, doc_chnl, insp.is_doc],
-[RECT_MODE, proxy.set_rect_mode, doc_chnl, insp.is_doc],
-[ELLIPSE_MODE, proxy.set_ellipse_mode, doc_chnl, insp.is_doc],
-[TEXT_MODE, proxy.set_text_mode, doc_chnl, insp.is_doc],
-[POLYGON_MODE, proxy.set_polygon_mode, doc_chnl, insp.is_doc],
-[ZOOM_OUT_MODE, proxy.set_zoom_out_mode, doc_chnl, insp.is_doc],
-[MOVE_MODE, proxy.set_move_mode, doc_chnl, insp.is_doc],
-[COPY_MODE, proxy.set_copy_mode, doc_chnl, insp.is_doc],
+
+[modes.SELECT_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.SHAPER_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.ZOOM_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.FLEUR_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.LINE_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.CURVE_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.RECT_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.ELLIPSE_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.TEXT_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.POLYGON_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.ZOOM_OUT_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.MOVE_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+[modes.COPY_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
+
 [NEW, proxy.new, None, None],
 [OPEN, proxy.open, None, None],
 [IMPORT_IMAGE, proxy.import_image, None, None],

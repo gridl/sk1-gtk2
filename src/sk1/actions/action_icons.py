@@ -15,11 +15,22 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
-from sk1 import rc
+import gtk, wal
+from sk1 import rc, modes
 from sk1.actions.action_ids import *
 
 action_icon = {
+modes.SELECT_MODE : wal.IMG_TOOL_SELECT,
+modes.SHAPER_MODE : wal.IMG_TOOL_SHAPER,
+modes.ZOOM_MODE : wal.IMG_TOOL_ZOOM,
+modes.FLEUR_MODE  : wal.IMG_TOOL_FLEUR,
+modes.LINE_MODE  : wal.IMG_TOOL_POLYLINE,
+modes.CURVE_MODE  : wal.IMG_TOOL_CURVE,
+modes.RECT_MODE  : wal.IMG_TOOL_RECT,
+modes.ELLIPSE_MODE  : wal.IMG_TOOL_ELLIPSE,
+modes.TEXT_MODE  : wal.IMG_TOOL_TEXT,
+modes.POLYGON_MODE  : wal.IMG_TOOL_POLYGON,
+
 NEW : gtk.STOCK_NEW,
 OPEN : gtk.STOCK_OPEN,
 SAVE : gtk.STOCK_SAVE,

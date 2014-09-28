@@ -34,6 +34,11 @@ class DocumentInspector:
 		else:
 			return True
 
+	def is_mode(self, mode):
+		if self.is_doc():
+			return mode == self.app.current_doc.canvas.mode
+		return False
+
 	def is_doc_saved(self, doc=None):
 		if doc:
 			return doc.saved

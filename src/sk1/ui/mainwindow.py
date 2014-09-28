@@ -50,7 +50,7 @@ class AppMainWindow(wal.MainWindow):
 		self.workarea.pack(wal.HLine(self.workarea))
 
 		hbox = wal.HBox(self.workarea)
-		self.tools = AppTools(self)
+		self.tools = AppTools(self.app, hbox)
 		hbox.pack_start(self.tools, False, False, 1)
 		self.inner_hpaned = gtk.HPaned()
 		self.nb = gtk.Notebook()

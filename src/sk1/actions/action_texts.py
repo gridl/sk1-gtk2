@@ -15,23 +15,24 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from sk1 import _
+from sk1 import _, modes
 from sk1.actions.action_ids import *
 
 action_text = {
-SELECT_MODE : _('Selection mode'),
-SHAPER_MODE : _('Edit mode'),
-ZOOM_MODE : _('Zoom mode'),
-FLEUR_MODE : _('Fleur mode'),
-LINE_MODE : _('Create polyline'),
-CURVE_MODE : _('Create paths'),
-RECT_MODE : _('Create rectangle'),
-ELLIPSE_MODE : _('Create ellipse'),
-TEXT_MODE : _('Create text'),
-POLYGON_MODE : _('Create polygon'),
-ZOOM_OUT_MODE : _('Zoom out mode'),
-MOVE_MODE : _('Move mode'),
-COPY_MODE : _('Copy mode'),
+modes.SELECT_MODE : _('Selection mode'),
+modes.SHAPER_MODE : _('Edit mode'),
+modes.ZOOM_MODE : _('Zoom mode'),
+modes.FLEUR_MODE : _('Fleur mode'),
+modes.LINE_MODE : _('Create polyline'),
+modes.CURVE_MODE : _('Create paths'),
+modes.RECT_MODE : _('Create rectangle'),
+modes.ELLIPSE_MODE : _('Create ellipse'),
+modes.TEXT_MODE : _('Create text'),
+modes.POLYGON_MODE : _('Create polygon'),
+modes.ZOOM_OUT_MODE : _('Zoom out mode'),
+modes.MOVE_MODE : _('Move mode'),
+modes.COPY_MODE : _('Copy mode'),
+
 NEW : _('_New'),
 OPEN : _('_Open'),
 IMPORT_IMAGE : _('_Import image'),
@@ -163,7 +164,8 @@ def get_action_text(action):
 		return '???'
 
 def get_action_tooltip_text(action):
-	if action in action_tooltip_text.keys():
-		return action_tooltip_text[action]
-	else:
-		return get_action_text(action)
+	return get_action_text(action).replace('_', '')
+#	if action in action_tooltip_text.keys():
+#		return action_tooltip_text[action]
+#	else:
+#		return get_action_text(action)
