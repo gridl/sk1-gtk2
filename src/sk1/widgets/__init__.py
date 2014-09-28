@@ -19,7 +19,6 @@ from generic import CheckButton, PangoLabel, SimpleListCombo, HLine, VLine
 from generic import SpinButton, SpinButtonInt, ColorButton
 from imagewidgets import ImageButton, ImageStockButton, ImageToggleButton
 from imagewidgets import KeepRatioLabel, ImageLabel
-from actionwidgets import ActionButton, ActionToggleButton
 
-from hidable import HidableArea, HidableHBox, HidableVBox
+
 
