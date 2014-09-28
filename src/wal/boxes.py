@@ -66,7 +66,7 @@ class HidableVBox(VBox):
 			self.visibility = True
 			self.show_all()
 		elif not visible and self.visibility:
-			VBox.remove(self, self.box, True, True)
+			VBox.remove(self, self.box)
 			self.visibility = False
 			self.show_all()
 
@@ -92,7 +92,7 @@ class HidableHBox(HBox):
 			self.visibility = True
 			self.show_all()
 		elif not visible and self.visibility:
-			HBox.remove(self, self.box, True, True)
+			HBox.remove(self, self.box)
 			self.visibility = False
 			self.show_all()
 

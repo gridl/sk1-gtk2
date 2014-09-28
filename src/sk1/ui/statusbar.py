@@ -36,7 +36,7 @@ class AppStatusbar(wal.HBox):
 		self.msg_label = wal.DecorLabel(self, size=-1)
 		self.pack(self.msg_label)
 
-		self.cmw = ColorMonitorWidget(self.app)
+		self.cmw = ColorMonitorWidget(self.app, self)
 		self.pack(self.cmw, end=True)
 
 		events.connect(events.APP_STATUS, self.show_message)
