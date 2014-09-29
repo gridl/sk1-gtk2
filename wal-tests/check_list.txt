@@ -1,0 +1,23 @@
+x	MainWindow
+AppAction
+AppToggleAction
+AppRadioAction
+x	HBox
+x	VBox
+HidableHBox
+HidableVBox
+HidableVArea
+MW_Menu
+MW_Toolbar
+x	HLine
+x	VLine
+x	Button
+x	ImgButton
+ActionButton
+x	Label
+x	DecorLabel
+x	Image
+x	ActiveImage
+x	ToggleButton
+x	ImgToggleButton
+ActionToggleButton
