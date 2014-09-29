@@ -10,14 +10,14 @@ class MW(wal.MainWindow):
 		but = wal.ToggleButton(hbox, 'Test', cmd=self.test)
 		hbox.pack(but, padding=10)
 
-		but = wal.FToggleButton(hbox, 'FTest', cmd=self.test)
+		but = wal.ToggleButton(hbox, 'FTest', cmd=self.test, flat=True)
 		hbox.pack(but, padding=10)
 
 		but = wal.ImgToggleButton(hbox, wal.IMG_PALETTE_ARROW_BOTTOM,
 						tooltip='test', cmd=self.test)
 		hbox.pack(but, padding=10)
 
-		but = wal.FImgToggleButton(hbox, wal.IMG_PALETTE_DOUBLE_ARROW_BOTTOM,
+		but = wal.ImgToggleButton(hbox, wal.IMG_PALETTE_DOUBLE_ARROW_BOTTOM,
 						tooltip='test', cmd=self.test)
 		hbox.pack(but, padding=10)
 		self.pack(hbox)
