@@ -16,6 +16,8 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from image_ids import *
+
 from window import MainWindow
 from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
 from menu import MW_Menu
@@ -23,5 +25,4 @@ from toolbar import MW_Toolbar
 from widgets import HLine, VLine, Button, ImgButton, ActionButton
 from widgets import Label, DecorLabel, Image, ActiveImage
 from widgets import ToggleButton, ImgToggleButton, ActionToggleButton
-
-from image_ids import *
+from widgets import ComboBoxText

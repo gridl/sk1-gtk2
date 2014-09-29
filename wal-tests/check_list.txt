@@ -21,3 +21,4 @@ x	ActiveImage
 x	ToggleButton
 x	ImgToggleButton
 ActionToggleButton
+x	ComboBoxText

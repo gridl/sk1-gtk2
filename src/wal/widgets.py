@@ -166,3 +166,27 @@ class ActionToggleButton(ToggleButton):
 		self.set_tooltip_text(action.tooltip)
 		if flat:self.set_property(gconst.PROP_RELIEF, gtk.RELIEF_NONE)
 		action.connect_proxy(self)
+
+class ComboBoxText(gtk.ComboBox):
+
+	def __init__(self, master, listdata=[], cmd=None):
+		self.master = master
+		self.liststore = gtk.ListStore(gobject.TYPE_STRING)
+		gtk.ComboBox.__init__(self, self.liststore)
+		cell = gtk.CellRendererText()
+		self.pack_start(cell, True)
+		self.add_attribute(cell, 'text', 0)
+		self.set_list(listdata)
+		self.set_active(0)
+		if cmd: self.connect(gconst.EVENT_CHANGED, cmd)
+
+	def clear(self):
+		self.liststore.clear()
+
+	def set_list(self, datalist=[]):
+		if datalist:
+			for item in datalist:
+				self.append_text(item)
+
+	def get_active(self):return gtk.ComboBox.get_active(self)
+	def set_active(self, index):gtk.ComboBox.set_active(self, index)
