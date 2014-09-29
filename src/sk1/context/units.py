@@ -37,8 +37,7 @@ class UnitsPlugin(GenericPlugin):
 		for item in unit_names:
 			names.append(unit_full_names[item])
 
-		self.combo = wal.ComboBoxEntry(self, names, editable=False,
-									cmd=self.combo_changed)
+		self.combo = wal.ComboBoxEntry(self, names, cmd=self.combo_changed)
 		self.combo.set_active(unit_names.index(config.default_unit))
 		self.pack(self.combo, padding=2)
 

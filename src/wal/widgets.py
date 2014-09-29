@@ -195,14 +195,14 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 
 	callback = None
 
-	def __init__(self, master, listdata=[], editable=True, cmd=None):
+	def __init__(self, master, listdata=[], editable=False, cmd=None):
 		self.master = master
 		self.callback = cmd
 		self.liststore = gtk.ListStore(gobject.TYPE_STRING)
 		gtk.ComboBoxEntry.__init__(self, self.liststore)
 		self.set_list(listdata)
 		self.set_active(0)
-		if not editable: self.set_editable(False)
+		self.set_editable(editable)
 		if cmd: self.child.connect(gconst.EVENT_CHANGED, self._changed)
 
 	def _changed(self, *args): self.callback()

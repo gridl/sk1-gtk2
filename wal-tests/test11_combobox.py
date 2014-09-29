@@ -23,7 +23,7 @@ class MW(wal.MainWindow):
 										cmd=self.test_comboentry)
 		self.pack(self.comboentry)
 
-		self.comboentry2 = wal.ComboBoxEntry(self, TEST_LIST, editable=False,
+		self.comboentry2 = wal.ComboBoxEntry(self, TEST_LIST, editable=True,
 										cmd=self.test_comboentry2)
 		self.pack(self.comboentry2)
 

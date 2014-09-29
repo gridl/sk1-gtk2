@@ -41,7 +41,7 @@ class PageFormatPlugin(GenericPlugin):
 
 		self.formats = PAGE_FORMAT_NAMES + [_('Custom'), ]
 
-		self.combo = wal.ComboBoxEntry(self, self.formats, editable=False,
+		self.combo = wal.ComboBoxEntry(self, self.formats,
 									cmd=self.combo_changed)
 		self.pack(self.combo, padding=2)
 
