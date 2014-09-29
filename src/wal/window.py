@@ -19,7 +19,7 @@ import sys
 
 import gtk, gconst
 
-from actions import AppAction, AppToggleAction, AppModeAction
+from actions import AppAction, AppToggleAction, AppRadioAction
 from boxes import VBox, HBox
 
 
@@ -72,7 +72,7 @@ class MainWindow(gtk.Window):
 		self.actions = {}
 		for entry in entries:
 			if entry[0] < 100:
-				action = AppModeAction(*entry)
+				action = AppRadioAction(*entry)
 			elif len(entry) == 8:
 				action = AppAction(*entry)
 			else:

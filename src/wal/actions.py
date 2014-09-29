@@ -73,7 +73,7 @@ class AppToggleAction(gtk.ToggleAction):
 		self.set_sensitive(self.validator())
 		self.set_active(self.checker())
 
-class AppModeAction(gtk.RadioAction):
+class AppRadioAction(gtk.RadioAction):
 
 	def __init__(self, action_id, label, tooltip, icon, shortcut,
 				 callback, channels, validator, checker, args=[]):
