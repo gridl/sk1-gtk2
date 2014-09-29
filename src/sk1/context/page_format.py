@@ -20,7 +20,6 @@ import wal
 from uc2.uc2const import PAGE_FORMATS, PAGE_FORMAT_NAMES, PORTRAIT, LANDSCAPE
 
 from sk1 import _, events
-from sk1.widgets import SimpleListCombo
 from sk1.parts import UnitSpin
 from sk1.context.generic import GenericPlugin
 
@@ -42,8 +41,8 @@ class PageFormatPlugin(GenericPlugin):
 
 		self.formats = PAGE_FORMAT_NAMES + [_('Custom'), ]
 
-		self.combo = SimpleListCombo(self.formats, cmd=self.combo_changed)
-		self.pack(self.combo.vbox, padding=2)
+		self.combo = wal.ComboBoxText(self, self.formats, cmd=self.combo_changed)
+		self.pack(self.combo, padding=2)
 
 		self.width_spin = UnitSpin(self.width_spin_changed)
 		self.pack(self.width_spin, padding=2)

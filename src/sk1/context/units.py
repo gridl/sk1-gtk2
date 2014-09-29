@@ -20,7 +20,6 @@ import wal
 from uc2.uc2const import unit_names, unit_full_names
 
 from sk1 import _, config, events
-from sk1.widgets import SimpleListCombo
 from sk1.context.generic import GenericPlugin
 
 class UnitsPlugin(GenericPlugin):
@@ -38,9 +37,9 @@ class UnitsPlugin(GenericPlugin):
 		for item in unit_names:
 			names.append(unit_full_names[item])
 
-		self.combo = SimpleListCombo(names, cmd=self.combo_changed)
+		self.combo = wal.ComboBoxText(self, names, cmd=self.combo_changed)
 		self.combo.set_active(unit_names.index(config.default_unit))
-		self.pack_start(self.combo.vbox, False, False, 2)
+		self.pack(self.combo, padding=2)
 
 	def config_changed(self, *args):
 		if not config.default_unit == unit_names[self.combo.get_active()]:
