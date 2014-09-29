@@ -70,6 +70,8 @@ class HidableVBox(VBox):
 			self.visibility = False
 			self.show_all()
 
+	def get_visible(self): return self.visibility
+
 class HidableHBox(HBox):
 
 	visibility = True
@@ -95,6 +97,8 @@ class HidableHBox(HBox):
 			HBox.remove(self, self.box)
 			self.visibility = False
 			self.show_all()
+
+	def get_visible(self): return self.visibility
 
 class HidableVArea(VBox):
 
@@ -130,6 +134,8 @@ class HidableVArea(VBox):
 			VBox.pack(self, self.box2, True, True)
 			self.visibility = False
 			self.show_all()
+
+	def get_visible(self): return self.visibility
 
 
 
