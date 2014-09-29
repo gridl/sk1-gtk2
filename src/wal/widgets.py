@@ -200,13 +200,13 @@ class ColorButton(gtk.ColorButton):
 
 	def rgb_to_gdk_hexcolor(self, color):
 		r, g, b = color
-		return '#%02x%02x%02x' % (r * 65535.0, g * 65535.0, b * 65535.0)
+		return '#%04x%04x%04x' % (r * 65535.0, g * 65535.0, b * 65535.0)
 
 	def gdk_hexcolor_to_rgb(self, hexcolor):
 		r = int(hexcolor[1:5], 0x10) / 65535.0
 		g = int(hexcolor[5:9], 0x10) / 65535.0
 		b = int(hexcolor[9:], 0x10) / 65535.0
-		return [r, g, b]
+		return (r, g, b)
 
 	def set_color(self, color):
 		color = gtk.gdk.Color(self.rgb_to_gdk_hexcolor(color))
@@ -214,7 +214,7 @@ class ColorButton(gtk.ColorButton):
 
 	def get_color(self):
 		color = gtk.ColorButton.get_color(self)
-		return tuple(self.gdk_hexcolor_to_rgb(color.to_string()))
+		return self.gdk_hexcolor_to_rgb(color.to_string())
 
 	def set_sensitive(self, val): gtk.ColorButton.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.ColorButton.get_sensitive(self)
