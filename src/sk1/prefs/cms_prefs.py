@@ -20,7 +20,6 @@ import gtk, wal
 
 from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, \
 COLOR_GRAY, COLOR_DISPLAY
-from uc2.cms import gdk_hexcolor_to_rgb
 from uc2 import uc2const
 
 from sk1 import _, config
@@ -248,13 +247,8 @@ class SettingsTab(PrefsTab):
 		self.alarm_label = gtk.Label('Alarm color:')
 		hbox.pack_start(self.alarm_label, False, False, 5)
 
-		self.cb = gtk.ColorButton()
-		self.cb.connect('color-set', self.update_vals)
-		self.cb.set_size_request(100, -1)
-		self.cb.set_title(_('Select alarm color'))
-		r, g, b = self.alarmcodes
-		color = '#%02x%02x%02x' % (r, g, b)
-		self.cb.set_color(gtk.gdk.Color(color))
+		self.cb = wal.ColorButton(hbox, self.alarmcodes,
+								_('Select alarm color'), cmd=self.update_vals)
 		hbox.pack_start(self.cb, False, False, 5)
 
 		vbox.pack_start(hbox, True, True, 0)
@@ -301,9 +295,7 @@ class SettingsTab(PrefsTab):
 		if self.proof_flag:
 			self.alarm_label.set_sensitive(self.gamutcheck_flag)
 			self.cb.set_sensitive(self.gamutcheck_flag)
-		r, g, b = self.alarmcodes
-		color = '#%02x%02x%02x' % (r, g, b)
-		self.cb.set_color(gtk.gdk.Color(color))
+		self.cb.set_color(self.alarmcodes)
 		self.spot_check.set_active(self.spot_flag)
 		self.bpc_check.set_active(self.bpc_flag)
 		self.bpt_check.set_active(self.bpt_flag)
@@ -315,9 +307,7 @@ class SettingsTab(PrefsTab):
 			self.cmyk_intent = self.cmyk_intent_combo.get_active()
 			self.proof_flag = self.printer_check.get_active()
 			self.gamutcheck_flag = self.gamut_check.get_active()
-			r, g, b = gdk_hexcolor_to_rgb(self.cb.get_color().to_string())
-			r = int(r * 255);g = int(g * 255);b = int(b * 255)
-			self.alarmcodes = (r, g, b)
+			self.alarmcodes = self.cb.get_color()
 			self.spot_flag = self.spot_check.get_active()
 			self.bpc_flag = self.bpc_check.get_active()
 			self.bpt_flag = self.bpt_check.get_active()

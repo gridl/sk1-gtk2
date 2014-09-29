@@ -74,20 +74,27 @@ class Image(gtk.Image):
 		self.master = master
 		gtk.Image.__init__(self)
 		self.set_from_pixbuf(rc.get_pixbuf(image_id, size))
+	def set_sensitive(self, val): gtk.Image.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.Image.get_sensitive(self)
 
 class ActiveImage(gtk.EventBox):
+
+	image = None
 
 	def __init__(self, master, image_id, size=rc.FIXED16, tooltip='', cmd=None):
 		self.master = master
 		self.cmd = cmd
 		gtk.EventBox.__init__(self)
-		self.add(Image(self, image_id, size))
+		self.image = Image(self, image_id, size)
+		self.add(self.image)
 		if tooltip: self.set_tooltip_text(tooltip)
 		if cmd: self.connect('button-press-event', self._mouse_pressed)
 
 	def _mouse_pressed(self, widget, event):
 		if event.button == gconst.LEFT_BUTTON:self.cmd(gconst.LEFT_BUTTON)
 		if event.button == gconst.RIGHT_BUTTON:self.cmd(gconst.RIGHT_BUTTON)
+	def set_sensitive(self, val): self.image.set_sensitive(self, val)
+	def get_sensitive(self): return self.image.get_sensitive(self)
 
 class Button(gtk.Button):
 
@@ -104,9 +111,6 @@ class Button(gtk.Button):
 			self.connect(gconst.EVENT_BUTTON_RELEASE, self._mouse_released)
 		if flat:self.set_property(gconst.PROP_RELIEF, gtk.RELIEF_NONE)
 
-	def set_sensitive(self, val): gtk.Button.set_sensitive(self, val)
-	def get_sensitive(self): return gtk.Button.get_sensitive(self)
-
 	def _mouse_pressed(self, widget, event):
 		if not event.button == gconst.LEFT_BUTTON: return
 		if not self.timer_id:
@@ -121,6 +125,9 @@ class Button(gtk.Button):
 		if self.timer_id:
 			gobject.source_remove(self.timer_id)
 			self.timer_id = None
+
+	def set_sensitive(self, val): gtk.Button.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.Button.get_sensitive(self)
 
 class ImgButton(Button):
 
@@ -179,6 +186,9 @@ class CheckButton(gtk.CheckButton):
 		self.set_active(state)
 		if cmd: self.connect(gconst.EVENT_TOGGLED, cmd)
 
+	def set_sensitive(self, val): gtk.CheckButton.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.CheckButton.get_sensitive(self)
+
 class ColorButton(gtk.ColorButton):
 
 	def __init__(self, master, color, title='', cmd=None):
@@ -206,6 +216,9 @@ class ColorButton(gtk.ColorButton):
 		color = gtk.ColorButton.get_color(self)
 		return tuple(self.gdk_hexcolor_to_rgb(color.to_string()))
 
+	def set_sensitive(self, val): gtk.ColorButton.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.ColorButton.get_sensitive(self)
+
 class ComboBoxText(gtk.ComboBox):
 
 	def __init__(self, master, listdata=[], cmd=None):
@@ -229,6 +242,8 @@ class ComboBoxText(gtk.ComboBox):
 
 	def get_active(self):return gtk.ComboBox.get_active(self)
 	def set_active(self, index):gtk.ComboBox.set_active(self, index)
+	def set_sensitive(self, val): gtk.ComboBox.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.ComboBox.get_sensitive(self)
 
 class ComboBoxEntry(gtk.ComboBoxEntry):
 
@@ -273,6 +288,8 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 
 	def get_active(self):return gtk.ComboBoxEntry.get_active(self)
 	def set_active(self, index):gtk.ComboBoxEntry.set_active(self, index)
+	def set_sensitive(self, val): gtk.ComboBoxEntry.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.ComboBoxEntry.get_sensitive(self)
 
 
 
