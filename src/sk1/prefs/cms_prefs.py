@@ -25,7 +25,6 @@ from uc2 import uc2const
 
 from sk1 import _, config, const
 from sk1.widgets import PangoLabel
-from sk1.widgets import CheckButton
 from sk1.prefs.generic import GenericPrefsPlugin
 from sk1.prefs.profilemngr import get_profiles_dialog
 from sk1.rc import IMG_PREFS_CMS_BANNER, IMG_PREFS_CMS, get_pixbuf
@@ -102,7 +101,7 @@ class CMSTab(PrefsTab):
 
 		hbox = gtk.HBox()
 		txt = _('Activate Color Management')
-		self.cms_check = CheckButton(txt, self.use_cms, self.changes)
+		self.cms_check = wal.CheckButton(hbox, txt, self.use_cms, self.changes)
 		hbox.pack_start(self.cms_check, False, True, 10)
 		self.pack_start(hbox, False, True, 10)
 
@@ -236,14 +235,15 @@ class SettingsTab(PrefsTab):
 		#Printer simulation
 		printer_frame = gtk.Frame()
 		txt = _('Simulate Printer on the Screen')
-		self.printer_check = CheckButton(txt, True, self.update_vals)
+		self.printer_check = wal.CheckButton(printer_frame, txt, True,
+											self.update_vals)
 		printer_frame.set_label_widget(self.printer_check)
 
 		vbox = gtk.VBox()
 		vbox.set_border_width(10)
 		printer_frame.add(vbox)
 		txt = _('Show colors that are out of the printer gamut')
-		self.gamut_check = CheckButton(txt, cmd=self.update_vals)
+		self.gamut_check = wal.CheckButton(vbox, txt, cmd=self.update_vals)
 		vbox.pack_start(self.gamut_check, True, True, 0)
 
 		hbox = gtk.HBox()
@@ -262,18 +262,18 @@ class SettingsTab(PrefsTab):
 		vbox.pack_start(hbox, True, True, 0)
 
 		txt = _('Separation for SPOT colors')
-		self.spot_check = CheckButton(txt, cmd=self.update_vals)
+		self.spot_check = wal.CheckButton(vbox, txt, cmd=self.update_vals)
 		vbox.pack_start(self.spot_check, False, True, 5)
 
 		self.pack_start(printer_frame, False, True, 0)
 
 		#Flags
 		txt = _('Use Blackpoint Compensation')
-		self.bpc_check = CheckButton(txt, cmd=self.update_vals)
+		self.bpc_check = wal.CheckButton(self, txt, cmd=self.update_vals)
 		self.pack_start(self.bpc_check, False, True, 5)
 
 		txt = _('Use Black preserving transforms')
-		self.bpt_check = CheckButton(txt, cmd=self.update_vals)
+		self.bpt_check = wal.CheckButton(self, txt, cmd=self.update_vals)
 		self.pack_start(self.bpt_check, False, True, 0)
 
 		self.update_widgets()

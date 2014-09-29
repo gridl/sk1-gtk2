@@ -19,23 +19,6 @@ import gtk, gobject, gconst
 
 from uc2.cms import gdk_hexcolor_to_rgb, rgb_to_gdk_hexcolor
 
-class VLine(gtk.VSeparator):
-
-	def __init__(self):
-		gtk.VSeparator.__init__(self)
-
-class HLine(gtk.HSeparator):
-
-	def __init__(self):
-		gtk.HSeparator.__init__(self)
-
-class CheckButton(gtk.CheckButton):
-
-	def __init__(self, text, state=False, cmd=None):
-		gtk.CheckButton.__init__(self, text)
-		self.set_active(state)
-		if cmd: self.connect(gconst.EVENT_TOGGLED, cmd)
-
 class SpinButton(gtk.SpinButton):
 
 	def __init__(self, val=0.0, valrange=[0.0, 1.0], step_incr=0.1, cmd=None):

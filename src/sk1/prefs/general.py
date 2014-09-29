@@ -15,18 +15,17 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import wal
 
 from sk1 import _, config
 from sk1.prefs.generic import GenericPrefsPlugin
-from sk1.widgets import CheckButton
 
 class GeneralPlugin(GenericPrefsPlugin):
 
 	name = 'GeneralPlugin'
 	title = _('General Application Preferences')
 	short_title = _('General')
-	icon_stock = gtk.STOCK_PROPERTIES
+	icon_stock = wal.STOCK_PROPERTIES
 
 	def __init__(self, app, dlg, fmt_config):
 		GenericPrefsPlugin.__init__(self, app, dlg, fmt_config)
@@ -35,15 +34,15 @@ class GeneralPlugin(GenericPrefsPlugin):
 		GenericPrefsPlugin.build(self)
 
 		txt = _('Create new document on start')
-		self.newdoc_check = CheckButton(txt, config.new_doc_on_start)
+		self.newdoc_check = wal.CheckButton(self, txt, config.new_doc_on_start)
 		self.pack_start(self.newdoc_check, False, True, 5)
 
 		txt = _('Store application window size')
-		self.winsize_check = CheckButton(txt, config.mw_store_size)
+		self.winsize_check = wal.CheckButton(self, txt, config.mw_store_size)
 		self.pack_start(self.winsize_check, False, True, 5)
 
 		txt = _('Maximize application window on start')
-		self.maxwin_check = CheckButton(txt, config.mw_keep_maximized)
+		self.maxwin_check = wal.CheckButton(self, txt, config.mw_keep_maximized)
 		self.pack_start(self.maxwin_check, False, True, 5)
 
 	def apply_changes(self):
