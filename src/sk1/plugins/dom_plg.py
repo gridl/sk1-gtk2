@@ -16,17 +16,17 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import gtk
+import gtk, wal
 
 from uc2.formats.sk1 import model
-from sk1 import _, events, config, rc
+from sk1 import _, events, config
 from sk1.plugins.plg_caption import PluginTabCaption
 
 class DOMPlugin(gtk.VBox):
 
 	name = 'DOMPlugin'
 	title = _('Object browser')
-	icon = rc.STOCK_PLUGIN_DOM_VIEWER
+	icon = wal.STOCK_PLUGIN_DOM_VIEWER
 	loaded = False
 	active = False
 

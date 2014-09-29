@@ -15,17 +15,17 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import gtk, wal
 
 
-from sk1 import _, rc
+from sk1 import _
 from sk1.plugins.plg_caption import PluginTabCaption
 
 class PagesPlugin(gtk.VBox):
 
 	name = 'PagesPlugin'
 	title = _('Pages roll')
-	icon = rc.STOCK_PLUGIN_PAGES
+	icon = wal.STOCK_PLUGIN_PAGES
 	loaded = False
 	active = False
 

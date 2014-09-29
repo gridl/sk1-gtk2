@@ -15,16 +15,16 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import gtk, wal
 
-from sk1 import _, rc
+from sk1 import _
 from sk1.plugins.plg_caption import PluginTabCaption
 
 class LayersPlugin(gtk.VBox):
 
 	name = 'LayersPlugin'
 	title = _('Layers')
-	icon = rc.STOCK_PLUGIN_LAYERS
+	icon = wal.STOCK_PLUGIN_LAYERS
 	loaded = False
 	active = False
 
