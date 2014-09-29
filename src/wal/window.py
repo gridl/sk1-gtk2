@@ -71,15 +71,16 @@ class MainWindow(gtk.Window):
 		self.modegroup = None
 		self.actions = {}
 		for entry in entries:
-			if entry[0] < 100:
+			action_id = entry[0]
+			if action_id < 100:
 				action = AppRadioAction(*entry)
-			elif len(entry) == 8:
+			elif action_id < 1000:
 				action = AppAction(*entry)
 			else:
 				action = AppToggleAction(*entry)
 
 			self.actions[entry[0]] = action
-			if entry[0] < 100:
+			if action_id < 100:
 				if self.modegroup is None:
 					self.modegroup = action
 				else:

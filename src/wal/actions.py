@@ -44,6 +44,9 @@ class AppAction(gtk.Action):
 	def receiver(self, *args):
 		self.set_sensitive(self.validator())
 
+	def is_radio(self): return False
+	def is_toggle(self): return False
+
 class AppToggleAction(gtk.ToggleAction):
 
 	def __init__(self, action_id, label, tooltip, icon, shortcut,
@@ -72,6 +75,9 @@ class AppToggleAction(gtk.ToggleAction):
 	def receiver(self, *args):
 		self.set_sensitive(self.validator())
 		self.set_active(self.checker())
+
+	def is_radio(self): return False
+	def is_toggle(self): return True
 
 class AppRadioAction(gtk.RadioAction):
 
@@ -106,3 +112,6 @@ class AppRadioAction(gtk.RadioAction):
 	def do_action(self, *args):
 		if self.get_active() and not self.checker(self.action_id):
 			self.callback(self.action_id)
+
+	def is_radio(self): return True
+	def is_toggle(self): return False
