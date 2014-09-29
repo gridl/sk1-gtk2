@@ -24,7 +24,7 @@ from uc2.cms import gdk_hexcolor_to_rgb
 from uc2 import uc2const
 
 from sk1 import _, config, const
-from sk1.widgets import ImageStockButton, PangoLabel
+from sk1.widgets import PangoLabel
 from sk1.widgets import CheckButton
 from sk1.prefs.generic import GenericPrefsPlugin
 from sk1.prefs.profilemngr import get_profiles_dialog
