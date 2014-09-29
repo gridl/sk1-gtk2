@@ -17,7 +17,7 @@
 
 import sys
 
-import gtk, gconst
+import gtk, gconst, rc
 
 from actions import AppAction, AppToggleAction, AppRadioAction
 from boxes import VBox, HBox
@@ -91,3 +91,64 @@ class MainWindow(gtk.Window):
 			else:
 				self.actiongroup.add_action(action)
 		self.add_accel_group(self.accelgroup)
+
+
+class MW_Toolbar(gtk.Toolbar):
+
+	def __init__(self, master):
+		self.master = master
+		self.actions = master.actions
+		gtk.Toolbar.__init__(self)
+		self.set_style(gtk.TOOLBAR_ICONS)
+		self.build()
+		master.pack(self)
+
+	def build(self):pass
+
+	def add_toolbar_items(self, entries):
+		index = 0
+		for entry in entries:
+			if entry is None:
+				button = gtk.SeparatorToolItem()
+			else:
+				action = self.actions[entry]
+				button = action.create_tool_item()
+			self.insert(button, index)
+			index += 1
+
+
+class MW_Menu(gtk.MenuBar):
+
+	def __init__(self, master):
+		self.master = master
+		self.actions = master.actions
+		gtk.MenuBar.__init__(self)
+		self.build()
+		master.pack(self)
+
+	def build(self):pass
+
+	def create_menu(self, text):
+		menu = gtk.Menu()
+		item = gtk.MenuItem(text)
+		item.set_submenu(menu)
+		return item, menu
+
+	def add_items(self, parent, items):
+		for item in items:
+			if item is None:
+				parent.append(gtk.SeparatorMenuItem())
+			elif isinstance(item, int):
+				action = self.actions[item]
+				if action.is_toggle() or not action.icon:
+					menuitem = action.create_menu_item()
+				else:
+					menuitem = gtk.ImageMenuItem()
+					menuitem.set_label(action.get_label())
+					menuitem.set_image(rc.get_image(action.icon, rc.FIXED16))
+					menuitem.set_accel_path(action.get_accel_path())
+					action.connect_proxy(menuitem)
+				action.menuitem = menuitem
+				parent.append(menuitem)
+			else:
+				parent.append(item)

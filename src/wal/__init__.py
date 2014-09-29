@@ -18,10 +18,8 @@
 
 from image_ids import *
 
-from window import MainWindow
+from window import MainWindow, MW_Menu, MW_Toolbar
 from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
-from menu import MW_Menu
-from toolbar import MW_Toolbar
 from widgets import HLine, VLine, Button, ImgButton, ActionButton
 from widgets import Label, DecorLabel, Image, ActiveImage, CheckButton
 from widgets import ToggleButton, ImgToggleButton, ActionToggleButton
