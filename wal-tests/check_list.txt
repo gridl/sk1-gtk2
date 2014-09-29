@@ -4,9 +4,9 @@ AppToggleAction
 AppRadioAction
 x	HBox
 x	VBox
-HidableHBox
-HidableVBox
-HidableVArea
+x	HidableHBox
+x	HidableVBox
+x	HidableVArea
 MW_Menu
 MW_Toolbar
 x	HLine
