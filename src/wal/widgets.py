@@ -167,6 +167,14 @@ class ActionToggleButton(ToggleButton):
 		if flat:self.set_property(gconst.PROP_RELIEF, gtk.RELIEF_NONE)
 		action.connect_proxy(self)
 
+class CheckButton(gtk.CheckButton):
+
+	def __init__(self, master, text, state=False, cmd=None):
+		self.master = master
+		gtk.CheckButton.__init__(self, text)
+		self.set_active(state)
+		if cmd: self.connect(gconst.EVENT_TOGGLED, cmd)
+
 class ComboBoxText(gtk.ComboBox):
 
 	def __init__(self, master, listdata=[], cmd=None):

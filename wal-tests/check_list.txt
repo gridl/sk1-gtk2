@@ -13,6 +13,7 @@ x	DecorLabel
 x	Image
 x	ActiveImage
 x	ToggleButton
+x	CheckButton
 x	ImgToggleButton
 x	ComboBoxText
 AppAction
