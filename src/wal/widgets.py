@@ -68,6 +68,7 @@ class DecorLabel(Label):
 	def get_text(self): return self.text
 
 class Image(gtk.Image):
+
 	def __init__(self, master, image_id, size=rc.FIXED16):
 		self.master = master
 		gtk.Image.__init__(self)
@@ -150,6 +151,7 @@ class ImgToggleButton(ToggleButton):
 		if tooltip:self.set_tooltip_text(tooltip)
 
 class ActionButton(Button):
+
 	def __init__(self, master, action, image_size=rc.FIXED16, flat=True):
 		Button.__init__(self, master)
 		if action.icon:
@@ -159,6 +161,7 @@ class ActionButton(Button):
 		action.connect_proxy(self)
 
 class ActionToggleButton(ToggleButton):
+
 	def __init__(self, master, action, image_size=rc.FIXED16, flat=True):
 		ToggleButton.__init__(self, master)
 		if action.icon:
