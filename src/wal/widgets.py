@@ -45,7 +45,7 @@ class DecorLabel(Label):
 	text = ''
 	markup = ''
 
-	def __init__(self, master, text='', size='', bold=False,
+	def __init__(self, master, text='', size=0, bold=False,
 				italic=False, enabled=True, wrap=False):
 		self.text = text
 		Label.__init__(self, master)
@@ -66,6 +66,7 @@ class DecorLabel(Label):
 		self.set_markup(self.markup % (text))
 
 	def get_text(self): return self.text
+	def set_width(self, width):self.set_size_request(width, -1)
 
 class Image(gtk.Image):
 

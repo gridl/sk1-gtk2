@@ -15,7 +15,6 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from generic import PangoLabel
 from generic import SpinButton, SpinButtonInt, ColorButton
 from imagewidgets import ImageStockButton
 from imagewidgets import KeepRatioLabel

@@ -23,8 +23,7 @@ COLOR_GRAY, COLOR_DISPLAY
 from uc2.cms import gdk_hexcolor_to_rgb
 from uc2 import uc2const
 
-from sk1 import _, config, const
-from sk1.widgets import PangoLabel
+from sk1 import _, config
 from sk1.prefs.generic import GenericPrefsPlugin
 from sk1.prefs.profilemngr import get_profiles_dialog
 from sk1.rc import IMG_PREFS_CMS_BANNER, IMG_PREFS_CMS, get_pixbuf
@@ -112,13 +111,12 @@ class CMSTab(PrefsTab):
 		self.pack_start(self.container, True, True, 0)
 
 		hbox = gtk.HBox()
-		txt = _('<b>Note:</b> If Color Management is not activated all colors '
+		txt = _('Note: If Color Management is not activated all colors '
 			'will be processed using simple calculation procedures. Therefore '
 			'resulted color values will be not accurate.')
-		note = PangoLabel(txt, const.TXT_SMALL, enabled=False, wrap=True)
-		note.set_alignment(0, 1)
-		note.set_size_request(450, -1)
-		hbox.pack_start(note, False, True, 10)
+		note = wal.DecorLabel(hbox, txt, -1, enabled=False, wrap=True)
+		note.set_width(450)
+		hbox.pack_start(note, True, True, 10)
 		self.pack_start(hbox, False, True, 10)
 
 
@@ -354,7 +352,7 @@ class ProfilesTab(PrefsTab):
 	def __init__(self, app, dlg, fmt_config):
 		PrefsTab.__init__(self, app, dlg, fmt_config)
 
-		title = PangoLabel(_('Document related profiles'), bold=True)
+		title = wal.DecorLabel(self, _('Document related profiles'), bold=True)
 		self.pack_start(title, False, False, 0)
 		self.pack_start(gtk.HSeparator(), False, False, 5)
 
@@ -389,7 +387,7 @@ class ProfilesTab(PrefsTab):
 
 			index += 1
 
-		title = PangoLabel(_('Application related profile'), bold=True)
+		title = wal.DecorLabel(tab, _('Application related profile'), bold=True)
 		tab.attach(title, 0, 3, 5, 6, gtk.FILL, gtk.SHRINK)
 		line = wal.HLine(tab)
 		tab.attach(line, 0, 3, 6, 7, gtk.FILL, gtk.SHRINK)
@@ -407,14 +405,13 @@ class ProfilesTab(PrefsTab):
 		button = ManageButton(tab, self, colorspace)
 		tab.attach(button, 2, 3, 7, 8, gtk.SHRINK, gtk.SHRINK)
 
-		text = _('<b>Note:</b> Display profile affects on '
+		text = _('Note: Display profile affects on '
 				'document screen representation only. The profile for your '
 				'hardware you can get either from monitor manufacture or '
 				'calibrating monitor (prefered option) or download '
-				'from ICC Profile Taxi service http://icc.opensuse.org/')
-		note = PangoLabel(text, const.TXT_SMALL, enabled=False, wrap=True)
-		note.set_alignment(0, 1)
-		note.set_size_request(430, -1)
+				'from ICC Profile Taxi service:\n http://icc.opensuse.org/')
+		note = wal.DecorLabel(tab, text, -1, enabled=False, wrap=True)
+		note.set_width(430)
 		tab.attach(note, 0, 2, 8, 9, gtk.FILL | gtk.EXPAND, gtk.SHRINK)
 
 		button = TaxiButton(tab, self.app)

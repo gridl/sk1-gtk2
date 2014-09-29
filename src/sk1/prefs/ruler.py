@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, os, cairo
+import gtk, os, cairo, wal
 
 from sk1 import _, config, rc, const
 from sk1.prefs.generic import GenericPrefsPlugin
@@ -122,7 +122,7 @@ class RulerPlugin(GenericPrefsPlugin):
 		self.pack_start(tab, False, False, 0)
 
 		#--- Testing ruler
-		al = PangoLabel(_('Testing ruler:'), bold=True)
+		al = wal.DecorLabel(self, _('Testing ruler:'), bold=True)
 		self.pack_start(al, False, False, 20)
 
 		self.pack_start(gtk.HSeparator(), False, False, 0)

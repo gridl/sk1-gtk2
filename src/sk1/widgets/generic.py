@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, gobject, gconst
+import gtk, gconst
 
 from uc2.cms import gdk_hexcolor_to_rgb, rgb_to_gdk_hexcolor
 
@@ -52,41 +52,3 @@ class ColorButton(gtk.ColorButton):
 	def get_color(self):
 		color = gtk.ColorButton.get_color(self)
 		return tuple(gdk_hexcolor_to_rgb(color.to_string()))
-
-class PangoLabel(gtk.Label):
-
-	def __init__(self, text='', size='', bold=False,
-				italic=False, enabled=True, wrap=False):
-		gtk.Label.__init__(self)
-		markup = '%s'
-		if italic:markup = '<i>%s</i>' % (markup)
-		if bold:markup = '<b>%s</b>' % (markup)
-		if size:markup = '<span size="%s">%s</span>' % (size, markup)
-		self.markup = markup
-		self.set_markup(markup % (text))
-		if not enabled: self.set_sensitive(False)
-		if wrap: self.set_line_wrap(True)
-
-	def set_text(self, text):
-		self.set_markup(self.markup % (text))
-
-class SimpleListCombo(gtk.ComboBox):
-
-	def __init__(self, listdata=[], cmd=None):
-		self.vbox = gtk.VBox(homogeneous=True)
-		self.liststore = gtk.ListStore(gobject.TYPE_STRING)
-		gtk.ComboBox.__init__(self, self.liststore)
-		cell = gtk.CellRendererText()
-		self.pack_start(cell, True)
-		self.add_attribute(cell, 'text', 0)
-		self.set_list(listdata)
-		self.vbox.pack_start(self, False, False, 0)
-		if cmd: self.connect(gconst.EVENT_CHANGED, cmd)
-
-	def clear(self):
-		self.liststore.clear()
-
-	def set_list(self, datalist=[]):
-		if datalist:
-			for item in datalist:
-				self.append_text(item)
