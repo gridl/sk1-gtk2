@@ -40,7 +40,7 @@ class MW_Menu(gtk.MenuBar):
 				parent.append(gtk.SeparatorMenuItem())
 			elif isinstance(item, int):
 				action = self.actions[item]
-				if not action.icon:
+				if action.is_toggle() or not action.icon:
 					menuitem = action.create_menu_item()
 				else:
 					menuitem = gtk.ImageMenuItem()
