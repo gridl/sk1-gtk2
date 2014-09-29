@@ -219,9 +219,12 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 		self.liststore.clear()
 
 	def set_list(self, datalist=[]):
+		maxsize = 1
 		if datalist:
 			for item in datalist:
 				self.append_text(item)
+				maxsize = max(len(item), maxsize)
+		self.set_size_request(max(maxsize * 10, 65), -1)
 
 	def get_text(self):
 		return self.child.get_text()
