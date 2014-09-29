@@ -11,7 +11,7 @@ class MW(wal.MainWindow):
 						tooltip='test', cmd=self.test)
 		hbox.pack(but, padding=10)
 
-		but = wal.ImgButton(hbox, wal.IMG_PALETTE_DOUBLE_ARROW_BOTTOM,
+		but = wal.ImgButton(hbox, wal.STOCK_EDIT,
 						tooltip='test', cmd=self.test, flat=True)
 		hbox.pack(but, padding=10)
 		self.pack(hbox)

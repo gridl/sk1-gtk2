@@ -50,6 +50,7 @@ def get_pixbuf(image_id, size=FIXED16):
 def get_stock_image(image_id, size=FIXED16):
 	image = gtk.Image()
 	image.set_from_pixbuf(get_stock_pixbuf(image_id, size))
+	return image
 
 def get_image(image_id, size=FIXED16):
 	if image_id[:4] == 'sk1-':
@@ -58,4 +59,3 @@ def get_image(image_id, size=FIXED16):
 		return image
 	else:
 		return get_stock_image(image_id, size)
-	return image

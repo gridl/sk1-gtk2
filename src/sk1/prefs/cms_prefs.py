@@ -16,7 +16,7 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import copy
-import gtk
+import gtk, wal
 
 from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, \
 COLOR_GRAY, COLOR_DISPLAY
@@ -24,7 +24,7 @@ from uc2.cms import gdk_hexcolor_to_rgb
 from uc2 import uc2const
 
 from sk1 import _, config, const
-from sk1.widgets import SimpleListCombo, ImageStockButton, PangoLabel
+from sk1.widgets import ImageStockButton, PangoLabel
 from sk1.widgets import CheckButton
 from sk1.prefs.generic import GenericPrefsPlugin
 from sk1.prefs.profilemngr import get_profiles_dialog
@@ -216,18 +216,18 @@ class SettingsTab(PrefsTab):
 
 		label = gtk.Label(_('Display/RGB intent:'))
 		tab.attach(label, 0, 1, 0, 1, gtk.SHRINK, gtk.SHRINK)
-		self.rgb_intent_combo = SimpleListCombo(self.intents_names,
+		self.rgb_intent_combo = wal.ComboBoxText(tab, self.intents_names,
 											cmd=self.update_vals)
 		self.rgb_intent_combo.set_active(config.cms_rgb_intent)
-		tab.attach(self.rgb_intent_combo.vbox, 1, 2, 0, 1, gtk.SHRINK,
+		tab.attach(self.rgb_intent_combo, 1, 2, 0, 1, gtk.SHRINK,
 				gtk.SHRINK)
 
 		label = gtk.Label(_('Printer/CMYK intent:'))
 		tab.attach(label, 0, 1, 1, 2, gtk.SHRINK, gtk.SHRINK)
-		self.cmyk_intent_combo = SimpleListCombo(self.intents_names,
+		self.cmyk_intent_combo = wal.ComboBoxText(tab, self.intents_names,
 												cmd=self.update_vals)
 		self.cmyk_intent_combo.set_active(config.cms_cmyk_intent)
-		tab.attach(self.cmyk_intent_combo.vbox, 1, 2, 1, 2, gtk.SHRINK,
+		tab.attach(self.cmyk_intent_combo, 1, 2, 1, 2, gtk.SHRINK,
 				gtk.SHRINK)
 
 		intent_frame.add(tab)
@@ -378,20 +378,20 @@ class ProfilesTab(PrefsTab):
 			label.set_alignment(0, 0.5)
 			tab.attach(label, 0, 1, index, index + 1, gtk.FILL, gtk.SHRINK)
 
-			combo = SimpleListCombo()
+			combo = wal.ComboBoxText(tab)
 			self.cs_widgets[colorspace] = combo
-			tab.attach(combo.vbox, 1, 2, index, index + 1,
+			tab.attach(combo, 1, 2, index, index + 1,
 					gtk.FILL | gtk.EXPAND, gtk.SHRINK)
 			self.update_combo(colorspace)
 
-			button = ManageButton(self, colorspace)
+			button = ManageButton(tab, self, colorspace)
 			tab.attach(button, 2, 3, index, index + 1, gtk.SHRINK, gtk.SHRINK)
 
 			index += 1
 
 		title = PangoLabel(_('Application related profile'), bold=True)
 		tab.attach(title, 0, 3, 5, 6, gtk.FILL, gtk.SHRINK)
-		line = gtk.HSeparator()
+		line = wal.HLine(tab)
 		tab.attach(line, 0, 3, 6, 7, gtk.FILL, gtk.SHRINK)
 
 		colorspace = COLOR_DISPLAY
@@ -399,12 +399,12 @@ class ProfilesTab(PrefsTab):
 		label.set_alignment(0, 0.5)
 		tab.attach(label, 0, 1, 7, 8, gtk.FILL, gtk.SHRINK)
 
-		combo = SimpleListCombo()
+		combo = wal.ComboBoxText(tab)
 		self.cs_widgets[colorspace] = combo
-		tab.attach(combo.vbox, 1, 2, 7, 8, gtk.FILL | gtk.EXPAND, gtk.SHRINK)
+		tab.attach(combo, 1, 2, 7, 8, gtk.FILL | gtk.EXPAND, gtk.SHRINK)
 		self.update_combo(colorspace)
 
-		button = ManageButton(self, colorspace)
+		button = ManageButton(tab, self, colorspace)
 		tab.attach(button, 2, 3, 7, 8, gtk.SHRINK, gtk.SHRINK)
 
 		text = _('<b>Note:</b> Display profile affects on '
@@ -417,7 +417,7 @@ class ProfilesTab(PrefsTab):
 		note.set_size_request(430, -1)
 		tab.attach(note, 0, 2, 8, 9, gtk.FILL | gtk.EXPAND, gtk.SHRINK)
 
-		button = TaxiButton(self.app)
+		button = TaxiButton(tab, self.app)
 		tab.attach(button, 2, 3, 8, 9, gtk.SHRINK, gtk.SHRINK)
 
 	def update_config_data(self, colorspace):
@@ -489,31 +489,32 @@ class ProfilesTab(PrefsTab):
 			else:
 				config.cms_display_profile = profile_name
 
-class ManageButton(ImageStockButton):
+class ManageButton(wal.ImgButton):
 
 	colorspace = ''
 	owner = None
 
-	def __init__(self, owner, colorspace):
+	def __init__(self, master, owner, colorspace):
 		self.owner = owner
 		self.colorspace = colorspace
-		txt = _('Add/remove %s profiles') % (colorspace)
-		ImageStockButton.__init__(self, gtk.STOCK_EDIT, txt, cmd=self.action)
+		tooltip = _('Add/remove %s profiles') % (colorspace)
+		wal.ImgButton.__init__(self, master, wal.STOCK_EDIT, tooltip=tooltip,
+							cmd=self.action)
 
 	def action(self, *args):
 		get_profiles_dialog(self.owner.app, self.owner.dlg,
 						self.owner, self.colorspace)
 
-class TaxiButton(ImageStockButton):
+class TaxiButton(wal.ImgButton):
 
 	colorspace = ''
 	owner = None
 
-	def __init__(self, app):
+	def __init__(self, master, app):
 		self.app = app
-		txt = _('Download profile from ICC Profile Taxi')
-		image_id = gtk.STOCK_GOTO_BOTTOM
-		ImageStockButton.__init__(self, image_id, txt, cmd=self.action)
+		tooltip = _('Download profile from ICC Profile Taxi')
+		wal.ImgButton.__init__(self, master, wal.STOCK_DOWNLOAD,
+							tooltip=tooltip, cmd=self.action)
 
 	def action(self, *args):
 		self.app.open_url('http://icc.opensuse.org/')
