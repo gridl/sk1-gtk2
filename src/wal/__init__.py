@@ -25,4 +25,4 @@ from toolbar import MW_Toolbar
 from widgets import HLine, VLine, Button, ImgButton, ActionButton
 from widgets import Label, DecorLabel, Image, ActiveImage
 from widgets import ToggleButton, ImgToggleButton, ActionToggleButton
-from widgets import ComboBoxText
+from widgets import ComboBoxText, ComboBoxEntry

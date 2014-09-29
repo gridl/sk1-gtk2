@@ -30,6 +30,7 @@ TXT_LARGER = 'larger'
 
 PROP_RELIEF = 'relief'
 PROP_CAN_FOCUS = 'can-focus'
+PROP_EDITABLE = 'editable'
 
 EVENT_DELETE = 'delete-event'
 EVENT_ACTIVATE = 'activate'

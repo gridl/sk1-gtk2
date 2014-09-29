@@ -19,9 +19,26 @@ class MW(wal.MainWindow):
 		self.combo = wal.ComboBoxText(self, TEST_LIST, cmd=self.test_combo)
 		self.pack(self.combo)
 
+		self.comboentry = wal.ComboBoxEntry(self, TEST_LIST,
+										cmd=self.test_comboentry)
+		self.pack(self.comboentry)
+
+		self.comboentry2 = wal.ComboBoxEntry(self, TEST_LIST, editable=False,
+										cmd=self.test_comboentry2)
+		self.pack(self.comboentry2)
 
 	def test_combo(self, *args):
 		print 'Active index', self.combo.get_active()
+
+	def test_comboentry(self, *args):
+		print 'Active index', self.comboentry.get_active()
+		print 'Active text', self.comboentry.get_text()
+		print 'State', self.comboentry.get_editable()
+
+	def test_comboentry2(self, *args):
+		print 'Active index', self.comboentry2.get_active()
+		print 'Active text', self.comboentry2.get_text()
+		print 'State', self.comboentry2.get_editable()
 
 mw = MW()
 mw.run()

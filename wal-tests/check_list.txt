@@ -1,24 +1,24 @@
 x	MainWindow
-AppAction
-AppToggleAction
-AppRadioAction
 x	HBox
 x	VBox
 x	HidableHBox
 x	HidableVBox
 x	HidableVArea
-MW_Menu
-MW_Toolbar
 x	HLine
 x	VLine
 x	Button
 x	ImgButton
-ActionButton
 x	Label
 x	DecorLabel
 x	Image
 x	ActiveImage
 x	ToggleButton
 x	ImgToggleButton
-ActionToggleButton
 x	ComboBoxText
+AppAction
+AppToggleAction
+AppRadioAction
+ActionButton
+ActionToggleButton
+MW_Menu
+MW_Toolbar

@@ -190,3 +190,59 @@ class ComboBoxText(gtk.ComboBox):
 
 	def get_active(self):return gtk.ComboBox.get_active(self)
 	def set_active(self, index):gtk.ComboBox.set_active(self, index)
+
+class ComboBoxEntry(gtk.ComboBoxEntry):
+
+	callback = None
+
+	def __init__(self, master, listdata=[], editable=True, cmd=None):
+		self.master = master
+		self.callback = cmd
+		self.liststore = gtk.ListStore(gobject.TYPE_STRING)
+		gtk.ComboBoxEntry.__init__(self, self.liststore)
+		self.set_list(listdata)
+		self.set_active(0)
+		if not editable: self.set_editable(False)
+		if cmd: self.child.connect(gconst.EVENT_CHANGED, self._changed)
+
+	def _changed(self, *args): self.callback()
+
+	def set_editable(self, value=True):
+		self.child.set_property(gconst.PROP_EDITABLE, value)
+		self.child.set_property(gconst.PROP_CAN_FOCUS, value)
+		self.set_focus_on_click(value)
+
+	def get_editable(self):
+		return self.child.get_property(gconst.PROP_EDITABLE)
+
+	def clear(self):
+		self.liststore.clear()
+
+	def set_list(self, datalist=[]):
+		if datalist:
+			for item in datalist:
+				self.append_text(item)
+
+	def get_text(self):
+		return self.child.get_text()
+
+	def set_text(self, text):
+		self.child.set_text(text)
+
+	def get_active(self):return gtk.ComboBoxEntry.get_active(self)
+	def set_active(self, index):gtk.ComboBoxEntry.set_active(self, index)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
