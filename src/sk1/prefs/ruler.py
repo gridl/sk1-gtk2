@@ -19,7 +19,7 @@ import gtk, os, cairo, wal
 
 from sk1 import _, config, rc, const
 from sk1.prefs.generic import GenericPrefsPlugin
-from sk1.widgets import SpinButtonInt, ColorButton, PangoLabel
+from sk1.widgets import SpinButtonInt, ColorButton
 
 class RulerPlugin(GenericPrefsPlugin):
 

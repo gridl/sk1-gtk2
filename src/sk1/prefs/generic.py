@@ -15,10 +15,9 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import gtk, wal
 
 from sk1 import const, rc
-from sk1.widgets import PangoLabel
 
 class GenericPrefsPlugin(gtk.VBox):
 
@@ -45,7 +44,7 @@ class GenericPrefsPlugin(gtk.VBox):
 			self.icon = rc.get_stock_pixbuf(self.icon_stock, gtk.ICON_SIZE_MENU)
 
 	def build(self):
-		title = PangoLabel(self.title, const.TXT_LARGE, True)
+		title = wal.DecorLabel(self, self.title, 1, True)
 		self.pack_start(title, False, False, 0)
 		self.pack_start(gtk.HSeparator(), False, False, 5)
 		self.built = True
