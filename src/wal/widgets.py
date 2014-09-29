@@ -179,6 +179,33 @@ class CheckButton(gtk.CheckButton):
 		self.set_active(state)
 		if cmd: self.connect(gconst.EVENT_TOGGLED, cmd)
 
+class ColorButton(gtk.ColorButton):
+
+	def __init__(self, master, color, title='', cmd=None):
+		self.master = master
+		gtk.ColorButton.__init__(self)
+		self.set_color(color)
+		if cmd:self.connect(gconst.EVENT_COLOR_SET, cmd)
+		if title:self.set_title(title)
+
+	def rgb_to_gdk_hexcolor(self, color):
+		r, g, b = color
+		return '#%02x%02x%02x' % (r * 65535.0, g * 65535.0, b * 65535.0)
+
+	def gdk_hexcolor_to_rgb(self, hexcolor):
+		r = int(hexcolor[1:5], 0x10) / 65535.0
+		g = int(hexcolor[5:9], 0x10) / 65535.0
+		b = int(hexcolor[9:], 0x10) / 65535.0
+		return [r, g, b]
+
+	def set_color(self, color):
+		color = gtk.gdk.Color(self.rgb_to_gdk_hexcolor(color))
+		gtk.ColorButton.set_color(self, color)
+
+	def get_color(self):
+		color = gtk.ColorButton.get_color(self)
+		return tuple(self.gdk_hexcolor_to_rgb(color.to_string()))
+
 class ComboBoxText(gtk.ComboBox):
 
 	def __init__(self, master, listdata=[], cmd=None):

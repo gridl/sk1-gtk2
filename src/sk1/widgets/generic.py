@@ -17,8 +17,6 @@
 
 import gtk, gconst
 
-from uc2.cms import gdk_hexcolor_to_rgb, rgb_to_gdk_hexcolor
-
 class SpinButton(gtk.SpinButton):
 
 	def __init__(self, val=0.0, valrange=[0.0, 1.0], step_incr=0.1, cmd=None):
@@ -36,19 +34,3 @@ class SpinButtonInt(SpinButton):
 
 	def get_value(self):
 		return self.get_value_as_int()
-
-class ColorButton(gtk.ColorButton):
-
-	def __init__(self, color, title='', cmd=None):
-		gtk.ColorButton.__init__(self)
-		self.set_color(color)
-		if cmd:self.connect(gconst.EVENT_COLOR_SET, cmd)
-		if title:self.set_title(title)
-
-	def set_color(self, color):
-		color = gtk.gdk.Color(rgb_to_gdk_hexcolor(color))
-		gtk.ColorButton.set_color(self, color)
-
-	def get_color(self):
-		color = gtk.ColorButton.get_color(self)
-		return tuple(gdk_hexcolor_to_rgb(color.to_string()))

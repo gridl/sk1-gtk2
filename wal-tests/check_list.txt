@@ -16,6 +16,7 @@ x	ToggleButton
 x	CheckButton
 x	ImgToggleButton
 x	ComboBoxText
+ColorButton
 AppAction
 AppToggleAction
 AppRadioAction
