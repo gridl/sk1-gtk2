@@ -22,6 +22,9 @@ RIGHT_BUTTON = 3
 KEY_KP_ENTER = 65421
 KEY_RETURN = 65293
 
+RENDERING_DELAY = 50
+DEFAULT_CURSOR = -1
+
 TXT_SMALL = 'small'
 TXT_SMALLER = 'smaller'
 TXT_MEDIUM = 'medium'
@@ -43,3 +46,5 @@ EVENT_TOGGLED = 'toggled'
 EVENT_CHANGED = 'changed'
 EVENT_VALUE_CHANGED = 'value-changed'
 EVENT_COLOR_SET = 'color-set'
+EVENT_KEY_PRESS = 'key_press_event'
+EVENT_FOCUS_OUT = 'focus-out-event'

@@ -24,3 +24,4 @@ from widgets import HLine, VLine, Button, ImgButton, ActionButton
 from widgets import Label, DecorLabel, Image, ActiveImage, CheckButton
 from widgets import ToggleButton, ImgToggleButton, ActionToggleButton
 from widgets import ComboBoxText, ComboBoxEntry, ColorButton
+from widgets import SpinButton, SpinButtonInt

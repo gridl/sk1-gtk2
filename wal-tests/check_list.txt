@@ -6,17 +6,20 @@ x	HidableVBox
 x	HidableVArea
 x	HLine
 x	VLine
-x	Button
-x	ImgButton
 x	Label
 x	DecorLabel
 x	Image
 x	ActiveImage
-x	ToggleButton
 x	CheckButton
+x	Button
+x	ImgButton
+x	ToggleButton
 x	ImgToggleButton
 x	ComboBoxText
-ColorButton
+x	ComboBoxEntry
+x	ColorButton
+SpinButton
+SpinButtonInt
 AppAction
 AppToggleAction
 AppRadioAction

@@ -88,7 +88,7 @@ class ActiveImage(gtk.EventBox):
 		self.image = Image(self, image_id, size)
 		self.add(self.image)
 		if tooltip: self.set_tooltip_text(tooltip)
-		if cmd: self.connect('button-press-event', self._mouse_pressed)
+		if cmd: self.connect(gconst.EVENT_BUTTON_PRESS, self._mouse_pressed)
 
 	def _mouse_pressed(self, widget, event):
 		if event.button == gconst.LEFT_BUTTON:self.cmd(gconst.LEFT_BUTTON)
@@ -198,23 +198,11 @@ class ColorButton(gtk.ColorButton):
 		if cmd:self.connect(gconst.EVENT_COLOR_SET, cmd)
 		if title:self.set_title(title)
 
-	def rgb_to_gdk_hexcolor(self, color):
-		r, g, b = color
-		return '#%04x%04x%04x' % (r * 65535.0, g * 65535.0, b * 65535.0)
-
-	def gdk_hexcolor_to_rgb(self, hexcolor):
-		r = int(hexcolor[1:5], 0x10) / 65535.0
-		g = int(hexcolor[5:9], 0x10) / 65535.0
-		b = int(hexcolor[9:], 0x10) / 65535.0
-		return (r, g, b)
-
 	def set_color(self, color):
-		color = gtk.gdk.Color(self.rgb_to_gdk_hexcolor(color))
-		gtk.ColorButton.set_color(self, color)
+		gtk.ColorButton.set_color(self, rc.rgb_to_gdkcolor(color))
 
 	def get_color(self):
-		color = gtk.ColorButton.get_color(self)
-		return self.gdk_hexcolor_to_rgb(color.to_string())
+		return rc.gdkcolor_to_rgb(gtk.ColorButton.get_color(self))
 
 	def set_sensitive(self, val): gtk.ColorButton.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.ColorButton.get_sensitive(self)
@@ -291,8 +279,69 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 	def set_sensitive(self, val): gtk.ComboBoxEntry.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.ComboBoxEntry.get_sensitive(self)
 
+class SpinButton(gtk.SpinButton):
 
+	change_flag = False
+	callback = None
 
+	def __init__(self, master, val=0.0, rng=(0.0, 1.0), incr=0.1, cmd=None,
+				check_focus=False):
+		self.master = master
+		self.callback = cmd
+		#value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0
+		self.adj = gtk.Adjustment(val, rng[0], rng[1], incr, 1.0, 0.0)
+		gtk.SpinButton.__init__(self, self.adj, 0.1, 2)
+		self.set_numeric(True)
+		self.connect(gconst.EVENT_VALUE_CHANGED, self._check_changes)
+		self.connect(gconst.EVENT_KEY_PRESS, self._check_enter)
+		if check_focus:
+			self.connect(gconst.EVENT_FOCUS_OUT, self._apply_changes)
+
+	def _check_changes(self, *args):self.change_flag = True
+	def _check_enter(self, widget, event):
+		keyval = event.keyval
+		if keyval in [gconst.KEY_RETURN, gconst.KEY_KP_ENTER]:
+			self._apply_changes()
+
+	def _apply_changes(self, *args):
+		if self.change_flag:
+			self.change_flag = False
+			self._do_callback()
+
+	def _do_callback(self):
+		if self.callback: self.callback()
+
+	def set_value(self, value):
+		gtk.SpinButton.set_value(self, value)
+		self.change_flag = False
+
+	def get_value(self):return gtk.SpinButton.get_value(self)
+
+	def set_digits(self, value):
+		gtk.SpinButton.set_digits(self, value)
+		self.change_flag = False
+
+	def set_lower(self, value): self.adj.set_lower(value)
+	def set_upper(self, value): self.adj.set_upper(value)
+	def set_step_increment(self, value): self.adj.set_step_increment(value)
+	def set_page_increment(self, value): self.adj.set_page_increment(value)
+	def set_sensitive(self, val): gtk.SpinButton.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.SpinButton.get_sensitive(self)
+
+class SpinButtonInt(SpinButton):
+
+	def __init__(self, master, val=0, rng=(0, 10), incr=1, cmd=None,
+				check_focus=False):
+		SpinButton.__init__(self, master, val, rng, incr, cmd, check_focus)
+		SpinButton.set_digits(self, 0)
+
+	def set_value(self, value): SpinButton.set_value(self, int(value))
+	def get_value(self): return self.get_value_as_int()
+	def set_digits(self, value):pass
+	def set_lower(self, value): self.adj.set_lower(int(value))
+	def set_upper(self, value): self.adj.set_upper(int(value))
+	def set_step_increment(self, value): self.adj.set_step_increment(int(value))
+	def set_page_increment(self, value): self.adj.set_page_increment(int(value))
 
 
 
