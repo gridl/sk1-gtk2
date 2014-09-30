@@ -59,3 +59,19 @@ def get_image(image_id, size=FIXED16):
 		return image
 	else:
 		return get_stock_image(image_id, size)
+
+def rgb_to_gdk_hexcolor(color):
+	r, g, b = color
+	return '#%04x%04x%04x' % (r * 65535.0, g * 65535.0, b * 65535.0)
+
+def rgb_to_gdkcolor(color):
+	return gtk.gdk.Color(rgb_to_gdk_hexcolor(color))
+
+def gdk_hexcolor_to_rgb(hexcolor):
+	r = int(hexcolor[1:5], 0x10) / 65535.0
+	g = int(hexcolor[5:9], 0x10) / 65535.0
+	b = int(hexcolor[9:], 0x10) / 65535.0
+	return (r, g, b)
+
+def gdkcolor_to_rgb(color):
+	return gdk_hexcolor_to_rgb(color.to_string())
