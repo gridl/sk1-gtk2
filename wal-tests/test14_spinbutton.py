@@ -7,7 +7,7 @@ class MW(wal.MainWindow):
 		self.set_size(300, 200)
 		hbox = wal.HBox(self)
 		self.pack(hbox, padding=30)
-		self.sb1 = wal.SpinButton(hbox, rng=(0.0, 10.0), cmd=self.callback,
+		self.sb1 = wal.SpinButton(hbox, rng=(0.0, 10000.0), cmd=self.callback,
 								check_focus=True)
 		hbox.pack(self.sb1, padding=30)
 

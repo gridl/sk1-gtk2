@@ -292,16 +292,20 @@ class SpinButton(gtk.SpinButton):
 		self.adj = gtk.Adjustment(val, rng[0], rng[1], incr, 1.0, 0.0)
 		gtk.SpinButton.__init__(self, self.adj, 0.1, 2)
 		self.set_numeric(True)
+		self.set_size_request(65, -1)
 		self.connect(gconst.EVENT_VALUE_CHANGED, self._check_changes)
 		self.connect(gconst.EVENT_KEY_PRESS, self._check_enter)
 		if check_focus:
 			self.connect(gconst.EVENT_FOCUS_OUT, self._apply_changes)
 
-	def _check_changes(self, *args):self.change_flag = True
+	def _check_changes(self, *args):
+		self.change_flag = True
+
 	def _check_enter(self, widget, event):
 		keyval = event.keyval
 		if keyval in [gconst.KEY_RETURN, gconst.KEY_KP_ENTER]:
 			self._apply_changes()
+		else: self.change_flag = True
 
 	def _apply_changes(self, *args):
 		if self.change_flag:
