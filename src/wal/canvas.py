@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-#   Gtk+ 2.0 Widgetset Abstraction Layer
 #	Copyright (C) 2014 by Igor E. Novikov
 #
 #	This program is free software: you can redistribute it and/or modify
@@ -16,14 +15,19 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from const import *
-from image_ids import *
+import gtk, rc
 
-from window import MainWindow, MW_Menu, MW_Toolbar
-from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
-from widgets import HLine, VLine, Button, ImgButton, ActionButton
-from widgets import Label, DecorLabel, Image, ActiveImage, CheckButton
-from widgets import ToggleButton, ImgToggleButton, ActionToggleButton
-from widgets import ComboBoxText, ComboBoxEntry, ColorButton, RadioButton
-from widgets import SpinButton, SpinButtonInt
-from canvas import ColorPlate
+class ColorPlate(gtk.DrawingArea):
+
+	def __init__(self, master, size=(), bgcolor=()):
+		self.master = master
+		gtk.DrawingArea.__init__()
+		if size: self.set_size(*size)
+		if bgcolor: self.set_bgcolor(bgcolor)
+
+	def set_size(self, w, h): self.set_size_request(w, h)
+	def get_size(self): return tuple(self.allocation)[2:]
+	def set_bgcolor(self, color):
+		self.modify_bg(gtk.STATE_NORMAL, rc.rgb_to_gdkcolor(color))
+	def get_bgcolor(self):
+		return rc.gdkcolor_to_rgb(self.get_style().bg[gtk.STATE_NORMAL])
