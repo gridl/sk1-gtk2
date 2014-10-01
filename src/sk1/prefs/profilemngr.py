@@ -16,13 +16,12 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, shutil
-import gtk
+import gtk, wal
 
 from uc2.utils.fs import expanduser_unicode
 from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY
 from uc2.cms import get_profile_name, get_profile_info
 from sk1 import _, config, dialogs, rc
-from sk1.widgets import ImageStockButton
 
 def get_profiles_dialog(app, parent, owner, colorspace):
 	title = _('%s profiles') % (colorspace)
@@ -177,16 +176,19 @@ class ProfileManager(gtk.HBox):
 
 		box = gtk.VBox()
 
-		self.add_button = ImageStockButton(gtk.STOCK_ADD,
-								_('Import profile'), cmd=self.import_profile)
+		self.add_button = wal.ImgButton(box, wal.STOCK_ADD,
+									tooltip=_('Import profile'),
+									cmd=self.import_profile)
 		box.pack_start(self.add_button, False, False, 5)
 
-		self.remove_button = ImageStockButton(gtk.STOCK_REMOVE,
-								_('Remove profile'), cmd=self.remove_profile)
+		self.remove_button = wal.ImgButton(box, wal.STOCK_REMOVE,
+									tooltip=_('Remove profile'),
+									cmd=self.remove_profile)
 		box.pack_start(self.remove_button, False, False, 5)
 		self.remove_button.set_sensitive(False)
 
-		self.info_button = ImageStockButton(gtk.STOCK_INFO, _('Profile info'),
+		self.info_button = wal.ImgButton(box, wal.STOCK_INFO,
+										tooltip=_('Profile info'),
 										cmd=self.inspect_profile)
 		box.pack_start(self.info_button, False, False, 5)
 

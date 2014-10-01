@@ -18,8 +18,7 @@
 import wal
 
 from sk1 import _, events
-from sk1.parts import UnitLabel, UnitSpin
-from sk1.widgets import KeepRatioLabel
+from sk1.parts import UnitLabel, UnitSpin, KeepRatioLabel
 from sk1.context.generic import GenericPlugin
 
 class ResizePlugin(GenericPlugin):
@@ -46,7 +45,7 @@ class ResizePlugin(GenericPlugin):
 
 		self.pack(UnitLabel(self), padding=2)
 
-		self.keep_ratio = KeepRatioLabel()
+		self.keep_ratio = KeepRatioLabel(self)
 		self.pack(self.keep_ratio, padding=5)
 
 	def set_state(self, *args):

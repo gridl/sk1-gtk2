@@ -19,3 +19,4 @@ from pager_widget import PagerWidget
 from color_monitor import ColorMonitorWidget
 from unitwidgets import UnitLabel, UnitSpin, AngleSpin
 from palette_widget import HPaletteWidget
+from widgets import KeepRatioLabel

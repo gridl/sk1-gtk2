@@ -46,8 +46,9 @@ class RulerPlugin(GenericPrefsPlugin):
 		al.add(gtk.Label(_('Ruler size (px):')))
 		tab.attach(al, 0, 1, 0, 1, gtk.FILL , gtk.SHRINK)
 
-		self.size_spin = SpinButtonInt(config.ruler_size, (15, 30),
-									cmd=self.test_ruler.redraw)
+		self.size_spin = wal.SpinButtonInt(tab, config.ruler_size, (15, 30),
+									cmd=self.test_ruler.redraw,
+									check_enter=False)
 		al = gtk.Alignment(0.0, 0.5)
 		al.add(self.size_spin)
 		tab.attach(al, 1, 2, 0, 1, gtk.FILL, gtk.SHRINK)
@@ -57,8 +58,9 @@ class RulerPlugin(GenericPrefsPlugin):
 		al.add(gtk.Label(_('Ruler font size (px):')))
 		tab.attach(al, 0, 1, 1, 2, gtk.FILL , gtk.SHRINK)
 
-		self.fsize_spin = SpinButtonInt(config.ruler_font_size, (5, 8),
-									cmd=self.test_ruler.redraw)
+		self.fsize_spin = wal.SpinButtonInt(tab, config.ruler_font_size, (5, 8),
+									cmd=self.test_ruler.redraw,
+									check_enter=False)
 		al = gtk.Alignment(0.0, 0.5)
 		al.add(self.fsize_spin)
 		tab.attach(al, 1, 2, 1, 2, gtk.FILL, gtk.SHRINK)
@@ -69,7 +71,8 @@ class RulerPlugin(GenericPrefsPlugin):
 		tab.attach(al, 0, 1, 2, 3, gtk.FILL, gtk.SHRINK)
 
 		self.bgcolor = wal.ColorButton(tab, config.ruler_bgcolor,
-									cmd=self.test_ruler.redraw)
+									cmd=self.test_ruler.redraw,
+									check_enter=False)
 		al = gtk.Alignment(0.0, 0.5)
 		al.add(self.bgcolor)
 		tab.attach(al, 1, 2, 2, 3, gtk.FILL, gtk.SHRINK)
@@ -90,8 +93,9 @@ class RulerPlugin(GenericPrefsPlugin):
 		al.add(gtk.Label(_('Small tick size (px):')))
 		tab.attach(al, 0, 1, 4, 5, gtk.FILL , gtk.SHRINK)
 
-		self.stick_spin = SpinButtonInt(config.ruler_small_tick, (1, 30),
-									cmd=self.test_ruler.redraw)
+		self.stick_spin = wal.SpinButtonInt(tab, config.ruler_small_tick, (1, 30),
+									cmd=self.test_ruler.redraw,
+									check_enter=False)
 		al = gtk.Alignment(0.0, 0.5)
 		al.add(self.stick_spin)
 		tab.attach(al, 1, 2, 4, 5, gtk.FILL, gtk.SHRINK)
@@ -101,8 +105,9 @@ class RulerPlugin(GenericPrefsPlugin):
 		al.add(gtk.Label(_('Large tick size (px):')))
 		tab.attach(al, 0, 1, 5, 6, gtk.FILL , gtk.SHRINK)
 
-		self.ltick_spin = SpinButtonInt(config.ruler_text_tick, (1, 30),
-									cmd=self.test_ruler.redraw)
+		self.ltick_spin = wal.SpinButtonInt(tab, config.ruler_text_tick, (1, 30),
+									cmd=self.test_ruler.redraw,
+									check_enter=False)
 		al = gtk.Alignment(0.0, 0.5)
 		al.add(self.ltick_spin)
 		tab.attach(al, 1, 2, 5, 6, gtk.FILL, gtk.SHRINK)
@@ -112,8 +117,9 @@ class RulerPlugin(GenericPrefsPlugin):
 		al.add(gtk.Label(_('Text mark shift (px):')))
 		tab.attach(al, 0, 1, 6, 7, gtk.FILL , gtk.SHRINK)
 
-		self.tmshift_spin = SpinButtonInt(config.ruler_text_shift, (-30, 30),
-									cmd=self.test_ruler.redraw)
+		self.tmshift_spin = wal.SpinButtonInt(tab, config.ruler_text_shift, (-30, 30),
+									cmd=self.test_ruler.redraw,
+									check_enter=False)
 		al = gtk.Alignment(0.0, 0.5)
 		al.add(self.tmshift_spin)
 		tab.attach(al, 1, 2, 6, 7, gtk.FILL, gtk.SHRINK)
