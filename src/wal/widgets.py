@@ -73,9 +73,11 @@ class Image(gtk.Image):
 	def __init__(self, master, image_id, size=rc.FIXED16):
 		self.master = master
 		gtk.Image.__init__(self)
-		self.set_from_pixbuf(rc.get_pixbuf(image_id, size))
+		self.set_image(image_id, size)
 	def set_sensitive(self, val): gtk.Image.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.Image.get_sensitive(self)
+	def set_image(self, image_id, size=rc.FIXED16):
+		self.set_from_pixbuf(rc.get_pixbuf(image_id, size))
 
 class ActiveImage(gtk.EventBox):
 
@@ -91,10 +93,15 @@ class ActiveImage(gtk.EventBox):
 		if cmd: self.connect(gconst.EVENT_BUTTON_PRESS, self._mouse_pressed)
 
 	def _mouse_pressed(self, widget, event):
-		if event.button == gconst.LEFT_BUTTON:self.cmd(gconst.LEFT_BUTTON)
-		if event.button == gconst.RIGHT_BUTTON:self.cmd(gconst.RIGHT_BUTTON)
+		if event.button == gconst.LEFT_BUTTON:
+			self.cmd(gconst.LEFT_BUTTON)
+		if event.button == gconst.RIGHT_BUTTON:
+			self.cmd(gconst.RIGHT_BUTTON)
 	def set_sensitive(self, val): self.image.set_sensitive(self, val)
 	def get_sensitive(self): return self.image.get_sensitive(self)
+	def set_tooltip(self, txt):self.set_tooltip_text(txt)
+	def set_image(self, image_id, size=rc.FIXED16):
+		self.image.set_image(image_id, size)
 
 class Button(gtk.Button):
 
@@ -300,11 +307,13 @@ class SpinButton(gtk.SpinButton):
 
 	change_flag = False
 	callback = None
+	check_enter = True
 
 	def __init__(self, master, val=0.0, rng=(0.0, 1.0), incr=0.1, cmd=None,
-				check_focus=False):
+				check_focus=False, check_enter=True):
 		self.master = master
 		self.callback = cmd
+		self.check_enter = check_enter
 		#value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0
 		self.adj = gtk.Adjustment(val, rng[0], rng[1], incr, 1.0, 0.0)
 		gtk.SpinButton.__init__(self, self.adj, 0.1, 2)
@@ -317,6 +326,7 @@ class SpinButton(gtk.SpinButton):
 
 	def _check_changes(self, *args):
 		self.change_flag = True
+		if not self.check_enter: self._apply_changes()
 
 	def _check_enter(self, widget, event):
 		keyval = event.keyval
@@ -333,13 +343,23 @@ class SpinButton(gtk.SpinButton):
 		if self.callback: self.callback()
 
 	def set_value(self, value):
-		gtk.SpinButton.set_value(self, value)
+		if not self.check_enter:
+			self.check_enter = True
+			gtk.SpinButton.set_value(self, value)
+			self.check_enter = False
+		else:
+			gtk.SpinButton.set_value(self, value)
 		self.change_flag = False
 
 	def get_value(self):return gtk.SpinButton.get_value(self)
 
 	def set_digits(self, value):
-		gtk.SpinButton.set_digits(self, value)
+		if not self.check_enter:
+			self.check_enter = True
+			gtk.SpinButton.set_digits(self, value)
+			self.check_enter = False
+		else:
+			gtk.SpinButton.set_digits(self, value)
 		self.change_flag = False
 
 	def set_lower(self, value): self.adj.set_lower(value)
@@ -352,8 +372,9 @@ class SpinButton(gtk.SpinButton):
 class SpinButtonInt(SpinButton):
 
 	def __init__(self, master, val=0, rng=(0, 10), incr=1, cmd=None,
-				check_focus=False):
-		SpinButton.__init__(self, master, val, rng, incr, cmd, check_focus)
+				check_focus=False, check_enter=True):
+		SpinButton.__init__(self, master, val, rng, incr, cmd,
+						check_focus, check_enter)
 		SpinButton.set_digits(self, 0)
 
 	def set_value(self, value): SpinButton.set_value(self, int(value))
