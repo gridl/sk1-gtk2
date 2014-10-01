@@ -15,9 +15,16 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import gtk
+
 LEFT_BUTTON = 1
 MIDDLE_BUTTON = 2
 RIGHT_BUTTON = 3
+
+SCROLL_UP = gtk.gdk.SCROLL_UP
+SCROLL_DOWN = gtk.gdk.SCROLL_DOWN
+SCROLL_LEFT = gtk.gdk.SCROLL_LEFT
+SCROLL_RIGHT = gtk.gdk.SCROLL_RIGHT
 
 KEY_KP_ENTER = 65421
 KEY_RETURN = 65293
@@ -41,6 +48,7 @@ EVENT_EXPOSE = 'expose_event'
 EVENT_BUTTON_PRESS = 'button-press-event'
 EVENT_BUTTON_RELEASE = 'button-release-event'
 EVENT_MOUSE_MOTION = 'motion_notify_event'
+EVENT_MOUSE_SCROLL = 'scroll-event'
 EVENT_CLICKED = 'clicked'
 EVENT_TOGGLED = 'toggled'
 EVENT_CHANGED = 'changed'
@@ -48,3 +56,5 @@ EVENT_VALUE_CHANGED = 'value-changed'
 EVENT_COLOR_SET = 'color-set'
 EVENT_KEY_PRESS = 'key_press_event'
 EVENT_FOCUS_OUT = 'focus-out-event'
+EVENT_ENTER_NOTIFY = 'enter-notify-event'
+EVENT_LEAVE_NOTIFY = 'leave-notify-event'

@@ -26,4 +26,4 @@ from widgets import Label, DecorLabel, Image, ActiveImage, CheckButton
 from widgets import ToggleButton, ImgToggleButton, ActionToggleButton
 from widgets import ComboBoxText, ComboBoxEntry, ColorButton, RadioButton
 from widgets import SpinButton, SpinButtonInt
-from canvas import ColorPlate
+from canvas import ColorPlate, ActiveColorPlate
