@@ -9,14 +9,16 @@ class MW(wal.MainWindow):
 		self.hor_box = wal.HidableHBox(self)
 		self.pack(self.hor_box)
 
-		self.hor_box.pack(wal.Button(self.hor_box, 'HBox'), True, True)
+		size = (50, 50)
+
+		self.hor_box.pack(wal.ColorPlate(self.hor_box, size, bg=wal.BLACK), True, True)
 		self.hor_box.set_visible(True)
 
 		hbox = wal.HBox(self)
 		self.pack(hbox, True, True)
 
 		self.vert_box = wal.HidableVBox(hbox)
-		self.vert_box.pack(wal.Button(self.vert_box, 'VBox'), True, True)
+		self.vert_box.pack(wal.ColorPlate(self.hor_box, size, bg=wal.GRAY), True, True)
 		self.vert_box.set_visible(True)
 		hbox.pack(self.vert_box)
 

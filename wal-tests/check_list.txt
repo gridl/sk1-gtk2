@@ -1,7 +1,7 @@
 x	MainWindow
 x	HBox
 x	VBox
-ColorPlate
+x	ColorPlate
 x	HidableHBox
 x	HidableVBox
 x	HidableVArea

@@ -7,7 +7,7 @@ class MW(wal.MainWindow):
 		self.set_size(300, 200)
 
 		self.area = wal.HidableVArea(self)
-		self.area.pack(wal.Button(self.area, 'HidableVArea'), True, True)
+		self.area.pack(wal.ColorPlate(self.area, bg=wal.GRAY), True, True)
 		self.pack(self.area, True, True)
 		self.area.set_visible(True)
 

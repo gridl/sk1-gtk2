@@ -19,11 +19,11 @@ import gtk, rc
 
 class ColorPlate(gtk.DrawingArea):
 
-	def __init__(self, master, size=(), bgcolor=()):
+	def __init__(self, master, size=(), bg=()):
 		self.master = master
 		gtk.DrawingArea.__init__(self)
 		if size: self.set_size(*size)
-		if bgcolor: self.set_bgcolor(bgcolor)
+		if bg: self.set_bgcolor(bg)
 
 	def set_size(self, w, h): self.set_size_request(w, h)
 	def get_size(self): return tuple(self.allocation)[2:]
