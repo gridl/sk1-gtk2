@@ -19,7 +19,6 @@ import gtk, os, cairo, wal
 
 from sk1 import _, config, rc, const
 from sk1.prefs.generic import GenericPrefsPlugin
-from sk1.widgets import SpinButtonInt
 
 class RulerPlugin(GenericPrefsPlugin):
 
@@ -71,8 +70,7 @@ class RulerPlugin(GenericPrefsPlugin):
 		tab.attach(al, 0, 1, 2, 3, gtk.FILL, gtk.SHRINK)
 
 		self.bgcolor = wal.ColorButton(tab, config.ruler_bgcolor,
-									cmd=self.test_ruler.redraw,
-									check_enter=False)
+									cmd=self.test_ruler.redraw)
 		al = gtk.Alignment(0.0, 0.5)
 		al.add(self.bgcolor)
 		tab.attach(al, 1, 2, 2, 3, gtk.FILL, gtk.SHRINK)
