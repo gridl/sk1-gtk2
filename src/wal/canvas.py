@@ -21,7 +21,7 @@ class ColorPlate(gtk.DrawingArea):
 
 	def __init__(self, master, size=(), bgcolor=()):
 		self.master = master
-		gtk.DrawingArea.__init__()
+		gtk.DrawingArea.__init__(self)
 		if size: self.set_size(*size)
 		if bgcolor: self.set_bgcolor(bgcolor)
 
