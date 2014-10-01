@@ -31,9 +31,9 @@ class AppMainWindow(wal.MainWindow):
 	canvas = None
 	doc_index = 1
 
-	def __init__(self, app, action_entries):
+	def __init__(self, app, action_entries, aliases=[]):
 		self.app = app
-		wal.MainWindow.__init__(self, action_entries)
+		wal.MainWindow.__init__(self, action_entries, aliases)
 
 	def build(self):
 		self.app.actions = self.actions

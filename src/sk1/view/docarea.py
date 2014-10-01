@@ -15,12 +15,11 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import gtk, wal
 
 from uc2.utils import system
 from uc2 import uc2const
 
-from sk1 import rc
 from sk1.view.canvas import AppCanvas
 from sk1.view.ruler import RulerCorner, Ruler
 
@@ -110,18 +109,14 @@ class TabCaption(gtk.HBox):
 		self.mw = master.app.mw
 
 		self.label = gtk.Label('')
-		self.tab_icon = gtk.Image()
-		self.tab_icon.set_from_stock(rc.STOCK_SK1_DOC, gtk.ICON_SIZE_MENU)
-		self.but_icon = gtk.Image()
-		self.but_icon.set_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
+		self.tab_icon = wal.Image(self, wal.IMG_DOC_ICON)
+		self.but_icon = wal.Image(self, wal.STOCK_CLOSE)
 
 
 		self.tab_button = gtk.EventBox()
 		self.tab_button.set_border_width(0)
 		self.tab_button.set_visible_window(False)
 		self.tab_button.set_size_request(15, 15)
-		color = self.mw.get_style().bg[gtk.STATE_ACTIVE]
-		self.tab_button.modify_bg(gtk.STATE_NORMAL, color)
 		self.tab_button.add(self.but_icon)
 
 		self.pack_start(self.tab_icon, False)

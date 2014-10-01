@@ -29,10 +29,11 @@ class MainWindow(gtk.Window):
 	actiongroup = None
 	actions = {}
 
-	def __init__(self, action_entries=[], horizontal=False):
+	def __init__(self, action_entries=[], aliases=[], horizontal=False):
 		gtk.Window.__init__(self)
 
 		self.create_actions(action_entries)
+		rc.registry_aliases(aliases)
 
 		self.box = VBox(self)
 		if horizontal: self.box = HBox(self)

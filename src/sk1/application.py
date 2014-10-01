@@ -15,9 +15,8 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
-import gtk
-import sys
+import os, sys
+import gtk, wal
 
 from uc2.application import UCApplication
 from uc2 import uc2const
@@ -57,13 +56,16 @@ class Application(UCApplication):
 
 		self.appdata = appdata
 		self.default_cms = AppColorManager(self)
-		rc.load_icons()
 		self.cursors = modes.get_cursors()
 		self.inspector = DocumentInspector(self)
 		self.proxy = AppProxy(self)
 		self.clipboard = AppClipboard(self)
 		self.palette_mngr = AppPaletteManager(self)
-		self.mw = AppMainWindow(self, create_actions(self))
+
+		aliases = [((wal.STOCK_DONT_SAVE, _("_Don't save"), 0, 0, None),
+				(wal.STOCK_DONT_SAVE, wal.STOCK_NO)), ]
+
+		self.mw = AppMainWindow(self, create_actions(self), aliases)
 		self.proxy.update_references()
 
 	def run(self):
@@ -115,7 +117,7 @@ class Application(UCApplication):
 			second = _('Do you want to save your changes?')
 			ret = warning_dialog(self.mw, self.appdata.app_name,
 					first, second,
-					[(rc.STOCK_DONT_SAVE , gtk.RESPONSE_NO,),
+					[(wal.STOCK_DONT_SAVE , gtk.RESPONSE_NO,),
 					(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL),
 					(gtk.STOCK_SAVE, gtk.RESPONSE_OK)])
 

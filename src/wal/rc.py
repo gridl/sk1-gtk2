@@ -31,6 +31,23 @@ FIXED32 = gtk.icon_size_register('FIXED32', 32, 32)
 
 def init_rc():pass
 
+def registry_aliases(aliases):
+	if aliases:
+		iconfactory = gtk.IconFactory()
+		items = []
+		alias_items = []
+		for item in aliases:
+			items.append(item[0])
+			alias_items.append(item[1])
+
+		gtk.stock_add(items)
+
+		for item, alias in alias_items:
+			iconset = gtk.icon_factory_lookup_default(alias)
+			iconfactory.add(item, iconset)
+
+		iconfactory.add_default()
+
 def get_image_path(image_id):
 	imgname = image_id + '.png'
 	if image_id[:4] == 'sk1-':
