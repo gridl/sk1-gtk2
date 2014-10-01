@@ -11,6 +11,7 @@ x	DecorLabel
 x	Image
 x	ActiveImage
 x	CheckButton
+x	RadioButton
 x	Button
 x	ImgButton
 x	ToggleButton
@@ -18,8 +19,8 @@ x	ImgToggleButton
 x	ComboBoxText
 x	ComboBoxEntry
 x	ColorButton
-SpinButton
-SpinButtonInt
+x	SpinButton
+x	SpinButtonInt
 AppAction
 AppToggleAction
 AppRadioAction

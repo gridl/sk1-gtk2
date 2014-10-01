@@ -188,6 +188,23 @@ class CheckButton(gtk.CheckButton):
 
 	def set_sensitive(self, val): gtk.CheckButton.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.CheckButton.get_sensitive(self)
+	def set_active(self, val):gtk.CheckButton.set_active(self, val)
+	def get_active(self):return gtk.CheckButton.get_active(self)
+
+class RadioButton(gtk.RadioButton):
+
+	def __init__(self, master, text, group=None, state=False, cmd=None):
+		self.master = master
+		gtk.RadioButton.__init__(self, group, text)
+		self.set_active(state)
+		if cmd: self.connect(gconst.EVENT_TOGGLED, cmd)
+
+	def set_sensitive(self, val): gtk.RadioButton.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.RadioButton.get_sensitive(self)
+	def set_active(self, val):gtk.RadioButton.set_active(self, val)
+	def get_active(self):return gtk.RadioButton.get_active(self)
+	def set_group(self, radiobutton):gtk.RadioButton.set_group(self, radiobutton)
+	def get_group(self):return gtk.RadioButton.get_group(self)
 
 class ColorButton(gtk.ColorButton):
 
