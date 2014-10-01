@@ -16,8 +16,6 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from generic import SpinButton, SpinButtonInt
-from imagewidgets import ImageStockButton
-from imagewidgets import KeepRatioLabel
 
 
 
