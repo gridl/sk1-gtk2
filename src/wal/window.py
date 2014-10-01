@@ -55,6 +55,9 @@ class MainWindow(gtk.Window):
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
 		self.box.pack(child, expand, fill, padding, end)
 
+	def pack_all(self, childs, expand=False, fill=False, padding=0, end=False):
+		self.box.pack_all(childs, expand, fill, padding, end)
+
 	def center(self): self.set_position(gtk.WIN_POS_CENTER)
 	def set_title(self, title): gtk.Window.set_title(self, title)
 	def set_size(self, w, h): gtk.Window.set_default_size(self, w, h)
