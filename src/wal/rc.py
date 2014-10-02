@@ -35,7 +35,33 @@ FIXED128 = gtk.icon_size_register('FIXED128', 128, 128)
 STOCK_ZOOM_PAGE = 'gtk-zoom-page'
 STOCK_DONT_SAVE = 'gtk-action-dont-save'
 
-def init_rc():pass
+SYSCOLORS = {
+		'bg':(),
+		'selected-bg':(),
+		'insensitive-bg':(),
+		'fg':(),
+		'selected-fg':(),
+		'insensitive-fg':(),
+		'text':(),
+		'selected-text':(),
+		'insensitive-text':(),
+		}
+
+def init_rc(mw):
+	mw.realize()
+	style = mw.get_style()
+	bg = style.bg
+	SYSCOLORS['bg'] = gdkcolor_to_rgb(bg[gtk.STATE_NORMAL])
+	SYSCOLORS['selected-bg'] = gdkcolor_to_rgb(bg[gtk.STATE_SELECTED])
+	SYSCOLORS['insensitive-bg'] = gdkcolor_to_rgb(bg[gtk.STATE_INSENSITIVE])
+	fg = style.fg
+	SYSCOLORS['fg'] = gdkcolor_to_rgb(fg[gtk.STATE_NORMAL])
+	SYSCOLORS['selected-fg'] = gdkcolor_to_rgb(fg[gtk.STATE_SELECTED])
+	SYSCOLORS['insensitive-fg'] = gdkcolor_to_rgb(fg[gtk.STATE_INSENSITIVE])
+	text = style.text
+	SYSCOLORS['text'] = gdkcolor_to_rgb(text[gtk.STATE_NORMAL])
+	SYSCOLORS['selected-text'] = gdkcolor_to_rgb(text[gtk.STATE_SELECTED])
+	SYSCOLORS['insensitive-text'] = gdkcolor_to_rgb(text[gtk.STATE_INSENSITIVE])
 
 def registry_aliases(aliases):
 

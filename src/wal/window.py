@@ -33,6 +33,7 @@ class MainWindow(gtk.Window):
 		gtk.Window.__init__(self)
 
 		self.create_actions(action_entries)
+		rc.init_rc(self)
 
 		self.box = VBox(self)
 		if horizontal: self.box = HBox(self)
