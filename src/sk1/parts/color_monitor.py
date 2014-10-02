@@ -39,13 +39,13 @@ class ColorMonitorWidget(wal.HidableHBox):
 		self.app = app
 		self.insp = app.inspector
 
-		self.fill_label = FillLabel(self.app)
+		self.fill_label = FillLabel(self.app, self)
 		self.pack(self.fill_label, padding=5)
 
 		self.fill_swatch = ColorSwatch(self.app, FILL_SWATCH)
 		self.pack(self.fill_swatch)
 
-		self.outline_label = OutlineLabel(self.app)
+		self.outline_label = OutlineLabel(self.app, self)
 		self.pack(self.outline_label, padding=5)
 
 		self.outline_swatch = ColorSwatch(self.app, OUTLINE_SWATCH)
@@ -86,7 +86,7 @@ class ColorMonitorWidget(wal.HidableHBox):
 		self.outline_swatch.update_from_obj(obj)
 
 
-class FillLabel(gtk.Label):
+class FillLabel(wal.Label):
 
 	colorspace = None
 	color = []
@@ -94,8 +94,8 @@ class FillLabel(gtk.Label):
 	color_name = ''
 	non_solid = False
 
-	def __init__(self, app):
-		gtk.Label.__init__(self)
+	def __init__(self, app, master):
+		wal.Label.__init__(self, master)
 
 	def update_from_obj(self, obj):
 		fill = obj.style[0]
@@ -151,13 +151,12 @@ class FillLabel(gtk.Label):
 
 		self.set_text(text)
 
-class OutlineLabel(gtk.Label):
+class OutlineLabel(wal.Label):
 
 	point_val = 0
 
-	def __init__(self, app):
-		gtk.Label.__init__(self)
-		events.connect(events.CONFIG_MODIFIED, self.update_label)
+	def __init__(self, app, master):
+		wal.Label.__init__(self, master)
 
 	def update_label(self, *args):
 		if args[0][0] == 'default_unit':
@@ -181,11 +180,6 @@ class OutlineLabel(gtk.Label):
 			text += ' ' + _('None')
 		self.set_text(text)
 
-
-WHITE = [1, 1, 1]
-BLACK = [0, 0, 0]
-GRAY = [0.878, 0.878, 0.878]
-
 class ColorSwatch(gtk.DrawingArea):
 
 	ctx = None
@@ -205,8 +199,6 @@ class ColorSwatch(gtk.DrawingArea):
 		self.insp = app.inspector
 		self.mode = mode
 		self.set_size_request(self.width, self.height)
-#		self.nofill_color = self.mw.get_style().fg[gtk.STATE_NORMAL]
-#		self.modify_bg(gtk.STATE_NORMAL, self.nodocs_color)
 		self.connect(const.EVENT_EXPOSE, self.repaint)
 
 	def update_from_obj(self, obj):
@@ -248,13 +240,13 @@ class ColorSwatch(gtk.DrawingArea):
 		self.draw_black_border()
 
 	def draw_white_bg(self):
-		self.ctx.set_source_rgb(*WHITE)
+		self.ctx.set_source_rgb(*wal.WHITE)
 		self.ctx.rectangle(0, 0, self.width, self.height)
 		self.ctx.fill()
 
 	def draw_transparency_bg(self):
 		self.ctx.set_antialias(cairo.ANTIALIAS_NONE)
-		self.ctx.set_source_rgb(*GRAY)
+		self.ctx.set_source_rgb(*wal.LIGHT_GRAY)
 		size = self.height / 2
 		for item in range(3):
 			shift = 2 * item * size + self.width / 2
@@ -281,7 +273,7 @@ class ColorSwatch(gtk.DrawingArea):
 		self.ctx.fill()
 
 	def draw_black_border(self):
-		self.ctx.set_source_rgb(*BLACK)
+		self.ctx.set_source_rgb(*wal.BLACK)
 		self.ctx.set_line_width(1)
 		self.ctx.set_antialias(cairo.ANTIALIAS_NONE)
 		self.ctx.rectangle(1, 1, self.width - 1, self.height - 1)
@@ -289,7 +281,7 @@ class ColorSwatch(gtk.DrawingArea):
 		self.ctx.set_antialias(cairo.ANTIALIAS_DEFAULT)
 
 	def draw_no_color(self):
-		self.ctx.set_source_rgb(*BLACK)
+		self.ctx.set_source_rgb(*wal.BLACK)
 		self.ctx.set_line_width(1)
 		self.ctx.move_to(-1, 0)
 		self.ctx.line_to(self.width - 1, self.height - 1)
