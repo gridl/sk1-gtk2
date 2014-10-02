@@ -17,7 +17,7 @@
 
 import gtk, wal
 
-from sk1 import config, events, rc
+from sk1 import config, events
 from sk1.ui.menubar import AppMenubar
 from sk1.ui.toolbar import AppToolbar
 from sk1.ui.tools import AppTools

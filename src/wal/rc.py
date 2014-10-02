@@ -32,11 +32,30 @@ FIXED48 = gtk.icon_size_register('FIXED48', 48, 48)
 FIXED64 = gtk.icon_size_register('FIXED64', 64, 64)
 FIXED128 = gtk.icon_size_register('FIXED128', 128, 128)
 
+STOCK_ZOOM_PAGE = 'gtk-zoom-page'
+STOCK_DONT_SAVE = 'gtk-action-dont-save'
+
 def init_rc():pass
 
 def registry_aliases(aliases):
+
+	iconfactory = gtk.IconFactory()
+	gtk.stock_add([(STOCK_ZOOM_PAGE, '', 0, 0, ''), ])
+
+	items = [gtk.STOCK_ZOOM_100, gtk.STOCK_ZOOM_FIT, gtk.STOCK_ZOOM_IN,
+			gtk.STOCK_ZOOM_OUT, STOCK_ZOOM_PAGE]
+
+	for item in items:
+		iconset = gtk.IconSet()
+		source = gtk.IconSource()
+		filepath = os.path.join(ICONS24_PATH, item + '.png')
+		pixbuf = gtk.gdk.pixbuf_new_from_file(filepath)
+		source.set_pixbuf(pixbuf)
+		source.set_size_wildcarded(True)
+		iconset.add_source(source)
+		iconfactory.add(item, iconset)
+
 	if aliases:
-		iconfactory = gtk.IconFactory()
 		items = []
 		alias_items = []
 		for item in aliases:
@@ -49,7 +68,7 @@ def registry_aliases(aliases):
 			iconset = gtk.icon_factory_lookup_default(alias)
 			iconfactory.add(item, iconset)
 
-		iconfactory.add_default()
+	iconfactory.add_default()
 
 def get_image_path(image_id):
 	imgname = image_id + '.png'
