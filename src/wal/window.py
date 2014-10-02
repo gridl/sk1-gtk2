@@ -40,6 +40,9 @@ class MainWindow(gtk.Window):
 		self.add(self.box)
 		self.connect(gconst.EVENT_DELETE, self.event_close)
 
+	def set_icon(self, image_id):
+		gtk.Window.set_icon(self, rc.get_pixbuf(image_id))
+
 	def build(self):pass
 
 	def event_close(self, *args):
