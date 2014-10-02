@@ -21,7 +21,7 @@ import gtk, wal
 from uc2.application import UCApplication
 from uc2 import uc2const
 
-from sk1 import _, config, events, rc
+from sk1 import _, config, events
 from sk1.dialogs import msg_dialog, get_open_file_name, get_save_file_name
 from sk1.dialogs import warning_dialog
 from sk1 import modes
@@ -64,8 +64,9 @@ class Application(UCApplication):
 
 		aliases = [((wal.STOCK_DONT_SAVE, _("_Don't save"), 0, 0, None),
 				(wal.STOCK_DONT_SAVE, wal.STOCK_NO)), ]
+		wal.registry_aliases(aliases)
 
-		self.mw = AppMainWindow(self, create_actions(self), aliases)
+		self.mw = AppMainWindow(self, create_actions(self))
 		self.proxy.update_references()
 
 	def run(self):
