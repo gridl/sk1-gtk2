@@ -17,7 +17,7 @@
 
 import wal
 
-from sk1 import actions
+from sk1 import actions, rc
 from sk1.parts import AngleSpin
 from sk1.context.generic import GenericPlugin
 
@@ -35,7 +35,7 @@ class RotatePlugin(GenericPlugin):
 	name = 'RotatePlugin'
 
 	def build(self):
-		self.pack(wal.ActiveImage(self, wal.IMG_CTX_ROTATE), padding=2)
+		self.pack(wal.ActiveImage(self, rc.IMG_CTX_ROTATE), padding=2)
 
 		self.angle_spin = AngleSpin(self.user_update, True)
 		self.pack_start(self.angle_spin, False, False, 0)

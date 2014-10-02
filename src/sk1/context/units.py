@@ -19,7 +19,7 @@ import wal
 
 from uc2.uc2const import unit_names, unit_full_names
 
-from sk1 import _, config, events
+from sk1 import _, config, events, rc
 from sk1.context.generic import GenericPlugin
 
 class UnitsPlugin(GenericPlugin):
@@ -31,7 +31,7 @@ class UnitsPlugin(GenericPlugin):
 		events.connect(events.CONFIG_MODIFIED, self.config_changed)
 
 	def build(self):
-		self.pack(wal.ActiveImage(self, wal.IMG_CTX_UNITS,
+		self.pack(wal.ActiveImage(self, rc.IMG_CTX_UNITS,
 								tooltip=_('Units')), padding=3)
 		names = []
 		for item in unit_names:

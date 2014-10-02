@@ -17,7 +17,7 @@
 
 import wal
 
-from sk1 import _, events, config
+from sk1 import _, events, config, rc
 from sk1.parts import UnitLabel, UnitSpin
 from sk1.context.generic import GenericPlugin
 
@@ -31,7 +31,7 @@ class JumpPlugin(GenericPlugin):
 		events.connect(events.CONFIG_MODIFIED, self.config_changed)
 
 	def build(self):
-		self.pack(wal.ActiveImage(self, wal.IMG_CTX_JUMP,
+		self.pack(wal.ActiveImage(self, rc.IMG_CTX_JUMP,
 								tooltip=_('Default object jump')))
 
 		self.jump_spin = UnitSpin(self.user_changes)

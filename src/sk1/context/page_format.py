@@ -19,7 +19,7 @@ import wal
 
 from uc2.uc2const import PAGE_FORMATS, PAGE_FORMAT_NAMES, PORTRAIT, LANDSCAPE
 
-from sk1 import _, events
+from sk1 import _, events, rc
 from sk1.parts import UnitSpin
 from sk1.context.generic import GenericPlugin
 
@@ -48,16 +48,16 @@ class PageFormatPlugin(GenericPlugin):
 		self.width_spin = UnitSpin(self.width_spin_changed)
 		self.pack(self.width_spin, padding=2)
 
-		self.pack(wal.Image(self, wal.IMG_CTX_W_ON_H))
+		self.pack(wal.Image(self, rc.IMG_CTX_W_ON_H))
 
 		self.height_spin = UnitSpin(self.height_spin_changed)
 		self.pack(self.height_spin, padding=2)
 
-		self.portrait = wal.ImgToggleButton(self, wal.IMG_CTX_PORTRAIT,
+		self.portrait = wal.ImgToggleButton(self, rc.IMG_CTX_PORTRAIT,
 							tooltip=_('Portrait'), cmd=self.portrait_toggled)
 		self.pack(self.portrait)
 
-		self.landscape = wal.ImgToggleButton(self, wal.IMG_CTX_LANDSCAPE,
+		self.landscape = wal.ImgToggleButton(self, rc.IMG_CTX_LANDSCAPE,
 							tooltip=_('Landscape'), cmd=self.landscape_toggled)
 		self.pack(self.landscape)
 

@@ -17,7 +17,7 @@
 
 import gtk, wal
 
-from sk1 import config, events
+from sk1 import config, events, rc
 from sk1.ui.menubar import AppMenubar
 from sk1.ui.toolbar import AppToolbar
 from sk1.ui.tools import AppTools
@@ -83,7 +83,7 @@ class AppMainWindow(wal.MainWindow):
 		self.set_min_size(*config.mw_min_size)
 		if config.mw_store_size: self.set_size(*config.mw_size)
 
-		self.set_icon(wal.IMG_APP_ICON)
+		self.set_icon(rc.IMG_APP_ICON)
 		self.center()
 
 		if config.mw_maximized: self.maximize()
@@ -133,8 +133,8 @@ class Splash(wal.ImgPlate):
 
 	def __init__(self, master):
 		wal.ImgPlate.__init__(self, master, bg=wal.DARK_GRAY)
-		self.cairo_img = self.load_image(wal.IMG_CAIRO_BANNER)
-		self.triada_img = self.load_image(wal.IMG_SPLASH_TRIADA)
+		self.cairo_img = self.load_image(rc.IMG_CAIRO_BANNER)
+		self.triada_img = self.load_image(rc.IMG_SPLASH_TRIADA)
 
 	def repaint(self):
 		if config.show_cairo_splash:

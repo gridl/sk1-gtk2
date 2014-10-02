@@ -17,7 +17,7 @@
 
 import wal
 
-from sk1 import _, events
+from sk1 import _, events, rc
 
 class PagerWidget(wal.HBox):
 
@@ -33,22 +33,22 @@ class PagerWidget(wal.HBox):
 		self.app = app
 		self.insp = app.inspector
 
-		self.start = wal.ImgButton(self, wal.IMG_PAGER_START,
+		self.start = wal.ImgButton(self, rc.IMG_PAGER_START,
 								cmd=self.first_page, flat=True)
 		self.pack(self.start)
 
-		self.left = wal.ImgButton(self, wal.IMG_PAGER_PREV,
+		self.left = wal.ImgButton(self, rc.IMG_PAGER_PREV,
 								cmd=self.prev_page, flat=True)
 		self.pack(self.left)
 
 		self.label = wal.DecorLabel(self, size=-1)
 		self.pack(self.label, False, False, 5)
 
-		self.right = wal.ImgButton(self, wal.IMG_PAGER_NEXT,
+		self.right = wal.ImgButton(self, rc.IMG_PAGER_NEXT,
 								cmd=self.next_page, flat=True)
 		self.pack(self.right)
 
-		self.end = wal.ImgButton(self, wal.IMG_PAGER_END,
+		self.end = wal.ImgButton(self, rc.IMG_PAGER_END,
 								cmd=self.last_page, flat=True)
 		self.pack(self.end)
 

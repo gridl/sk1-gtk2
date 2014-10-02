@@ -17,7 +17,7 @@
 
 import wal
 
-from sk1 import modes
+from sk1 import modes, rc
 
 class AppTools(wal.HidableHBox):
 
@@ -44,8 +44,8 @@ class AppTools(wal.HidableHBox):
 #			modes.POLYGON_MODE ,
 			modes.TEXT_MODE ,
 			None,
-			wal.IMG_TOOL_STROKE,
-			wal.IMG_TOOL_FILL,
+			rc.IMG_TOOL_STROKE,
+			rc.IMG_TOOL_FILL,
 			None
 		]
 

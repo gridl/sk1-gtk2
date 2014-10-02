@@ -17,7 +17,7 @@
 
 import wal
 
-from sk1 import _
+from sk1 import _, rc
 
 
 class KeepRatioLabel(wal.ActiveImage):
@@ -25,14 +25,14 @@ class KeepRatioLabel(wal.ActiveImage):
 	value = True
 
 	def __init__(self, master):
-		wal.ActiveImage.__init__(self, master, wal.IMG_KEEP_RATIO,
+		wal.ActiveImage.__init__(self, master, rc.IMG_KEEP_RATIO,
 						tooltip=_('Keep aspect ratio'), cmd=self.process_click)
 
 	def process_click(self, *args):
 		self.value = not self.value
 		if self.value:
-			self.set_image(wal.IMG_KEEP_RATIO)
+			self.set_image(rc.IMG_KEEP_RATIO)
 			self.set_tooltip(_('Don\'t keep aspect ratio'))
 		else:
-			self.set_image(wal.IMG_DONT_KEEP_RATIO)
+			self.set_image(rc.IMG_DONT_KEEP_RATIO)
 			self.set_tooltip(_('Keep aspect ratio'))

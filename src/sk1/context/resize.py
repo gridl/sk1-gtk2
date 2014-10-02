@@ -17,7 +17,7 @@
 
 import wal
 
-from sk1 import _, events
+from sk1 import _, events, rc
 from sk1.parts import UnitLabel, UnitSpin, KeepRatioLabel
 from sk1.context.generic import GenericPlugin
 
@@ -38,7 +38,7 @@ class ResizePlugin(GenericPlugin):
 		self.width_spin = UnitSpin(self.user_changes)
 		self.pack(self.width_spin)
 
-		self.pack(wal.Image(self, wal.IMG_CTX_W_ON_H))
+		self.pack(wal.Image(self, rc.IMG_CTX_W_ON_H))
 
 		self.height_spin = UnitSpin(self.user_changes)
 		self.pack(self.height_spin)

@@ -22,7 +22,7 @@ from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, \
 COLOR_GRAY, COLOR_DISPLAY
 from uc2 import uc2const
 
-from sk1 import _, config
+from sk1 import _, config, rc
 from sk1.prefs.generic import GenericPrefsPlugin
 from sk1.prefs.profilemngr import get_profiles_dialog
 from sk1.rc import IMG_PREFS_CMS
@@ -104,7 +104,7 @@ class CMSTab(PrefsTab):
 		self.pack_start(hbox, False, True, 10)
 
 		self.container = gtk.VBox()
-		self.splash = wal.ImgPlate(self.container, wal.IMG_PREFS_CMS_BANNER,
+		self.splash = wal.ImgPlate(self.container, rc.IMG_PREFS_CMS_BANNER,
 								bg=wal.DARK_GRAY)
 		if self.use_cms:
 			self.container.pack_start(self.splash, True, True, 0)
