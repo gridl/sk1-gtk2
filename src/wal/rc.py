@@ -35,6 +35,8 @@ FIXED128 = gtk.icon_size_register('FIXED128', 128, 128)
 STOCK_ZOOM_PAGE = 'gtk-zoom-page'
 STOCK_DONT_SAVE = 'gtk-action-dont-save'
 
+PROVIDERS = []
+
 SYSCOLORS = {
 		'bg':(),
 		'selected-bg':(),
@@ -96,10 +98,13 @@ def registry_aliases(aliases):
 
 	iconfactory.add_default()
 
+def registry_provider(provider):
+	PROVIDERS.append(provider)
+
 def get_image_path(image_id):
-	imgname = image_id + '.png'
-	imgpath = os.path.join(GENERIC_ICONS_PATH, imgname)
-	if os.path.lexists(imgpath): return imgpath
+	for item in PROVIDERS:
+		imagepath = item(image_id)
+		if not imagepath is None: return imagepath
 	return None
 
 def get_stock_pixbuf(image_id, size=FIXED16):

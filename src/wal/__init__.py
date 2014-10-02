@@ -19,7 +19,7 @@
 from const import *
 from image_ids import *
 
-from rc import registry_aliases
+from rc import registry_aliases, registry_provider
 
 from window import MainWindow, MW_Menu, MW_Toolbar
 from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
