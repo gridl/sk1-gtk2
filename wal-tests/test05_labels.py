@@ -13,6 +13,8 @@ class MW(wal.MainWindow):
 		self.pack(wal.DecorLabel(self, 'Test DecorLabel', size=1), padding=10)
 		self.pack(wal.DecorLabel(self, 'Test DecorLabel', size=1, bold=True), padding=10)
 		self.pack(wal.DecorLabel(self, 'Test DecorLabel', enabled=False), padding=10)
+		self.pack(wal.URL_Label(self, 'http://sk1project.org'), padding=10)
+		self.pack(wal.URL_Label(self, 'http://inkscape.org', tooltip='Home site'), padding=10)
 
 mw = MW()
 mw.run()

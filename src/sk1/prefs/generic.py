@@ -17,7 +17,7 @@
 
 import gtk, wal
 
-from sk1 import const, rc
+from sk1 import const
 
 class GenericPrefsPlugin(gtk.VBox):
 
@@ -25,8 +25,8 @@ class GenericPrefsPlugin(gtk.VBox):
 	name = ''
 	title = ''
 	short_title = ''
-	icon_stock = gtk.STOCK_FILE
-	image_id = ''
+	icon_stock = wal.STOCK_FILE
+	image_id = wal.STOCK_FILE
 	icon = None
 	cid = const.PREFS_APP_PLUGIN
 	childs = []
@@ -38,15 +38,11 @@ class GenericPrefsPlugin(gtk.VBox):
 		self.fmt_config = fmt_config
 		self.app = app
 		self.dlg = dlg
-		if self.image_id:
-			self.icon = rc.get_pixbuf(self.image_id)
-		else:
-			self.icon = rc.get_stock_pixbuf(self.icon_stock, gtk.ICON_SIZE_MENU)
 
 	def build(self):
 		title = wal.DecorLabel(self, self.title, 1, True)
 		self.pack_start(title, False, False, 0)
-		self.pack_start(gtk.HSeparator(), False, False, 5)
+		self.pack_start(wal.HLine(self), False, False, 5)
 		self.built = True
 		self.set_border_width(5)
 		self.set_size_request(400, -1)

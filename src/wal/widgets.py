@@ -68,6 +68,33 @@ class DecorLabel(Label):
 	def get_text(self): return self.text
 	def set_width(self, width):self.set_size_request(width, -1)
 
+class URL_Label(gtk.EventBox):
+
+	cursor_flag = False
+
+	def __init__(self, master, url, text='', tooltip=''):
+		self.url = url
+		self.master = master
+		gtk.EventBox.__init__(self)
+		if tooltip: self.set_tooltip_text(tooltip)
+		if not text: text = url
+		self.label = Label(self)
+		self.label.set_markup('<u>%s</u>' % (text))
+		color = rc.rgb_to_gdkcolor(rc.SYSCOLORS['selected-bg'])
+		self.label.modify_fg(gtk.STATE_NORMAL, color)
+		self.add(self.label)
+		self.connect(gconst.EVENT_BUTTON_PRESS, self._mouse_pressed)
+		self.connect(gconst.EVENT_ENTER_NOTIFY, self._set_cursor)
+
+	def _mouse_pressed(self, *args):
+		import webbrowser
+		webbrowser.open_new(self.url)
+
+	def _set_cursor(self, *args):
+		if not self.cursor_flag:
+			self.cursor_flag = True
+			self.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
+
 class Image(gtk.Image):
 
 	def __init__(self, master, image_id, size=rc.FIXED16):
