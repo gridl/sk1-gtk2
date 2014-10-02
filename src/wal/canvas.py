@@ -42,13 +42,16 @@ class ImgPlate(ColorPlate):
 		self.connect(gconst.EVENT_EXPOSE, self._repaint)
 		if image_id:
 			self.image = self.load_image(image_id, image_size)
-			self.set_size(self.image.get_width(), self.image.get_height())
+			self.set_size(self.get_image_size(self.image))
 
 	def repaint_request(self):
 		self.queue_draw()
 
 	def load_image(self, image_id, image_size=rc.FIXED16):
 		return rc.get_pixbuf(image_id, image_size)
+
+	def get_image_size(self, image):
+		return image.get_width(), image.get_height()
 
 	def set_image(self, image_id):
 		if image_id:
