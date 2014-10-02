@@ -141,11 +141,11 @@ class Splash(wal.ImgPlate):
 			w, h = self.get_size()
 
 			x = 5
-			y = h - self.cairo_img.get_height() - 5
+			y = h - self.get_image_size(self.cairo_img)[1] - 5
 			self.draw_image(self.cairo_img, x, y)
 
-			x = w - self.triada_img.get_width() + 80
-			y = h - self.triada_img.get_height() + 80
+			x = w - self.get_image_size(self.triada_img)[0] + 80
+			y = h - self.get_image_size(self.triada_img)[1] + 80
 			self.draw_image(self.triada_img, x, y)
 
 
