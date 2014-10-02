@@ -28,6 +28,9 @@ FIXED16 = gtk.icon_size_register('FIXED16', 16, 16)
 FIXED22 = gtk.icon_size_register('FIXED22', 22, 22)
 FIXED24 = gtk.icon_size_register('FIXED24', 24, 24)
 FIXED32 = gtk.icon_size_register('FIXED32', 32, 32)
+FIXED48 = gtk.icon_size_register('FIXED48', 48, 48)
+FIXED64 = gtk.icon_size_register('FIXED64', 64, 64)
+FIXED128 = gtk.icon_size_register('FIXED128', 128, 128)
 
 def init_rc():pass
 
@@ -98,4 +101,5 @@ def gdkcolor_to_rgb(color):
 
 def rgb_to_gdkpixel(color):
 	r, g, b = color
+	r = int(r * 256);g = int(g * 256);b = int(b * 256)
 	return r * 256 * 256 * 256 + g * 65536 + b * 256 + 255
