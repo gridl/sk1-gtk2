@@ -64,7 +64,7 @@ class AppMainWindow(wal.MainWindow):
 		self.workarea.pack(hbox, True, True)
 
 		#---SPLASH
-		self.nb_splash = SplashArea(self)
+		self.nb_splash = Splash(self.workarea)
 		self.workarea.pack2(self.nb_splash, True, True)
 
 		self.hpalette = HPalette(self.app, self.workarea)
@@ -129,53 +129,24 @@ class AppMainWindow(wal.MainWindow):
 	def set_active_tab(self, tab):
 		self.nb.set_current_page(self.nb.page_num(tab))
 
+class Splash(wal.ImgPlate):
 
-class SplashArea(gtk.DrawingArea):
+	def __init__(self, master):
+		wal.ImgPlate.__init__(self, master, bg=wal.DARK_GRAY)
+		self.cairo_img = self.load_image(wal.IMG_CAIRO_BANNER)
+		self.triada_img = self.load_image(wal.IMG_SPLASH_TRIADA)
 
-	def __init__(self, mw):
-		gtk.DrawingArea.__init__(self)
-		self.mw = mw
-		self.nodocs_color = self.mw.get_style().fg[gtk.STATE_INSENSITIVE]
-		self.modify_bg(gtk.STATE_NORMAL, self.nodocs_color)
-
-		r = self.nodocs_color.red / 0xff
-		g = self.nodocs_color.green / 0xff
-		b = self.nodocs_color.blue / 0xff
-		self.pixel = r * 256 * 256 * 256 + g * 65536 + b * 256 + 255
-
-		self.banner = rc.get_pixbuf(rc.IMG_CAIRO_BANNER)
-		self.banner2 = rc.get_pixbuf(rc.IMG_SPLASH_TRIADA)
-		self.connect('expose_event', self.repaint)
-
-	def repaint(self, *args):
+	def repaint(self):
 		if config.show_cairo_splash:
-			w, h = tuple(self.allocation)[2:]
-			self.composite(self.banner, 5, h - self.banner.get_height() - 5)
-			x = w - self.banner2.get_width() + 80
-			y = h - self.banner2.get_height() + 80
-			self.composite(self.banner2, x, y)
+			w, h = self.get_size()
 
-	def composite(self, banner, x, y):
-		frame = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False, 8,
-            banner.get_width(),
-            banner.get_height())
+			x = 5
+			y = h - self.cairo_img.get_height() - 5
+			self.draw_image(self.cairo_img, x, y)
 
-		frame.fill(self.pixel)
-		banner.composite(
-			frame,
-			0, 0,
-            banner.get_width(),
-            banner.get_height(),
-            0, 0, 1, 1, gtk.gdk.INTERP_NEAREST, 255)
-
-		self.window.draw_rgb_image(
-            self.style.black_gc,
-            x, y,
-            frame.get_width(),
-            frame.get_height(),
-            gtk.gdk.RGB_DITHER_NORMAL,
-            frame.get_pixels(),
-            frame.get_rowstride())
+			x = w - self.triada_img.get_width() + 80
+			y = h - self.triada_img.get_height() + 80
+			self.draw_image(self.triada_img, x, y)
 
 
 
