@@ -25,7 +25,7 @@ from uc2 import uc2const
 from sk1 import _, config
 from sk1.prefs.generic import GenericPrefsPlugin
 from sk1.prefs.profilemngr import get_profiles_dialog
-from sk1.rc import IMG_PREFS_CMS_BANNER, IMG_PREFS_CMS, get_pixbuf
+from sk1.rc import IMG_PREFS_CMS
 
 COLORSPACES = [COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY, COLOR_DISPLAY]
 
@@ -104,7 +104,8 @@ class CMSTab(PrefsTab):
 		self.pack_start(hbox, False, True, 10)
 
 		self.container = gtk.VBox()
-		self.splash = CMSSplash()
+		self.splash = wal.ImgPlate(self.container, wal.IMG_PREFS_CMS_BANNER,
+								bg=wal.DARK_GRAY)
 		if self.use_cms:
 			self.container.pack_start(self.splash, True, True, 0)
 		self.pack_start(self.container, True, True, 0)
@@ -134,49 +135,49 @@ class CMSTab(PrefsTab):
 	def restore_defaults(self):
 		self.cms_check.set_active(True)
 
-class CMSSplash(gtk.DrawingArea):
-
-	def __init__(self):
-		gtk.DrawingArea.__init__(self)
-		self.bg = self.get_style().fg[gtk.STATE_INSENSITIVE]
-		self.modify_bg(gtk.STATE_NORMAL, self.bg)
-
-		r = self.bg.red / 0xff
-		g = self.bg.green / 0xff
-		b = self.bg.blue / 0xff
-		self.pixel = r * 256 * 256 * 256 + g * 65536 + b * 256 + 255
-
-		self.cms_banner = get_pixbuf(IMG_PREFS_CMS_BANNER)
-		self.connect('expose_event', self.repaint)
-
-	def repaint(self, *args):
-		_x, _y, w, h = self.allocation
-		self.composite(self.cms_banner,
-					w / 2 - self.cms_banner.get_width() / 2,
-					(h - self.cms_banner.get_height()) / 2)
-
-	def composite(self, banner, x, y):
-		frame = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB,
-							False, 8,
-            banner.get_width(),
-            banner.get_height())
-
-		frame.fill(self.pixel)
-		banner.composite(
-			frame,
-			0, 0,
-            banner.get_width(),
-            banner.get_height(),
-            0, 0, 1, 1, gtk.gdk.INTERP_NEAREST, 255)
-
-		self.window.draw_rgb_image(
-            self.style.black_gc,
-            x, y,
-            frame.get_width(),
-            frame.get_height(),
-            gtk.gdk.RGB_DITHER_NORMAL,
-            frame.get_pixels(),
-            frame.get_rowstride())
+#class CMSSplash(gtk.DrawingArea):
+#
+#	def __init__(self):
+#		gtk.DrawingArea.__init__(self)
+#		self.bg = self.get_style().fg[gtk.STATE_INSENSITIVE]
+#		self.modify_bg(gtk.STATE_NORMAL, self.bg)
+#
+#		r = self.bg.red / 0xff
+#		g = self.bg.green / 0xff
+#		b = self.bg.blue / 0xff
+#		self.pixel = r * 256 * 256 * 256 + g * 65536 + b * 256 + 255
+#
+#		self.cms_banner = get_pixbuf(IMG_PREFS_CMS_BANNER)
+#		self.connect('expose_event', self.repaint)
+#
+#	def repaint(self, *args):
+#		_x, _y, w, h = self.allocation
+#		self.composite(self.cms_banner,
+#					w / 2 - self.cms_banner.get_width() / 2,
+#					(h - self.cms_banner.get_height()) / 2)
+#
+#	def composite(self, banner, x, y):
+#		frame = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB,
+#							False, 8,
+#            banner.get_width(),
+#            banner.get_height())
+#
+#		frame.fill(self.pixel)
+#		banner.composite(
+#			frame,
+#			0, 0,
+#            banner.get_width(),
+#            banner.get_height(),
+#            0, 0, 1, 1, gtk.gdk.INTERP_NEAREST, 255)
+#
+#		self.window.draw_rgb_image(
+#            self.style.black_gc,
+#            x, y,
+#            frame.get_width(),
+#            frame.get_height(),
+#            gtk.gdk.RGB_DITHER_NORMAL,
+#            frame.get_pixels(),
+#            frame.get_rowstride())
 
 class SettingsTab(PrefsTab):
 

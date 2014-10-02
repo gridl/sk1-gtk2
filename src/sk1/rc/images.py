@@ -33,7 +33,7 @@ IMG_RULER_DO_C = 'sk1-ruler-docorigin-c'
 #IMG_PAGER_START = 'sk1-pager-start'
 
 IMG_PREFS_CMS = 'sk1-prefs-cms'
-IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
+#IMG_PREFS_CMS_BANNER = 'sk1-prefs-cms-banner'
 IMG_PREFS_RULER = 'sk1-prefs-ruler'
 IMG_PREFS_PALETTE = 'sk1-prefs-palette'
 
