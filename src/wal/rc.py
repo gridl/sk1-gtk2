@@ -50,19 +50,22 @@ def registry_aliases(aliases):
 
 def get_image_path(image_id):
 	imgname = image_id + '.png'
-	if image_id[:4] == 'sk1-':
-		return os.path.join(GENERIC_ICONS_PATH, imgname)
+	imgpath = os.path.join(GENERIC_ICONS_PATH, imgname)
+	if os.path.lexists(imgpath): return imgpath
 	return None
 
 def get_stock_pixbuf(image_id, size=FIXED16):
 	return gtk.Image().render_icon(image_id, size)
 
 def get_pixbuf(image_id, size=FIXED16):
-	if image_id[:4] == 'sk1-':
-		loader = gtk.gdk.pixbuf_new_from_file
-		return loader(get_image_path(image_id))
-	else:
+	if image_id[:4] == 'gtk-':
 		return get_stock_pixbuf(image_id, size)
+	else:
+		loader = gtk.gdk.pixbuf_new_from_file
+		imgpath = get_image_path(image_id)
+		if imgpath is None:
+			return get_stock_pixbuf(gtk.STOCK_DELETE, size)
+		return loader(imgpath)
 
 def get_stock_image(image_id, size=FIXED16):
 	image = gtk.Image()
@@ -70,12 +73,12 @@ def get_stock_image(image_id, size=FIXED16):
 	return image
 
 def get_image(image_id, size=FIXED16):
-	if image_id[:4] == 'sk1-':
+	if image_id[:4] == 'gtk-':
+		return get_stock_image(image_id, size)
+	else:
 		image = gtk.Image()
 		image.set_from_pixbuf(get_pixbuf(image_id))
 		return image
-	else:
-		return get_stock_image(image_id, size)
 
 def rgb_to_gdk_hexcolor(color):
 	r, g, b = color
@@ -92,3 +95,7 @@ def gdk_hexcolor_to_rgb(hexcolor):
 
 def gdkcolor_to_rgb(color):
 	return gdk_hexcolor_to_rgb(color.to_string())
+
+def rgb_to_gdkpixel(color):
+	r, g, b = color
+	return r * 256 * 256 * 256 + g * 65536 + b * 256 + 255

@@ -32,6 +32,64 @@ class ColorPlate(gtk.DrawingArea):
 	def get_bgcolor(self):
 		return rc.gdkcolor_to_rgb(self.get_style().bg[gtk.STATE_NORMAL])
 
+class ImgPlate(ColorPlate):
+
+	image = None
+
+	def __init__(self, master, image_id=None, image_size=rc.FIXED16,
+				 size=(), bg=()):
+		ColorPlate.__init__(self, master, size, bg)
+		self.connect(gconst.EVENT_EXPOSE, self._repaint)
+		if image_id: self.image = self.load_image(image_id, image_size)
+
+	def repaint_request(self):
+		self.queue_draw()
+
+	def load_image(self, image_id, image_size=rc.FIXED16):
+		return rc.get_pixbuf(image_id, image_size)
+
+	def set_image(self, image_id):
+		if image_id:
+			self.image = self.load_image(image_id)
+			self.repaint_request()
+
+	def draw_image(self, image, x, y):
+		frame = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False, 8,
+            image.get_width(),
+            image.get_height())
+
+		frame.fill(rc.rgb_to_gdkpixel(self.get_bgcolor()))
+		image.composite(
+			frame,
+			0, 0,
+            image.get_width(),
+            image.get_height(),
+            0, 0, 1, 1, gtk.gdk.INTERP_NEAREST, 255)
+
+		self.window.draw_rgb_image(
+            self.style.black_gc,
+            x, y,
+            frame.get_width(),
+            frame.get_height(),
+            gtk.gdk.RGB_DITHER_NORMAL,
+            frame.get_pixels(),
+            frame.get_rowstride())
+
+	def draw_image_at_center(self, image):
+		width, height = self.get_size()
+		x = (width - image.get_width()) / 2
+		y = (height - image.get_height()) / 2
+		self.draw_image(image, x, y)
+
+	def _repaint(self, *args):
+		self.repaint()
+		return True
+
+	#--- Stub for subclass repaint method
+	def repaint(self):
+		if self.image: self.draw_image_at_center(self.image)
+
+
 class Event:
 	pos = ()
 	alt = False; ctrl = False; shift = False
