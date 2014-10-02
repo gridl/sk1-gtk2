@@ -36,12 +36,6 @@ HORIZONTAL = 1
 KEY_KP_ENTER = 65421
 KEY_RETURN = 65293
 
-#TXT_SMALL = 'small'
-#TXT_SMALLER = 'smaller'
-#TXT_MEDIUM = 'medium'
-#TXT_LARGE = 'large'
-#TXT_LARGER = 'larger'
-
 PROP_RELIEF = 'relief'
 PROP_CAN_FOCUS = 'can-focus'
 
