@@ -65,36 +65,41 @@ def init_rc(mw):
 	SYSCOLORS['selected-text'] = gdkcolor_to_rgb(text[gtk.STATE_SELECTED])
 	SYSCOLORS['insensitive-text'] = gdkcolor_to_rgb(text[gtk.STATE_INSENSITIVE])
 
-def registry_aliases(aliases):
+def registry_aliases(txt, overlay_icons=True):
 
 	iconfactory = gtk.IconFactory()
-	gtk.stock_add([(STOCK_ZOOM_PAGE, '', 0, 0, ''), ])
 
-	items = [gtk.STOCK_ZOOM_100, gtk.STOCK_ZOOM_FIT, gtk.STOCK_ZOOM_IN,
-			gtk.STOCK_ZOOM_OUT, STOCK_ZOOM_PAGE]
+	#--- Overlay for zoom icons
+	if overlay_icons:
+		gtk.stock_add([(STOCK_ZOOM_PAGE, '', 0, 0, ''), ])
 
-	for item in items:
-		iconset = gtk.IconSet()
-		source = gtk.IconSource()
-		filepath = os.path.join(ICONS24_PATH, item + '.png')
-		pixbuf = gtk.gdk.pixbuf_new_from_file(filepath)
-		source.set_pixbuf(pixbuf)
-		source.set_size_wildcarded(True)
-		iconset.add_source(source)
-		iconfactory.add(item, iconset)
+		items = [gtk.STOCK_ZOOM_100, gtk.STOCK_ZOOM_FIT, gtk.STOCK_ZOOM_IN,
+				gtk.STOCK_ZOOM_OUT, STOCK_ZOOM_PAGE]
 
-	if aliases:
-		items = []
-		alias_items = []
-		for item in aliases:
-			items.append(item[0])
-			alias_items.append(item[1])
-
-		gtk.stock_add(items)
-
-		for item, alias in alias_items:
-			iconset = gtk.icon_factory_lookup_default(alias)
+		for item in items:
+			iconset = gtk.IconSet()
+			source = gtk.IconSource()
+			filepath = os.path.join(ICONS24_PATH, item + '.png')
+			pixbuf = gtk.gdk.pixbuf_new_from_file(filepath)
+			source.set_pixbuf(pixbuf)
+			source.set_size_wildcarded(True)
+			iconset.add_source(source)
 			iconfactory.add(item, iconset)
+
+	#---Registry DON'T SAVE item
+	aliases = [((STOCK_DONT_SAVE, txt, 0, 0, None),
+			(STOCK_DONT_SAVE, gtk.STOCK_NO)), ]
+	items = []
+	alias_items = []
+	for item in aliases:
+		items.append(item[0])
+		alias_items.append(item[1])
+
+	gtk.stock_add(items)
+
+	for item, alias in alias_items:
+		iconset = gtk.icon_factory_lookup_default(alias)
+		iconfactory.add(item, iconset)
 
 	iconfactory.add_default()
 

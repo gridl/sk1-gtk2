@@ -63,9 +63,7 @@ class Application(UCApplication):
 		self.palette_mngr = AppPaletteManager(self)
 
 		wal.registry_provider(rc.get_image_path)
-		aliases = [((wal.STOCK_DONT_SAVE, _("_Don't save"), 0, 0, None),
-				(wal.STOCK_DONT_SAVE, wal.STOCK_NO)), ]
-		wal.registry_aliases(aliases)
+		wal.registry_aliases(_("_Don't save"))
 
 		self.mw = AppMainWindow(self, create_actions(self))
 		self.proxy.update_references()
