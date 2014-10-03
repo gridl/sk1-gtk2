@@ -317,7 +317,8 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 			for item in datalist:
 				self.append_text(item)
 				maxsize = max(len(item), maxsize)
-		self.set_size_request(max(maxsize * 10, 65), -1)
+		font_size = rc.SYSFONT['size']
+		self.set_size_request(max(maxsize * font_size, 65), -1)
 
 	def get_text(self):
 		return self.child.get_text()
@@ -345,7 +346,8 @@ class SpinButton(gtk.SpinButton):
 		self.adj = gtk.Adjustment(val, rng[0], rng[1], incr, 1.0, 0.0)
 		gtk.SpinButton.__init__(self, self.adj, 0.1, 2)
 		self.set_numeric(True)
-		self.set_size_request(65, -1)
+		font_size = rc.SYSFONT['size']
+		self.set_size_request(max(7 * font_size, 65), -1)
 		self.connect(gconst.EVENT_VALUE_CHANGED, self._check_changes)
 		self.connect(gconst.EVENT_KEY_PRESS, self._check_enter)
 		if check_focus:
