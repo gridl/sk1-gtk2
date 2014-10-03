@@ -44,7 +44,7 @@ class ImgPlate(ColorPlate):
 			self.image = self.load_image(image_id, image_size)
 			self.set_size(*self.get_image_size(self.image))
 
-	def repaint_request(self):
+	def repaint_request(self, *args):
 		self.queue_draw()
 
 	def load_image(self, image_id, image_size=rc.FIXED16):
@@ -191,6 +191,8 @@ class CairoCanvas(ActiveColorPlate):
 		if has_tooltip:
 			self.set_property(gconst.PROP_HAS_TOOLTIP, True)
 			self.connect(gconst.EVENT_QUERY_TOOLTIP, self._update_tooltip)
+
+	def repaint_request(self, *args): self.queue_draw()
 
 	def _update_tooltip(self, *args):
 		x = args[1]

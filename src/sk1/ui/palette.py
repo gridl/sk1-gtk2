@@ -28,25 +28,25 @@ class PaletteTemplate:
 		self.pw.position -= 20
 		if self.pw.position < -self.pw.max_pos:
 			self.pw.position = -self.pw.max_pos
-		self.pw.queue_draw()
+		self.pw.repaint_request()
 
 	def action_forward(self, *args):
 		self.pw.position -= 1
 		if self.pw.position < -self.pw.max_pos:
 			self.pw.position = -self.pw.max_pos
-		self.pw.queue_draw()
+		self.pw.repaint_request()
 
 	def action_back(self, *args):
 		self.pw.position += 1
 		if self.pw.position > 0:
 			self.pw.position = 0
-		self.pw.queue_draw()
+		self.pw.repaint_request()
 
 	def action_dback(self, *args):
 		self.pw.position += 20
 		if self.pw.position > 0:
 			self.pw.position = 0
-		self.pw.queue_draw()
+		self.pw.repaint_request()
 
 	def action_nocolor(self, button):
 		if button == const.LEFT_BUTTON:
@@ -74,7 +74,7 @@ class HPalette(wal.HidableVBox, PaletteTemplate):
 		box.pack(wal.ActiveImage(self, rc.IMG_PALETTE_NO_COLOR,
 				tooltip=_('Empthy pattern'), cmd=self.action_nocolor))
 
-		self.pw = HPaletteWidget(self.app)
+		self.pw = HPaletteWidget(box, self.app)
 		box.pack(self.pw, True, True, 1)
 
 		box.pack(wal.ImgButton(self, rc.IMG_PALETTE_ARROW_RIGHT,
