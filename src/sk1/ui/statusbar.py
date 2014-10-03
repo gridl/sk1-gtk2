@@ -29,11 +29,12 @@ class AppStatusbar(wal.HBox):
 	def __init__(self, app, master):
 		self.app = app
 		wal.HBox.__init__(self, master)
+		self.set_border_width(2)
 
 		self.pager = PagerWidget(self.app, self)
 		self.pack(self.pager, padding=5)
 
-		self.msg_label = wal.DecorLabel(self, size=-1)
+		self.msg_label = wal.DecorLabel(self)
 		self.pack(self.msg_label)
 
 		self.cmw = ColorMonitorWidget(self.app, self)

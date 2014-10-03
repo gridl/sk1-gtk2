@@ -41,7 +41,7 @@ class PagerWidget(wal.HBox):
 								cmd=self.prev_page, flat=True)
 		self.pack(self.left)
 
-		self.label = wal.DecorLabel(self, size=-1)
+		self.label = wal.DecorLabel(self)
 		self.pack(self.label, False, False, 5)
 
 		self.right = wal.ImgButton(self, rc.IMG_PAGER_NEXT,

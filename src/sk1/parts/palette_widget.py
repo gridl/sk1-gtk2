@@ -176,7 +176,7 @@ class VPaletteWidget(wal.CairoCanvas):
 		x0 = 2.0; y0 = 0.0
 		offset = config.vpalette_cell_vertical
 		pal = self.app.palette_mngr.palette_in_use.colors
-		x1 = config.vpalette_cell_horizontal + 1
+		x1 = config.vpalette_cell_horizontal
 		self.set_antialias(False)
 
 		i = self.position

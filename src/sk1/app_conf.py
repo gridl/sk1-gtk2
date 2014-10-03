@@ -98,8 +98,8 @@ class AppConfig(UCConfig):
 	palette_in_use = ''
 	hpalette_cell_vertical = 18
 	hpalette_cell_horizontal = 40
-	vpalette_cell_vertical = 18
-	vpalette_cell_horizontal = 18
+	vpalette_cell_vertical = 20
+	vpalette_cell_horizontal = 20
 
 	palette_hcell_vertical = 18
 	palette_hcell_horizontal = 40
