@@ -101,7 +101,7 @@ class CMSTab(PrefsTab):
 		txt = _('Activate Color Management')
 		self.cms_check = wal.CheckButton(hbox, txt, self.use_cms, self.changes)
 		hbox.pack_start(self.cms_check, False, True, 10)
-		self.pack_start(hbox, False, True, 10)
+		self.pack_start(hbox, False, True, 5)
 
 		self.container = gtk.VBox()
 		self.splash = wal.ImgPlate(self.container, rc.IMG_PREFS_CMS_BANNER,
@@ -117,7 +117,7 @@ class CMSTab(PrefsTab):
 		note = wal.DecorLabel(hbox, txt, -1, enabled=False, wrap=True)
 		note.set_width(450)
 		hbox.pack_start(note, True, True, 10)
-		self.pack_start(hbox, False, True, 10)
+		self.pack_start(hbox, False, True, 5)
 
 
 	def changes(self, *args):
@@ -135,49 +135,6 @@ class CMSTab(PrefsTab):
 	def restore_defaults(self):
 		self.cms_check.set_active(True)
 
-#class CMSSplash(gtk.DrawingArea):
-#
-#	def __init__(self):
-#		gtk.DrawingArea.__init__(self)
-#		self.bg = self.get_style().fg[gtk.STATE_INSENSITIVE]
-#		self.modify_bg(gtk.STATE_NORMAL, self.bg)
-#
-#		r = self.bg.red / 0xff
-#		g = self.bg.green / 0xff
-#		b = self.bg.blue / 0xff
-#		self.pixel = r * 256 * 256 * 256 + g * 65536 + b * 256 + 255
-#
-#		self.cms_banner = get_pixbuf(IMG_PREFS_CMS_BANNER)
-#		self.connect('expose_event', self.repaint)
-#
-#	def repaint(self, *args):
-#		_x, _y, w, h = self.allocation
-#		self.composite(self.cms_banner,
-#					w / 2 - self.cms_banner.get_width() / 2,
-#					(h - self.cms_banner.get_height()) / 2)
-#
-#	def composite(self, banner, x, y):
-#		frame = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB,
-#							False, 8,
-#            banner.get_width(),
-#            banner.get_height())
-#
-#		frame.fill(self.pixel)
-#		banner.composite(
-#			frame,
-#			0, 0,
-#            banner.get_width(),
-#            banner.get_height(),
-#            0, 0, 1, 1, gtk.gdk.INTERP_NEAREST, 255)
-#
-#		self.window.draw_rgb_image(
-#            self.style.black_gc,
-#            x, y,
-#            frame.get_width(),
-#            frame.get_height(),
-#            gtk.gdk.RGB_DITHER_NORMAL,
-#            frame.get_pixels(),
-#            frame.get_rowstride())
 
 class SettingsTab(PrefsTab):
 
@@ -400,7 +357,7 @@ class ProfilesTab(PrefsTab):
 				'document screen representation only. The profile for your '
 				'hardware you can get either from monitor manufacture or '
 				'calibrating monitor (prefered option) or download '
-				'from ICC Profile Taxi service:\n http://icc.opensuse.org/')
+				'from ICC Profile Taxi service: http://icc.opensuse.org/')
 		note = wal.DecorLabel(tab, text, -1, enabled=False, wrap=True)
 		note.set_width(430)
 		tab.attach(note, 0, 2, 8, 9, gtk.FILL | gtk.EXPAND, gtk.SHRINK)
