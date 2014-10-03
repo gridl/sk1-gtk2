@@ -319,6 +319,6 @@ class ProfileListModel(gtk.ListStore):
 
 	def __init__(self, objs):
 		gtk.ListStore.__init__(self, gtk.gdk.Pixbuf, str)
-		icon = rc.get_pixbuf(rc.IMG_PREFS_CMS)
+		icon = wal.rc.get_pixbuf(rc.IMG_PREFS_CMS)
 		for item in objs:
 			self.append((icon, item))
