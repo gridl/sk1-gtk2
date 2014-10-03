@@ -94,7 +94,7 @@ class AppConfig(UCConfig):
 
 	#============== PALETTE OPTIONS ================
 	palette_visible = True
-	palette_orientation = const.HORIZONTAL
+	palette_orientation = const.VERTICAL
 	palette_in_use = ''
 	hpalette_cell_vertical = 18
 	hpalette_cell_horizontal = 40

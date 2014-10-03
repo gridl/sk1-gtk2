@@ -17,11 +17,11 @@
 
 import gtk, wal
 
-from sk1 import config, events, rc
+from sk1 import config, events, rc, const
 from sk1.ui.menubar import AppMenubar
 from sk1.ui.toolbar import AppToolbar
 from sk1.ui.tools import AppTools
-from sk1.ui.palette import HPalette
+from sk1.ui.palette import HPalette, VPalette
 from sk1.ui.statusbar import AppStatusbar
 from sk1.context import ContextPanel
 from sk1.plugins import PluginPanel
@@ -51,7 +51,7 @@ class AppMainWindow(wal.MainWindow):
 
 		hbox = wal.HBox(self.workarea)
 		self.tools = AppTools(self.app, hbox)
-		hbox.pack_start(self.tools, False, False, 1)
+		hbox.pack(self.tools, padding=1)
 		self.inner_hpaned = gtk.HPaned()
 		self.nb = gtk.Notebook()
 		self.nb.connect('switch-page', self.change_doc)
@@ -59,15 +59,17 @@ class AppMainWindow(wal.MainWindow):
 		self.inner_hpaned.pack1(self.nb, 1, 0)
 
 		self.plugin_panel = PluginPanel(self)
+		hbox.pack(self.inner_hpaned, True, True, padding=1)
 
-		hbox.pack_start(self.inner_hpaned, True, True, 1)
+		self.vpalette = VPalette(self.workarea, self.app)
+		hbox.pack(self.vpalette, padding=2)
 		self.workarea.pack(hbox, True, True)
 
 		#---SPLASH
 		self.nb_splash = Splash(self.workarea)
 		self.workarea.pack2(self.nb_splash, True, True)
 
-		self.hpalette = HPalette(self.app, self.workarea)
+		self.hpalette = HPalette(self.workarea, self.app)
 		self.workarea.pack(self.hpalette, padding=2)
 
 		self.workarea.pack(wal.HLine(self.workarea))

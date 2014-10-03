@@ -17,8 +17,8 @@
 
 import wal
 
-from sk1 import _, const, rc
-from sk1.parts import HPaletteWidget
+from sk1 import _, const, rc, config
+from sk1.parts import HPaletteWidget, VPaletteWidget
 
 class PaletteTemplate:
 
@@ -57,11 +57,11 @@ class PaletteTemplate:
 
 class HPalette(wal.HidableVBox, PaletteTemplate):
 
-	def __init__(self, app, master):
+	def __init__(self, master, app):
 		self.app = app
 		wal.HidableVBox.__init__(self, master)
 
-		self.pack(wal.HLine(self))
+		self.pack(wal.HLine(self), padding=1)
 
 		box = wal.HBox(self)
 
@@ -83,4 +83,45 @@ class HPalette(wal.HidableVBox, PaletteTemplate):
 		box.pack(wal.ImgButton(self, rc.IMG_PALETTE_DOUBLE_ARROW_RIGHT,
 						cmd=self.action_dforward, repeat=True, flat=True))
 		self.pack(box, True, True)
+
+		if config.palette_orientation == const.HORIZONTAL and  config.palette_visible:
+			self.set_visible(True)
+		else:
+			self.set_visible(False)
+
+
+
+class VPalette(wal.HidableHBox, PaletteTemplate):
+
+	def __init__(self, master, app):
+		self.app = app
+		wal.HidableHBox.__init__(self, master)
+
+		self.pack(wal.VLine(self), padding=1)
+
+		box = wal.VBox(self)
+
+		box.pack(wal.ImgButton(self, rc.IMG_PALETTE_DOUBLE_ARROW_TOP,
+						cmd=self.action_dback, repeat=True, flat=True))
+
+		box.pack(wal.ImgButton(self, rc.IMG_PALETTE_ARROW_TOP,
+						cmd=self.action_back, repeat=True, flat=True))
+
+		box.pack(wal.ActiveImage(self, rc.IMG_PALETTE_NO_COLOR,
+				tooltip=_('Empthy pattern'), cmd=self.action_nocolor))
+
+		self.pw = VPaletteWidget(box, self.app)
+		box.pack(self.pw, True, True, 1)
+
+		box.pack(wal.ImgButton(self, rc.IMG_PALETTE_ARROW_BOTTOM,
+						cmd=self.action_forward, repeat=True, flat=True))
+
+		box.pack(wal.ImgButton(self, rc.IMG_PALETTE_DOUBLE_ARROW_BOTTOM,
+						cmd=self.action_dforward, repeat=True, flat=True))
+		self.pack(box, True, True)
+
+		if config.palette_orientation == const.VERTICAL and  config.palette_visible:
+			self.set_visible(True)
+		else:
+			self.set_visible(False)
 
