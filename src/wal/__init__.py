@@ -29,3 +29,5 @@ from widgets import ToggleButton, ImgToggleButton, ActionToggleButton
 from widgets import ComboBoxText, ComboBoxEntry, ColorButton, RadioButton
 from widgets import SpinButton, SpinButtonInt, URL_Label
 from canvas import ColorPlate, ImgPlate, ActiveColorPlate, CairoCanvas
+
+from dialogs import info_dialog, warning_dialog, error_dialog
