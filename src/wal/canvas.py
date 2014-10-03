@@ -15,7 +15,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, rc, gconst
+import gtk, rc, gconst, cairo
 
 class ColorPlate(gtk.DrawingArea):
 
@@ -180,3 +180,90 @@ class ActiveColorPlate(ColorPlate):
 	def mouse_middle_up(self, event):pass
 	def mouse_move(self, event):pass
 	def mouse_wheel(self, event):pass
+
+class CairoCanvas(ActiveColorPlate):
+
+	ctx = None
+
+	def __init__(self, master, size=(), bg=(), has_tooltip=False):
+		ActiveColorPlate.__init__(self, master, size, bg)
+		self.connect(gconst.EVENT_EXPOSE, self._repaint)
+		if has_tooltip:
+			self.set_property(gconst.PROP_HAS_TOOLTIP, True)
+			self.connect(gconst.EVENT_QUERY_TOOLTIP, self._update_tooltip)
+
+	def _update_tooltip(self, *args):
+		x = args[1]
+		y = args[2]
+		tooltip = args[4]
+		ret = self.update_tooltip(x, y)
+		if not ret or not len(ret) == 3:return False
+		if ret[0]: tooltip.set_icon(rc.get_pixbuf(ret[0]))
+		markup = ''
+		if ret[1]:markup += '<b>%s</b>' % (ret[1])
+		if ret[1] and ret[2]:markup += '\n'
+		if ret[2]:markup += ret[2]
+		if markup: tooltip.set_markup(markup)
+		elif not ret[0]:return False
+		return True
+
+	#---Stub for subclassing
+	def update_tooltip(self, x, y):return ()
+
+	def _repaint(self, *args):
+		self.ctx = self.window.cairo_create()
+		self.repaint()
+		self.ctx = None
+		return True
+
+	#---Stub for subclassing
+	def repaint(self):pass
+
+	def set_antialias(self, val=True):
+		if not self.ctx:return
+		if val: self.ctx.set_antialias(cairo.ANTIALIAS_DEFAULT)
+		else: self.ctx.set_antialias(cairo.ANTIALIAS_NONE)
+
+	def clear(self):
+		if not self.ctx:return
+		self.ctx.set_source_rgb(*self.get_bgcolor())
+		self.ctx.paint()
+
+	def draw_rect(self, rect):
+		"rect - tuple of (x,y,w,h)"
+		if not self.ctx:return
+		self.ctx.rectangle(*rect)
+
+	def draw_line(self, points):
+		"points - sequence of points [(x,y),(x,y)...]"
+		if not self.ctx:return
+		self.ctx.move_to(*points[0])
+		for point in points[1:]:
+			self.ctx.line_to(*point)
+
+	def fill(self, color):
+		"color- tuple of (r,g,b)"
+		if not self.ctx:return
+		self.ctx.set_source_rgb(*color)
+		self.ctx.fill()
+
+	def stroke(self, color, width=1.0, dashes=()):
+		"color- tuple of (r,g,b)"
+		if not self.ctx:return
+		self.ctx.set_line_width(width)
+		self.ctx.set_dash(dashes)
+		self.ctx.set_source_rgb(*color)
+		self.ctx.stroke()
+
+	def rectangle(self, rect, fill_color, stroke_color, width=1.0, dashes=()):
+		"rect - tuple of (x,y,w,h); color- tuple of (r,g,b)"
+		if not self.ctx:return
+		self.draw_rect(rect)
+		self.fill(fill_color)
+		self.draw_rect(rect)
+		self.stroke(stroke_color, width, dashes)
+
+	def polyline(self, points, stroke_color, width=1.0, dashes=()):
+		if not self.ctx:return
+		self.draw_line(points)
+		self.stroke(stroke_color, width, dashes)

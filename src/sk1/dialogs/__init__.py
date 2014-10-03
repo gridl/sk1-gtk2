@@ -16,7 +16,7 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, sys
-import gtk, gobject
+import gtk, gobject, wal
 
 from uc2 import uc2const
 from uc2.formats import data
@@ -224,8 +224,9 @@ def about_dialog(parent):
 						  _("and Skencil 0.6.x experience."))
 	about.set_website('http://www.sk1project.org')
 
-	about.set_logo(rc.get_pixbuf(rc.IMG_APP_ICON))
+	about.set_logo(wal.rc.get_pixbuf(rc.IMG_APP_ICON))
 	about.set_authors(authors + [CREDITS])
+	about.set_translator_credits(CREDITS)
 	about.set_license(LICENSE)
 	about.run()
 	about.destroy()
