@@ -43,7 +43,7 @@ class PageFormatPlugin(GenericPlugin):
 
 		self.combo = wal.ComboBoxEntry(self, self.formats,
 									cmd=self.combo_changed)
-		self.pack(self.combo, padding=4)
+		self.pack(self.combo)
 
 		self.width_spin = UnitSpin(self, self.width_spin_changed)
 		self.pack(self.width_spin, padding=2)

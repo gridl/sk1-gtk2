@@ -26,6 +26,9 @@ class VBox(gtk.VBox):
 		self.childs = []
 		gtk.VBox.__init__(self)
 
+	def set_border_width(self, val):
+		gtk.VBox.set_border_width(self, val)
+
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
 		if end: self.pack_end(child, expand, fill, padding)
 		else: self.pack_start(child, expand, fill, padding)
@@ -51,6 +54,9 @@ class HBox(gtk.HBox):
 		self.master = master
 		self.childs = []
 		gtk.HBox.__init__(self)
+
+	def set_border_width(self, val):
+		gtk.HBox.set_border_width(self, val)
 
 	def pack(self, child, expand=False, fill=False, padding=0, end=False):
 		if end: self.pack_end(child, expand, fill, padding)

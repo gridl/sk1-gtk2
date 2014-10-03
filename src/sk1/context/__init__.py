@@ -52,6 +52,8 @@ class ContextPanel(wal.HBox):
 		self.app = app
 		self.insp = self.app.inspector
 
+		self.set_border_width(3)
+
 		for item in PLUGINS:
 			plg = item(self.app, self)
 			self.plugins_dict[plg.name] = plg
