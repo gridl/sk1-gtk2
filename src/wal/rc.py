@@ -49,6 +49,8 @@ SYSCOLORS = {
 		'insensitive-text':(),
 		}
 
+SYSFONT = {'family':'', 'size':0}
+
 def init_rc(mw):
 	mw.realize()
 	style = mw.get_style()
@@ -64,6 +66,9 @@ def init_rc(mw):
 	SYSCOLORS['text'] = gdkcolor_to_rgb(text[gtk.STATE_NORMAL])
 	SYSCOLORS['selected-text'] = gdkcolor_to_rgb(text[gtk.STATE_SELECTED])
 	SYSCOLORS['insensitive-text'] = gdkcolor_to_rgb(text[gtk.STATE_INSENSITIVE])
+	font = style.font_desc
+	SYSFONT['family'] = font.get_family()
+	SYSFONT['size'] = font.get_size() / 1024
 
 def registry_aliases(txt, overlay_icons=True):
 
