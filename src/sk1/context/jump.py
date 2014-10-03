@@ -32,9 +32,9 @@ class JumpPlugin(GenericPlugin):
 
 	def build(self):
 		self.pack(wal.ActiveImage(self, rc.IMG_CTX_JUMP,
-								tooltip=_('Default object jump')))
+								tooltip=_('Default object jump')), padding=2)
 
-		self.jump_spin = UnitSpin(self.user_changes)
+		self.jump_spin = UnitSpin(self, self.user_changes)
 		self.pack(self.jump_spin)
 		self.jump_spin.set_point_value(config.obj_jump)
 

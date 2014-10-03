@@ -15,13 +15,12 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, math, wal
+import math, wal
 
 from uc2.uc2const import unit_dict, point_dict
 from uc2 import uc2const
 
 from sk1 import config, events
-from sk1.const import KEY_KP_ENTER, KEY_RETURN
 
 
 class UnitLabel(wal.Label):
@@ -34,96 +33,69 @@ class UnitLabel(wal.Label):
 		if args[0][0] == 'default_unit':
 			self.set_text(config.default_unit)
 
-class UnitSpin(gtk.SpinButton):
+class UnitSpin(wal.SpinButton):
 
 	point_value = 0
-	flag = False
 	callback = None
 
-	def __init__(self, callback):
-		#value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0
+	def __init__(self, master, callback):
 		self.callback = callback
-		self.adj = gtk.Adjustment(0.0, 0.0, 1.0, 0.001, 1.0, 0.0)
-		gtk.SpinButton.__init__(self, self.adj, 0.1, 2)
+		wal.SpinButton.__init__(self, master, cmd=self._update_point_value,
+							check_focus=True)
 		self.update_increment()
-		self.set_numeric(True)
-		events.connect(events.CONFIG_MODIFIED, self.update_spin)
-		self.connect('value-changed', self.update_point_value)
+		events.connect(events.CONFIG_MODIFIED, self._update_spin)
+
+	def _update_spin(self, *args):
+		if args[0][0] == 'default_unit':
+			self.update_increment()
+
+	def _update_point_value(self, *args):
+		value = self.get_value()
+		self.point_value = value * unit_dict[config.default_unit]
+		self.callback()
 
 	def update_increment(self):
-		self.flag = True
-		if config.default_unit == uc2const.UNIT_IN:
+		if config.default_unit in [uc2const.UNIT_IN, uc2const.UNIT_FT,
+								uc2const.UNIT_M]:
 			value = 0.001
 			self.set_digits(3)
 		else:
 			value = 0.01
 			self.set_digits(2)
-		self.adj.set_upper(100000.0 * point_dict[config.default_unit])
-		self.adj.set_step_increment(value)
-		self.adj.set_page_increment(value)
-		self.flag = True
-		self.adj.set_value(self.point_value * point_dict[config.default_unit])
-		self.flag = False
-
-
-	def update_spin(self, *args):
-		if args[0][0] == 'default_unit':
-			self.update_increment()
-
-	def update_point_value(self, *args):
-		if self.flag:
-			self.flag = False
-		else:
-			value = self.adj.get_value()
-			self.point_value = value * unit_dict[config.default_unit]
-			self.callback()
+		self.set_upper(100000.0 * point_dict[config.default_unit])
+		self.set_step_increment(value)
+		self.set_page_increment(value)
+		self.set_value(self.point_value * point_dict[config.default_unit])
 
 	def set_point_value(self, value=0.0):
 		self.point_value = value
-		self.flag = True
-		self.adj.set_value(value * point_dict[config.default_unit])
-		self.flag = False
+		self.set_value(value * point_dict[config.default_unit])
 
 	def get_point_value(self):
 		return self.point_value
 
-class AngleSpin(gtk.SpinButton):
+class AngleSpin(wal.SpinButton):
 
-	angle_value = 0
-	flag = False
+	angle_value = 0.0
 	callback = None
-	changes = False
-	input_flag = False
 
-	def __init__(self, callback, input_flag=False):
-		#value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0
+	def __init__(self, master, callback):
 		self.callback = callback
-		self.input_flag = input_flag
-		self.adj = gtk.Adjustment(0.0, -1000.0, 1000.0, 5.0, 5.0, 0.0)
-		gtk.SpinButton.__init__(self, self.adj, 0.1, 2)
-		self.set_numeric(True)
-		self.connect('value-changed', self.update_angle_value)
-		if self.input_flag:
-			self.connect('key_press_event', self.check_input)
-
-	def check_input(self, widget, event):
-		keyval = event.keyval
-		if keyval in [KEY_RETURN, KEY_KP_ENTER]:
-			if self.adj.get_value() == round(self.angle_value * 180 / math.pi, 2):
-				self.update_angle_value()
+		wal.SpinButton.__init__(self, master, cmd=self.update_angle_value)
+		self.set_range((-1000.0, 1000.0))
+		self.set_step_increment(5.0)
+		self.set_page_increment(5.0)
+		self.set_digits(1)
 
 	def update_angle_value(self, *args):
-		if self.flag:return
-		value = self.adj.get_value()
+		value = self.get_value()
 		self.angle_value = math.pi * value / 180.0
-		self.changes = False
 		self.callback()
 
 	def set_angle_value(self, value=0.0):
 		self.angle_value = value
-		self.flag = True
-		self.adj.set_value(value * 180 / math.pi)
-		self.flag = False
+		self.set_value(value * 180 / math.pi)
 
 	def get_angle_value(self):
 		return self.angle_value
+

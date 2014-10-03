@@ -45,12 +45,12 @@ class PageFormatPlugin(GenericPlugin):
 									cmd=self.combo_changed)
 		self.pack(self.combo, padding=4)
 
-		self.width_spin = UnitSpin(self.width_spin_changed)
+		self.width_spin = UnitSpin(self, self.width_spin_changed)
 		self.pack(self.width_spin, padding=2)
 
 		self.pack(wal.Image(self, rc.IMG_CTX_W_ON_H))
 
-		self.height_spin = UnitSpin(self.height_spin_changed)
+		self.height_spin = UnitSpin(self, self.height_spin_changed)
 		self.pack(self.height_spin, padding=2)
 
 		self.portrait = wal.ImgToggleButton(self, rc.IMG_CTX_PORTRAIT,

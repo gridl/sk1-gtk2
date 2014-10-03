@@ -35,12 +35,12 @@ class ResizePlugin(GenericPlugin):
 	def build(self):
 		self.pack(wal.Label(self, _('Size:')), padding=2)
 
-		self.width_spin = UnitSpin(self.user_changes)
+		self.width_spin = UnitSpin(self, self.user_changes)
 		self.pack(self.width_spin)
 
 		self.pack(wal.Image(self, rc.IMG_CTX_W_ON_H))
 
-		self.height_spin = UnitSpin(self.user_changes)
+		self.height_spin = UnitSpin(self, self.user_changes)
 		self.pack(self.height_spin)
 
 		self.pack(UnitLabel(self), padding=2)

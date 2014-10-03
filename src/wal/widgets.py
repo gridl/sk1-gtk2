@@ -333,13 +333,13 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 class SpinButton(gtk.SpinButton):
 
 	change_flag = False
-	callback = None
+	cmd = None
 	check_enter = True
 
 	def __init__(self, master, val=0.0, rng=(0.0, 1.0), incr=0.1, cmd=None,
 				check_focus=False, check_enter=True):
 		self.master = master
-		self.callback = cmd
+		self.cmd = cmd
 		self.check_enter = check_enter
 		#value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0
 		self.adj = gtk.Adjustment(val, rng[0], rng[1], incr, 1.0, 0.0)
@@ -367,7 +367,7 @@ class SpinButton(gtk.SpinButton):
 			self._do_callback()
 
 	def _do_callback(self):
-		if self.callback: self.callback()
+		if self.cmd: self.cmd()
 
 	def set_value(self, value):
 		if not self.check_enter:
@@ -395,6 +395,9 @@ class SpinButton(gtk.SpinButton):
 	def set_page_increment(self, value): self.adj.set_page_increment(value)
 	def set_sensitive(self, val): gtk.SpinButton.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.SpinButton.get_sensitive(self)
+	def set_range(self, rng):
+		self.set_lower(rng[0])
+		self.set_upper(rng[1])
 
 class SpinButtonInt(SpinButton):
 

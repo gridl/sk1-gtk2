@@ -37,18 +37,15 @@ class RotatePlugin(GenericPlugin):
 	def build(self):
 		self.pack(wal.ActiveImage(self, rc.IMG_CTX_ROTATE), padding=2)
 
-		self.angle_spin = AngleSpin(self.user_update, True)
-		self.pack_start(self.angle_spin, False, False, 0)
-		self.angle_spin.set_angle_value(0.0)
+		self.angle_spin = AngleSpin(self, self.user_update)
+		self.pack(self.angle_spin)
 
 		self.pack(wal.ActionButton(self, self.actions[actions.ROTATE_LEFT]))
 		self.pack(wal.ActionButton(self, self.actions[actions.ROTATE_RIGHT]))
 
 	def user_update(self, *args):
 		val = self.angle_spin.get_angle_value()
-		if val <> 0.0:
-			self.app.current_doc.api.rotate_selected(val)
-			self.angle_spin.grab_focus()
+		if val <> 0.0: self.app.current_doc.api.rotate_selected(val)
 
 
 class MirrorPlugin(GenericPlugin):
