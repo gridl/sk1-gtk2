@@ -470,6 +470,28 @@ class Entry(gtk.Entry):
 	def set_editable(self, val=True):
 		self.set_property(gconst.PROP_EDITABLE, val)
 
+class TextView(gtk.ScrolledWindow):
+
+	def __init__(self, master, text=''):
+		self.master = master
+		gtk.ScrolledWindow.__init__(self)
+
+		self.text_buffer = gtk.TextBuffer()
+		self.text_buffer.set_text(text)
+		self.editor = gtk.TextView(self.text_buffer);
+		self.editor.set_wrap_mode(gtk.WRAP_WORD)
+
+		self.add(self.editor)
+		self.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+		self.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+
+	def get_text(self):return self.text_buffer.get_text()
+	def set_text(self, text):self.text_buffer.set_text(text)
+	def set_sensitive(self, val): self.editor.set_sensitive(val)
+	def get_sensitive(self): return self.editor.get_sensitive()
+	def set_editable(self, val=True): self.editor.set_editable(val)
+
+
 
 
 

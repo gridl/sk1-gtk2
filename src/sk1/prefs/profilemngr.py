@@ -116,17 +116,8 @@ def get_profile_info_dialog(parent, name, filename, info):
 	label.set_alignment(1, 0)
 	tab.attach(label, 0, 1, 2, 3, gtk.FILL, gtk.FILL | gtk.EXPAND)
 
-
-	text_buffer = gtk.TextBuffer()
-	text_buffer.set_text(info)
-	editor = gtk.TextView(text_buffer);
-	editor.set_wrap_mode(gtk.WRAP_WORD)
-	editor.set_editable(False)
-
-	sw = gtk.ScrolledWindow()
-	sw.set_shadow_type(gtk.SHADOW_ETCHED_IN)
-	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-	sw.add(editor)
+	sw = wal.TextView(tab, info)
+	sw.set_editable(False)
 
 	tab.attach(sw, 1, 2, 2, 3, gtk.FILL , gtk.FILL | gtk.EXPAND)
 	vbox.show_all()
