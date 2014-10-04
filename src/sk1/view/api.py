@@ -17,7 +17,7 @@
 
 from copy import deepcopy
 import types, math
-import gtk
+import wal
 
 from uc2.formats.pdxf import model
 from uc2.formats.pdxf import const
@@ -742,14 +742,9 @@ class PresenterAPI(AbstractAPI):
 
 		second = _('Do you want to try again?')
 
-		ret = dialogs.warning_dialog(self.app.mw, self.app.appdata.app_name,
-				first, second,
-				[(gtk.STOCK_NO, gtk.RESPONSE_CANCEL),
-				(gtk.STOCK_YES, gtk.RESPONSE_OK)])
+		return wal.yesno_dialog(self.app.mw, self.app.appdata.app_name,
+				first, second)
 
-		if ret == gtk.RESPONSE_OK:
-			return True
-		return False
 
 	def pack_container(self, container):
 		if self.selection.objs:

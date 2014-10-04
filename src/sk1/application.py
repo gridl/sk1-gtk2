@@ -116,10 +116,9 @@ class Application(UCApplication):
 			second = _('Do you want to save your changes?')
 			ret = wal.ask_save_dialog(self.mw, self.appdata.app_name,
 					first, second)
-			if ret == wal.RESPONSE_OK:
-				if not self.save(): return False
-			elif ret == wal.RESPONSE_NO: pass
-			else: return False
+			print ret
+			if ret is None: return False
+			elif ret and not self.save(): return False
 
 		if doc in self.docs:
 			self.docs.remove(doc)

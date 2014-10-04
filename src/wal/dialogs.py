@@ -15,15 +15,15 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, rc, const
+import gtk, rc
 
 RESPONCE = {
-		gtk.RESPONSE_OK:const.RESPONSE_OK,
-		gtk.RESPONSE_YES:const.RESPONSE_YES,
-		gtk.RESPONSE_NO:const.RESPONSE_NO,
-		gtk.RESPONSE_CANCEL:const.RESPONSE_CANCEL,
-		gtk.RESPONSE_NONE:const.RESPONSE_CANCEL,
-		gtk.RESPONSE_DELETE_EVENT:const.RESPONSE_CANCEL,
+		gtk.RESPONSE_OK:True,
+		gtk.RESPONSE_YES:True,
+		gtk.RESPONSE_NO:False,
+		gtk.RESPONSE_CANCEL:None,
+		gtk.RESPONSE_NONE:None,
+		gtk.RESPONSE_DELETE_EVENT:None,
 		}
 
 def _msg_dialog(parent_win, title, text, secondary_text='', details='',
