@@ -4,6 +4,7 @@ class MW(wal.MainWindow):
 
 	def __init__(self):
 		wal.MainWindow.__init__(self)
+		wal.registry_aliases("_Don't save")
 		self.set_size(300, 200)
 		rb0 = wal.Button(self, 'Info', cmd=self.callback0)
 		rb1 = wal.Button(self, 'Warning', cmd=self.callback1)
@@ -11,7 +12,10 @@ class MW(wal.MainWindow):
 		rb3 = wal.Button(self, 'Info with details', cmd=self.callback3)
 		rb4 = wal.Button(self, 'Warning with details', cmd=self.callback4)
 		rb5 = wal.Button(self, 'Error with details', cmd=self.callback5)
-		self.pack_all((rb0, rb1, rb2, rb3, rb4, rb5), padding=10)
+		rb6 = wal.Button(self, 'Ask for save', cmd=self.callback6)
+		rb7 = wal.Button(self, 'Yes-No', cmd=self.callback7)
+		rb8 = wal.Button(self, 'Yes-No-Cancel', cmd=self.callback8)
+		self.pack_all((rb0, rb1, rb2, rb3, rb4, rb5, rb6, rb7, rb8), padding=10)
 
 	def callback0(self, *args):
 		title = 'Info'
@@ -56,6 +60,24 @@ class MW(wal.MainWindow):
 		have changed with respect to their button parameters, which are now used \
 		to set the standard buttons and the default button.')
 		wal.error_dialog(self, title, first, second, details)
+
+	def callback6(self, *args):
+		title = 'Warning'
+		first = 'The document <xxxxxxx yyyyy> has been changed!'
+		second = 'Do you wish to save it?.'
+		print wal.ask_save_dialog(self, title, first, second)
+
+	def callback7(self, *args):
+		title = 'Info'
+		first = 'The document <xxxxxxx yyyyy> has been changed!'
+		second = 'Do you wish to save it?.'
+		print wal.yesno_dialog(self, title, first, second)
+
+	def callback8(self, *args):
+		title = 'Info'
+		first = 'The document <xxxxxxx yyyyy> has been changed!'
+		second = 'Do you wish to save it?.'
+		print wal.yesnocancel_dialog(self, title, first, second)
 
 
 mw = MW()

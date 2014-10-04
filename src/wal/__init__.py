@@ -31,3 +31,4 @@ from widgets import SpinButton, SpinButtonInt, URL_Label
 from canvas import ColorPlate, ImgPlate, ActiveColorPlate, CairoCanvas
 
 from dialogs import info_dialog, warning_dialog, error_dialog
+from dialogs import ask_save_dialog, yesno_dialog, yesnocancel_dialog

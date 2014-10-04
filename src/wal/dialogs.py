@@ -15,15 +15,29 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+import gtk, rc, const
+
+RESPONCE = {
+		gtk.RESPONSE_OK:const.RESPONSE_OK,
+		gtk.RESPONSE_YES:const.RESPONSE_YES,
+		gtk.RESPONSE_NO:const.RESPONSE_NO,
+		gtk.RESPONSE_CANCEL:const.RESPONSE_CANCEL,
+		gtk.RESPONSE_NONE:const.RESPONSE_CANCEL,
+		gtk.RESPONSE_DELETE_EVENT:const.RESPONSE_CANCEL,
+		}
 
 def _msg_dialog(parent_win, title, text, secondary_text='', details='',
-			dlg_type=gtk.MESSAGE_ERROR):
+			dlg_type=gtk.MESSAGE_ERROR, buttons=[(gtk.STOCK_OK, gtk.RESPONSE_OK)]):
 	dialog = gtk.MessageDialog(parent_win,
 					flags=gtk.DIALOG_MODAL,
 					type=dlg_type,
-					buttons=gtk.BUTTONS_OK,
 					message_format=text)
+	dialog.set_title(title)
+
+	for button in buttons:
+		dialog.add_button(button[0], button[1])
+	dialog.set_default_response(buttons[-1][1])
+
 	if secondary_text:
 		dialog.format_secondary_text(secondary_text)
 
@@ -46,8 +60,9 @@ def _msg_dialog(parent_win, title, text, secondary_text='', details='',
 		expander.show_all()
 
 	dialog.set_title(title)
-	dialog.run()
+	ret = dialog.run()
 	dialog.destroy()
+	return ret
 
 def warning_dialog(parent_win, title, text, secondary_text='', details=()):
 	_msg_dialog(parent_win, title, text, secondary_text,
@@ -60,3 +75,27 @@ def error_dialog(parent_win, title, text, secondary_text='', details=()):
 def info_dialog(parent_win, title, text, secondary_text='', details=()):
 	_msg_dialog(parent_win, title, text, secondary_text,
 			details, gtk.MESSAGE_INFO)
+
+def yesno_dialog(parent_win, title, text, secondary_text='', details=()):
+	buttons = [(gtk.STOCK_NO, gtk.RESPONSE_NO),
+			(gtk.STOCK_YES , gtk.RESPONSE_YES,)]
+	ret = _msg_dialog(parent_win, title, text, secondary_text,
+			details, gtk.MESSAGE_INFO, buttons)
+	return RESPONCE[ret]
+
+def yesnocancel_dialog(parent_win, title, text, secondary_text='', details=()):
+	buttons = [(gtk.STOCK_NO, gtk.RESPONSE_NO),
+			(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL),
+			(gtk.STOCK_YES , gtk.RESPONSE_YES,)]
+	ret = _msg_dialog(parent_win, title, text, secondary_text,
+			details, gtk.MESSAGE_INFO, buttons)
+	return RESPONCE[ret]
+
+def ask_save_dialog(parent_win, title, text, secondary_text='', details=()):
+	buttons = [(rc.STOCK_DONT_SAVE , gtk.RESPONSE_NO,),
+				(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL),
+				(gtk.STOCK_SAVE, gtk.RESPONSE_OK)]
+	ret = _msg_dialog(parent_win, title, text, secondary_text,
+			details, gtk.MESSAGE_WARNING, buttons)
+	return RESPONCE[ret]
+
