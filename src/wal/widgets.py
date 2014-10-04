@@ -36,7 +36,7 @@ class Label(gtk.Label):
 		gtk.Label.__init__(self, text)
 
 	def set_text(self, text):gtk.Label.set_text(self, text)
-	def get_text(self, text):return gtk.Label.get_text(self)
+	def get_text(self):return gtk.Label.get_text(self)
 	def set_sensitive(self, val): gtk.Label.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.Label.get_sensitive(self)
 
@@ -416,6 +416,59 @@ class SpinButtonInt(SpinButton):
 	def set_upper(self, value): self.adj.set_upper(int(value))
 	def set_step_increment(self, value): self.adj.set_step_increment(int(value))
 	def set_page_increment(self, value): self.adj.set_page_increment(int(value))
+
+class HScale(gtk.HScale):
+	#TODO:class useful for context
+	def __init__(self, master):
+		gtk.HScale.__init__(self)
+
+class ScaleButton(gtk.ScaleButton):
+	#TODO:class useful for plugins
+	def __init__(self, master, minval=0, maxval=100, step=2, image_id=''):
+		gtk.ScaleButton.__init__(self, gtk.ICON_SIZE_MENU, minval, maxval, step)
+
+class Entry(gtk.Entry):
+
+	change_flag = False
+	cmd = None
+	check_enter = False
+
+	def __init__(self, master, text='', cmd=None,
+				check_focus=False, check_enter=False):
+		self.master = master
+		self.cmd = cmd
+		self.check_enter = check_enter
+		gtk.Entry.__init__(self)
+		if text:self.set_text(text)
+		self.connect(gconst.EVENT_CHANGED, self._check_changes)
+		self.connect(gconst.EVENT_KEY_PRESS, self._check_enter)
+		if check_focus:
+			self.connect(gconst.EVENT_FOCUS_OUT, self._apply_changes)
+
+	def _check_changes(self, *args):
+		self.change_flag = True
+		if not self.check_enter: self._apply_changes()
+
+	def _check_enter(self, widget, event):
+		keyval = event.keyval
+		if keyval in [gconst.KEY_RETURN, gconst.KEY_KP_ENTER]:
+			self._apply_changes()
+		else: self.change_flag = True
+
+	def _apply_changes(self, *args):
+		if self.change_flag:
+			self.change_flag = False
+			self._do_callback()
+
+	def _do_callback(self):
+		if self.cmd: self.cmd()
+
+	def set_text(self, text):gtk.Entry.set_text(self, text)
+	def get_text(self):return gtk.Entry.get_text(self)
+	def set_sensitive(self, val): gtk.Entry.set_sensitive(self, val)
+	def get_sensitive(self): return gtk.Entry.get_sensitive(self)
+	def set_editable(self, val=True):
+		self.set_property(gconst.PROP_EDITABLE, val)
 
 
 

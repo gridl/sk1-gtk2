@@ -2,7 +2,8 @@ x	MainWindow
 x	HBox
 x	VBox
 x	ColorPlate
-ActiveColorPlate
+x	ActiveColorPlate
+x	CairoCanvas
 x	HidableHBox
 x	HidableVBox
 x	HidableVArea
@@ -23,6 +24,14 @@ x	ComboBoxEntry
 x	ColorButton
 x	SpinButton
 x	SpinButtonInt
+:	Scale
+:	ScaleButton
+x	info_dialog
+x	warning_dialog
+x	error_dialog
+x	ask_save_dialog
+x	yesno_dialog
+x	yesnocancel_dialog
 AppAction
 AppToggleAction
 AppRadioAction
