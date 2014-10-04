@@ -21,7 +21,7 @@ import gtk, wal
 from uc2.utils.fs import expanduser_unicode
 from uc2.uc2const import COLOR_RGB, COLOR_CMYK, COLOR_LAB, COLOR_GRAY
 from uc2.cms import get_profile_name, get_profile_info
-from sk1 import _, config, dialogs, rc
+from sk1 import _, config, rc
 
 def get_profiles_dialog(app, parent, owner, colorspace):
 	title = _('%s profiles') % (colorspace)
@@ -202,13 +202,13 @@ class ProfileManager(gtk.HBox):
 			msg = _('Cannot open profile')
 			msg = "%s '%s'" % (msg, src)
 			sec = _('The profile may be corrupted or not supported format')
-			dialogs.msg_dialog(self.dlg, self.app.appdata.app_name, msg, sec)
+			wal.error_dialog(self.dlg, self.app.appdata.app_name, msg, sec)
 			return
 		if name in self.pf_list:
 			msg = _('Selected profile cannot be added to profile list:')
 			msg = "%s '%s'" % (msg, name)
 			sec = _('It seems you have imported this profile')
-			dialogs.msg_dialog(self.dlg, self.app.appdata.app_name, msg, sec)
+			wal.error_dialog(self.dlg, self.app.appdata.app_name, msg, sec)
 			return
 		filename = os.path.basename(src)
 		dst_dir = self.app.appdata.app_color_profile_dir
@@ -217,7 +217,7 @@ class ProfileManager(gtk.HBox):
 			msg = _('Selected file has been added to profile pool')
 			msg = "%s '%s'" % (msg, src)
 			sec = _('If you sure to import the file try renaming it')
-			dialogs.msg_dialog(self.dlg, self.app.appdata.app_name, msg, sec)
+			wal.error_dialog(self.dlg, self.app.appdata.app_name, msg, sec)
 			return
 		try:
 			shutil.copy(src, dst)
@@ -225,7 +225,7 @@ class ProfileManager(gtk.HBox):
 			msg = _('Cannot copy file')
 			msg = "%s '%s'" % (msg, src)
 			sec = _('Please check writing permissions for config directory:\n%s' % dst_dir)
-			dialogs.msg_dialog(self.dlg, self.app.appdata.app_name, msg, sec)
+			wal.error_dialog(self.dlg, self.app.appdata.app_name, msg, sec)
 			return
 		config.profile_import_dir = os.path.dirname(src)
 		self.profiles[name] = filename

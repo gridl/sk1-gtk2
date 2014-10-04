@@ -16,14 +16,13 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, sys
-import gtk, wal
+import wal
 
 from uc2.application import UCApplication
 from uc2 import uc2const
 
 from sk1 import _, config, events, rc
-from sk1.dialogs import msg_dialog, get_open_file_name, get_save_file_name
-from sk1.dialogs import warning_dialog
+from sk1.dialogs import get_open_file_name, get_save_file_name
 from sk1 import modes
 from sk1.app_cms import AppColorManager
 from sk1.proxy import AppProxy
@@ -115,15 +114,11 @@ class Application(UCApplication):
 		if self.inspector.is_doc_not_saved(doc):
 			first = _("Document '%s' has been modified.") % (doc.doc_name)
 			second = _('Do you want to save your changes?')
-			ret = warning_dialog(self.mw, self.appdata.app_name,
-					first, second,
-					[(wal.STOCK_DONT_SAVE , gtk.RESPONSE_NO,),
-					(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL),
-					(gtk.STOCK_SAVE, gtk.RESPONSE_OK)])
-
-			if ret == gtk.RESPONSE_OK:
+			ret = wal.ask_save_dialog(self.mw, self.appdata.app_name,
+					first, second)
+			if ret == wal.RESPONSE_OK:
 				if not self.save(): return False
-			elif ret == gtk.RESPONSE_NO: pass
+			elif ret == wal.RESPONSE_NO: pass
 			else: return False
 
 		if doc in self.docs:
@@ -157,7 +152,7 @@ class Application(UCApplication):
 				msg = _('Cannot open file')
 				msg = "%s '%s'" % (msg, doc_file)
 				sec = _('The file may be corrupted or not supported format')
-				msg_dialog(self.mw, self.appdata.app_name, msg, sec, details)
+				wal.error_dialog(self.mw, self.appdata.app_name, msg, sec, details)
 				return
 			self.docs.append(doc)
 			self.set_current_doc(doc)
@@ -175,7 +170,7 @@ class Application(UCApplication):
 				msg = _('Cannot import image')
 				msg = "%s '%s'" % (msg, image_file)
 				sec = _('The file may be corrupted or not supported format')
-				msg_dialog(self.mw, self.appdata.app_name, msg, sec, details)
+				wal.error_dialog(self.mw, self.appdata.app_name, msg, sec, details)
 				return
 			config.import_dir = os.path.dirname(image_file)
 			events.emit(events.APP_STATUS, _('Image is imported'))
@@ -199,7 +194,7 @@ class Application(UCApplication):
 			msg = _('Cannot save file')
 			msg = "%s '%s'" % (msg, self.current_doc.doc_file)
 			sec = _('Please check file write permissions')
-			msg_dialog(self.mw, self.appdata.app_name, msg, sec, details)
+			wal.error_dialog(self.mw, self.appdata.app_name, msg, sec, details)
 			return False
 		events.emit(events.APP_STATUS, _('Document saved'))
 		return True
@@ -229,7 +224,7 @@ class Application(UCApplication):
 				sec = _('Please check file name and write permissions')
 				msg = ("%s '%s'.") % (first, self.current_doc.doc_name)
 
-				msg_dialog(self.mw, self.appdata.app_name, msg, sec, details)
+				wal.error_dialog(self.mw, self.appdata.app_name, msg, sec, details)
 
 				return False
 			config.save_dir = os.path.dirname(doc_file)

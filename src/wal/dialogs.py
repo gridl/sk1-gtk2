@@ -27,7 +27,7 @@ RESPONCE = {
 		}
 
 def _msg_dialog(parent_win, title, text, secondary_text='', details='',
-			dlg_type=gtk.MESSAGE_ERROR, buttons=[(gtk.STOCK_OK, gtk.RESPONSE_OK)]):
+		dlg_type=gtk.MESSAGE_ERROR, buttons=[(gtk.STOCK_OK, gtk.RESPONSE_OK)]):
 	dialog = gtk.MessageDialog(parent_win,
 					flags=gtk.DIALOG_MODAL,
 					type=dlg_type,
