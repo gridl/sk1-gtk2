@@ -116,7 +116,7 @@ class Application(UCApplication):
 			second = _('Do you want to save your changes?')
 			ret = wal.ask_save_dialog(self.mw, self.appdata.app_name,
 					first, second)
-			print ret
+
 			if ret is None: return False
 			elif ret and not self.save(): return False
 

@@ -90,9 +90,9 @@ class AppMainWindow(wal.MainWindow):
 
 		if config.mw_maximized: self.maximize()
 
-	def event_close(self, *args):
+	def event_close(self):
 		if self.app.exit_request(): self.exit()
-		return False
+		return True
 
 	def set_win_title(self, docname=''):
 		if docname:

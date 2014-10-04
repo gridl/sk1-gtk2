@@ -39,14 +39,17 @@ class MainWindow(gtk.Window):
 		if horizontal: self.box = HBox(self)
 		self.build()
 		self.add(self.box)
-		self.connect(gconst.EVENT_DELETE, self.event_close)
+		self.connect(gconst.EVENT_DELETE, self._event_close)
 
 	def set_icon(self, image_id):
 		gtk.Window.set_icon(self, rc.get_pixbuf(image_id))
 
 	def build(self):pass
 
-	def event_close(self, *args):
+	def _event_close(self, *args):
+		return self.event_close()
+
+	def event_close(self):
 		self.exit()
 		return False
 
