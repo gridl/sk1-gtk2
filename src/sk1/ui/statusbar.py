@@ -42,5 +42,5 @@ class AppStatusbar(wal.HBox):
 
 		events.connect(events.APP_STATUS, self.show_message)
 
-	def show_message(self, args):
-		self.msg_label.set_text(args[0])
+	def show_message(self, msg):
+		self.msg_label.set_text(msg)
