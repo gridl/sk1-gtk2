@@ -27,6 +27,9 @@ x	SpinButtonInt
 :	Scale
 :	ScaleButton
 x	Entry
+x	TextView
+x	NoteBook
+x	Frame
 x	info_dialog
 x	warning_dialog
 x	error_dialog
