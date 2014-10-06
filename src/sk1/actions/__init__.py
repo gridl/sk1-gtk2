@@ -37,7 +37,6 @@ def create_actions(app):
 	entries = [
 #	id, callable, [channels], validator, args
 #	name, label, tooltip, icon, shortcut, callable, [channels], validator, args
-#gtk.accelerator_name(ord('+'),gtk.gdk.CONTROL_MASK)
 
 [modes.SELECT_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
 [modes.SHAPER_MODE, proxy.set_mode, mod_chnl, insp.is_doc, insp.is_mode],
