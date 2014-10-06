@@ -123,7 +123,6 @@ class Application(UCApplication):
 		if doc in self.docs:
 			self.docs.remove(doc)
 			doc.close()
-			events.emit(events.DOC_CLOSED, doc)
 			if not len(self.docs):
 				self.current_doc = None
 				events.emit(events.NO_DOCS)

@@ -128,6 +128,7 @@ class DocPresenter:
 		fields = self.__dict__
 		items = fields.keys()
 		for item in items: fields[item] = None
+		events.emit(events.DOC_CLOSED, self)
 
 	def modified(self, *args):
 		self.saved = False
