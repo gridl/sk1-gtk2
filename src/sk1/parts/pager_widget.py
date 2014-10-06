@@ -57,9 +57,6 @@ class PagerWidget(wal.HBox):
 		self.update_pager()
 		events.connect(events.DOC_CHANGED, self.update_pager)
 		events.connect(events.DOC_MODIFIED, self.update_pager)
-		events.connect(events.DOC_CLOSED, self.update_pager)
-		events.connect(events.NO_DOCS, self.update_pager)
-
 
 	def update_pager(self, *args):
 		if not self.insp.is_doc():return
