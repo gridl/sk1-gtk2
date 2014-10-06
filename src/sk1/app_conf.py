@@ -33,7 +33,7 @@ class AppData(UCData):
 	app_domain = 'sk1project.org'
 	app_icon = None
 	doc_icon = None
-	version = "1.0"
+	version = "2.0"
 	app_config_dir = expanduser_unicode(os.path.join('~', '.config', 'sk1'))
 
 	def __init__(self):
