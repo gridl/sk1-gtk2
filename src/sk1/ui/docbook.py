@@ -19,7 +19,7 @@ import gtk, wal
 
 from sk1 import events, rc
 
-class DocBook(gtk.Notebook):
+class AppDocBook(gtk.Notebook):
 
 	docs = []
 
