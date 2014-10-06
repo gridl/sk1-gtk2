@@ -318,7 +318,7 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 				self.append_text(item)
 				maxsize = max(len(item), maxsize)
 		font_size = rc.SYSFONT['size']
-		self.set_size_request(max(maxsize * font_size, 65), -1)
+		self.set_size_request(max(maxsize * font_size, 65), 20)
 
 	def get_text(self):
 		return self.child.get_text()
