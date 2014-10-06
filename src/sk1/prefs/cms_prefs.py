@@ -41,7 +41,7 @@ class CmsPrefsPlugin(GenericPrefsPlugin):
 
 	def build(self):
 		GenericPrefsPlugin.build(self)
-		self.nb = gtk.Notebook()
+		self.nb = wal.NoteBook(self)
 		self.tabs = [CMSTab(self, self.app, self.dlg, self.fmt_config),
 					ProfilesTab(self.app, self.dlg, self.fmt_config),
 					SettingsTab(self.app, self.dlg, self.fmt_config)]
@@ -49,26 +49,20 @@ class CmsPrefsPlugin(GenericPrefsPlugin):
 		self.pack_end(self.nb, True, True, 0)
 
 	def set_tabs(self, cms_state):
-		num = self.nb.get_n_pages()
-		pages = range(0, num)
-		pages.reverse()
-		if num:
-			for item in pages:
-				self.nb.remove_page(item)
+		if self.nb.get_page_count():
+			self.nb.remove_pages(self.tabs)
 		if cms_state:
-			for tab in self.tabs:
-				self.nb.append_page(tab, tab.label)
+			for page in self.tabs:
+				self.nb.add_page(page, page.name)
 		else:
-			self.nb.append_page(self.tabs[0], self.tabs[0].label)
-		self.nb.show_all()
+			self.nb.add_page(self.tabs[0], self.tabs[0].name)
 
 	def apply_changes(self):
 		for tab in self.tabs:
 			tab.apply_changes()
 
 	def restore_defaults(self):
-		index = self.nb.get_current_page()
-		self.tabs[index].restore_defaults()
+		self.nb.get_active_page().restore_defaults()
 
 
 class PrefsTab(gtk.VBox):

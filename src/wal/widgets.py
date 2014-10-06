@@ -491,6 +491,45 @@ class TextView(gtk.ScrolledWindow):
 	def get_sensitive(self): return self.editor.get_sensitive()
 	def set_editable(self, val=True): self.editor.set_editable(val)
 
+class NoteBook(gtk.Notebook):
+
+	pages = []
+
+	def __init__(self, master):
+		self.master = master
+		self.pages = []
+		gtk.Notebook.__init__(self)
+		self.connect('switch-page', self.page_switched)
+
+	#--- Stub for subclassing
+	def page_switched(self, *args):pass
+
+	def add_page(self, page, tab_txt='', tab_label=None):
+		self.pages.append(page)
+		if tab_txt and not tab_label:
+			tab_label = gtk.Label(tab_txt)
+		gtk.Notebook.append_page(self, page, tab_label)
+		self.show_all()
+
+	def remove_page(self, page):
+		if page in self.pages:
+			gtk.Notebook.remove_page(self, self.pages.index(page))
+			self.pages.remove(page)
+
+	def remove_pages(self, pages):
+		for page in pages:self.remove_page(page)
+
+	def set_active_page(self, page):
+		if page in self.pages:
+			gtk.Notebook.set_current_page(self, self.pages.index(page))
+
+	def get_active_page(self):
+		return self.pages[gtk.Notebook.get_current_page(self)]
+
+	def get_page_count(self):return len(self.pages)
+
+
+
 
 
 
