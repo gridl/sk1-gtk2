@@ -49,6 +49,7 @@ encoding//src/sk1/rc/cmyk_palette.py=utf-8
 encoding//src/sk1/rc/images.py=utf-8
 encoding//src/sk1/rc/rgb_palette.py=utf-8
 encoding//src/sk1/ui/clipboard.py=utf-8
+encoding//src/sk1/ui/docbook.py=utf-8
 encoding//src/sk1/ui/mainwindow.py=utf-8
 encoding//src/sk1/ui/menubar.py=utf-8
 encoding//src/sk1/ui/palette.py=utf-8

@@ -82,12 +82,12 @@ class RulerCorner(gtk.DrawingArea):
 		items = fields.keys()
 		for item in items: fields[item] = None
 
-	def check_config(self, *args):
-		if args[0][0] == 'ruler_size':
+	def check_config(self, attr, value):
+		if attr == 'ruler_size':
 			size = config.ruler_size
 			self.set_size_request(size, size)
 			return
-		if args[0][0][:6] == 'ruler_':
+		if attr[:6] == 'ruler_':
 			self.queue_draw()
 
 	def check_coords(self, *args):

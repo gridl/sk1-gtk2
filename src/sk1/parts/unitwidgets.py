@@ -29,8 +29,8 @@ class UnitLabel(wal.Label):
 		wal.Label.__init__(self, master, config.default_unit)
 		events.connect(events.CONFIG_MODIFIED, self.update_label)
 
-	def update_label(self, *args):
-		if args[0][0] == 'default_unit':
+	def update_label(self, attr, value):
+		if attr == 'default_unit':
 			self.set_text(config.default_unit)
 
 class UnitSpin(wal.SpinButton):
@@ -45,8 +45,8 @@ class UnitSpin(wal.SpinButton):
 		self.update_increment()
 		events.connect(events.CONFIG_MODIFIED, self._update_spin)
 
-	def _update_spin(self, *args):
-		if args[0][0] == 'default_unit':
+	def _update_spin(self, attr, value):
+		if attr == 'default_unit':
 			self.update_increment()
 
 	def _update_point_value(self, *args):

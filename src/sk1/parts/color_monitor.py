@@ -158,8 +158,8 @@ class OutlineLabel(wal.Label):
 	def __init__(self, app, master):
 		wal.Label.__init__(self, master)
 
-	def update_label(self, *args):
-		if args[0][0] == 'default_unit':
+	def update_label(self, attr, value):
+		if attr == 'default_unit':
 			self.update_val()
 
 	def update_from_obj(self, obj):

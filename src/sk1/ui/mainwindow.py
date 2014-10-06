@@ -105,7 +105,6 @@ class AppMainWindow(wal.MainWindow):
 		if not self.nb.get_n_pages():
 			self.workarea.set_visible(True)
 		index = self.nb.append_page(da, da.tab_caption)
-		da.show_all()
 		self.nb.show_all()
 		self.nb.set_current_page(index)
 		self.set_win_title(da.presenter.doc_name)

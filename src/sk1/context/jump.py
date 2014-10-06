@@ -41,12 +41,10 @@ class JumpPlugin(GenericPlugin):
 		self.pack(UnitLabel(self), padding=2)
 
 	def user_changes(self, *args):
-		val = self.jump_spin.get_point_value()
-		if not config.obj_jump == val:
-			config.obj_jump = val
+		config.obj_jump = self.jump_spin.get_point_value()
 
-	def config_changed(self, *args):
-		if args[0][0] == 'obj_jump':
+	def config_changed(self, attr, value):
+		if attr == 'obj_jump':
 			val = self.jump_spin.get_point_value()
 			if not config.obj_jump == val:
 				self.jump_spin.set_point_value(config.obj_jump)

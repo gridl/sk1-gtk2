@@ -123,7 +123,7 @@ class Application(UCApplication):
 		if doc in self.docs:
 			self.docs.remove(doc)
 			doc.close()
-			events.emit(events.DOC_CLOSED)
+			events.emit(events.DOC_CLOSED, doc)
 			if not len(self.docs):
 				self.current_doc = None
 				events.emit(events.NO_DOCS)
@@ -187,7 +187,6 @@ class Application(UCApplication):
 
 		try:
 			doc.save()
-			events.emit(events.DOC_SAVED, doc)
 		except:
 			details = sys.exc_info()[1].__str__() + sys.exc_info()[2].__str__()
 			msg = _('Cannot save file')
