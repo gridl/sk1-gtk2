@@ -31,7 +31,7 @@ class UnitsPlugin(GenericPlugin):
 		events.connect(events.CONFIG_MODIFIED, self.config_changed)
 
 	def build(self):
-		self.pack(wal.ActiveImage(self, rc.IMG_CTX_UNITS,
+		self.pack(wal.ClickableImage(self, rc.IMG_CTX_UNITS,
 								tooltip=_('Units')), padding=3)
 		names = []
 		for item in unit_names:

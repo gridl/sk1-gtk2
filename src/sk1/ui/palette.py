@@ -71,7 +71,7 @@ class HPalette(wal.HidableVBox, PaletteTemplate):
 		box.pack(wal.ImgButton(self, rc.IMG_PALETTE_ARROW_LEFT,
 						cmd=self.action_back, repeat=True, flat=True))
 
-		box.pack(wal.ActiveImage(self, rc.IMG_PALETTE_NO_COLOR,
+		box.pack(wal.ClickableImage(self, rc.IMG_PALETTE_NO_COLOR,
 				tooltip=_('Empthy pattern'), cmd=self.action_nocolor))
 
 		self.pw = HPaletteWidget(box, self.app)
@@ -107,7 +107,7 @@ class VPalette(wal.HidableHBox, PaletteTemplate):
 		box.pack(wal.ImgButton(self, rc.IMG_PALETTE_ARROW_TOP,
 						cmd=self.action_back, repeat=True, flat=True))
 
-		box.pack(wal.ActiveImage(self, rc.IMG_PALETTE_NO_COLOR,
+		box.pack(wal.ClickableImage(self, rc.IMG_PALETTE_NO_COLOR,
 				tooltip=_('Empthy pattern'), cmd=self.action_nocolor))
 
 		self.pw = VPaletteWidget(box, self.app)

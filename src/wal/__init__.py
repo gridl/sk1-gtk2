@@ -24,7 +24,7 @@ from rc import registry_aliases, registry_provider
 from window import MainWindow, MW_Menu, MW_Toolbar
 from boxes import HBox, VBox, HidableHBox, HidableVBox, HidableVArea
 from widgets import HLine, VLine, Button, ImgButton, ActionButton
-from widgets import Label, DecorLabel, Image, ActiveImage, CheckButton
+from widgets import Label, DecorLabel, Image, ClickableImage, CheckButton
 from widgets import ToggleButton, ImgToggleButton, ActionToggleButton
 from widgets import ComboBoxText, ComboBoxEntry, ColorButton, RadioButton
 from widgets import SpinButton, SpinButtonInt, URL_Label, Entry, TextView

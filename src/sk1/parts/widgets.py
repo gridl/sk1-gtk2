@@ -20,12 +20,12 @@ import wal
 from sk1 import _, rc
 
 
-class KeepRatioLabel(wal.ActiveImage):
+class KeepRatioLabel(wal.ClickableImage):
 
 	value = True
 
 	def __init__(self, master):
-		wal.ActiveImage.__init__(self, master, rc.IMG_KEEP_RATIO,
+		wal.ClickableImage.__init__(self, master, rc.IMG_KEEP_RATIO,
 						tooltip=_('Keep aspect ratio'), cmd=self.process_click)
 
 	def process_click(self, *args):

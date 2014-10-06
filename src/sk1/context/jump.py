@@ -31,7 +31,7 @@ class JumpPlugin(GenericPlugin):
 		events.connect(events.CONFIG_MODIFIED, self.config_changed)
 
 	def build(self):
-		self.pack(wal.ActiveImage(self, rc.IMG_CTX_JUMP,
+		self.pack(wal.ClickableImage(self, rc.IMG_CTX_JUMP,
 								tooltip=_('Default object jump')), padding=2)
 
 		self.jump_spin = UnitSpin(self, self.user_changes)

@@ -106,7 +106,7 @@ class Image(gtk.Image):
 	def set_image(self, image_id, size=rc.FIXED16):
 		self.set_from_pixbuf(rc.get_pixbuf(image_id, size))
 
-class ActiveImage(gtk.EventBox):
+class ClickableImage(gtk.EventBox):
 
 	image = None
 

@@ -35,7 +35,7 @@ class RotatePlugin(GenericPlugin):
 	name = 'RotatePlugin'
 
 	def build(self):
-		self.pack(wal.ActiveImage(self, rc.IMG_CTX_ROTATE), padding=2)
+		self.pack(wal.ClickableImage(self, rc.IMG_CTX_ROTATE), padding=2)
 
 		self.angle_spin = AngleSpin(self, self.user_update)
 		self.pack(self.angle_spin)
