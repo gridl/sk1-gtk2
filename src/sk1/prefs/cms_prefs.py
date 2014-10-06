@@ -42,9 +42,9 @@ class CmsPrefsPlugin(GenericPrefsPlugin):
 	def build(self):
 		GenericPrefsPlugin.build(self)
 		self.nb = wal.NoteBook(self)
-		self.tabs = [CMSTab(self, self.app, self.dlg, self.fmt_config),
-					ProfilesTab(self.app, self.dlg, self.fmt_config),
-					SettingsTab(self.app, self.dlg, self.fmt_config)]
+		self.tabs = [CMSTab(self.nb, self, self.app, self.dlg),
+					ProfilesTab(self.nb, self.app, self.dlg),
+					SettingsTab(self.nb, self.app, self.dlg)]
 		self.set_tabs(config.cms_use)
 		self.pack_end(self.nb, True, True, 0)
 
@@ -65,17 +65,14 @@ class CmsPrefsPlugin(GenericPrefsPlugin):
 		self.nb.get_active_page().restore_defaults()
 
 
-class PrefsTab(gtk.VBox):
+class PrefsTab(wal.VBox):
 
 	name = 'Tab'
-	label = None
 
-	def __init__(self, app, dlg, fmt_config):
-		gtk.VBox.__init__(self)
+	def __init__(self, master, app, dlg):
+		wal.VBox.__init__(self, master)
 		self.app = app
 		self.dlg = dlg
-		self.label = gtk.Label(self.name)
-		self.fmt_config = fmt_config
 		self.set_border_width(10)
 
 	def apply_changes(self):pass
@@ -85,43 +82,39 @@ class CMSTab(PrefsTab):
 
 	name = _('Color Management')
 
-	def __init__(self, owner, app, dlg, fmt_config):
+	def __init__(self, master, owner, app, dlg):
 		self.owner = owner
-		PrefsTab.__init__(self, app, dlg, fmt_config)
+		PrefsTab.__init__(self, master, app, dlg)
 		self.set_border_width(0)
 		self.use_cms = config.cms_use
 
-		hbox = gtk.HBox()
+		hbox = wal.HBox(self)
 		txt = _('Activate Color Management')
 		self.cms_check = wal.CheckButton(hbox, txt, self.use_cms, self.changes)
-		hbox.pack_start(self.cms_check, False, True, 10)
-		self.pack_start(hbox, False, True, 5)
+		hbox.pack(self.cms_check, padding=10)
+		self.pack(hbox, padding=5)
 
-		self.container = gtk.VBox()
+		self.container = wal.HidableVBox(hbox)
 		self.splash = wal.ImgPlate(self.container, rc.IMG_PREFS_CMS_BANNER,
 								bg=wal.DARK_GRAY)
-		if self.use_cms:
-			self.container.pack_start(self.splash, True, True, 0)
-		self.pack_start(self.container, True, True, 0)
+		self.container.pack(self.splash, True, True)
+		self.container.set_visible(self.use_cms)
+		self.pack(self.container)
 
-		hbox = gtk.HBox()
+		hbox = wal.HBox(self)
 		txt = _('Note: If Color Management is not activated all colors '
 			'will be processed using simple calculation procedures. Therefore '
 			'resulted color values will be not accurate.')
 		note = wal.DecorLabel(hbox, txt, -1, enabled=False, wrap=True)
 		note.set_width(450)
-		hbox.pack_start(note, True, True, 10)
-		self.pack_start(hbox, False, True, 5)
+		hbox.pack(note, padding=10)
+		self.pack(hbox, padding=5)
 
 
 	def changes(self, *args):
 		self.use_cms = self.cms_check.get_active()
 		self.owner.set_tabs(self.use_cms)
-		if not self.use_cms:
-			self.container.remove(self.splash)
-		else:
-			self.container.pack_start(self.splash, True, True, 0)
-			self.container.show_all()
+		self.container.set_visible(self.use_cms)
 
 	def apply_changes(self):
 		config.cms_use = self.use_cms
@@ -144,8 +137,8 @@ class SettingsTab(PrefsTab):
 	bpc_flag = False
 	bpt_flag = False
 
-	def __init__(self, app, dlg, fmt_config):
-		PrefsTab.__init__(self, app, dlg, fmt_config)
+	def __init__(self, master, app, dlg):
+		PrefsTab.__init__(self, master, app, dlg)
 
 		self.get_config_vals()
 
@@ -156,13 +149,14 @@ class SettingsTab(PrefsTab):
 		for item in self.intents:
 			self.intents_names.append(uc2const.INTENTS[item])
 
-		intent_frame = gtk.Frame(' ' + _('Rendering intents') + ' ')
+		intent_frame = wal.Frame(self, ' ' + _('Rendering intents') + ' ')
+
 		tab = gtk.Table(2, 2, False)
 		tab.set_row_spacings(5)
 		tab.set_col_spacings(10)
 		tab.set_border_width(5)
 
-		label = gtk.Label(_('Display/RGB intent:'))
+		label = wal.Label(tab, _('Display/RGB intent:'))
 		tab.attach(label, 0, 1, 0, 1, gtk.SHRINK, gtk.SHRINK)
 		self.rgb_intent_combo = wal.ComboBoxText(tab, self.intents_names,
 											cmd=self.update_vals)
@@ -170,7 +164,7 @@ class SettingsTab(PrefsTab):
 		tab.attach(self.rgb_intent_combo, 1, 2, 0, 1, gtk.SHRINK,
 				gtk.SHRINK)
 
-		label = gtk.Label(_('Printer/CMYK intent:'))
+		label = wal.Label(tab, _('Printer/CMYK intent:'))
 		tab.attach(label, 0, 1, 1, 2, gtk.SHRINK, gtk.SHRINK)
 		self.cmyk_intent_combo = wal.ComboBoxText(tab, self.intents_names,
 												cmd=self.update_vals)
@@ -179,46 +173,46 @@ class SettingsTab(PrefsTab):
 				gtk.SHRINK)
 
 		intent_frame.add(tab)
-		self.pack_start(intent_frame, False, True, 0)
+		self.pack(intent_frame)
 
 		#Printer simulation
-		printer_frame = gtk.Frame()
+		printer_frame = wal.Frame(self)
 		txt = _('Simulate Printer on the Screen')
 		self.printer_check = wal.CheckButton(printer_frame, txt, True,
 											self.update_vals)
 		printer_frame.set_label_widget(self.printer_check)
 
-		vbox = gtk.VBox()
+		vbox = wal.VBox(printer_frame)
 		vbox.set_border_width(10)
 		printer_frame.add(vbox)
 		txt = _('Show colors that are out of the printer gamut')
 		self.gamut_check = wal.CheckButton(vbox, txt, cmd=self.update_vals)
-		vbox.pack_start(self.gamut_check, True, True, 0)
+		vbox.pack(self.gamut_check, True, True)
 
-		hbox = gtk.HBox()
-		self.alarm_label = gtk.Label('Alarm color:')
-		hbox.pack_start(self.alarm_label, False, False, 5)
+		hbox = wal.HBox(printer_frame)
+		self.alarm_label = wal.Label(hbox, 'Alarm color:')
+		hbox.pack(self.alarm_label, padding=5)
 
 		self.cb = wal.ColorButton(hbox, self.alarmcodes,
 								_('Select alarm color'), cmd=self.update_vals)
-		hbox.pack_start(self.cb, False, False, 5)
+		hbox.pack(self.cb, padding=5)
 
-		vbox.pack_start(hbox, True, True, 0)
+		vbox.pack(hbox, True, True)
 
 		txt = _('Separation for SPOT colors')
 		self.spot_check = wal.CheckButton(vbox, txt, cmd=self.update_vals)
-		vbox.pack_start(self.spot_check, False, True, 5)
+		vbox.pack(self.spot_check, padding=5)
 
-		self.pack_start(printer_frame, False, True, 0)
+		self.pack(printer_frame)
 
 		#Flags
 		txt = _('Use Blackpoint Compensation')
 		self.bpc_check = wal.CheckButton(self, txt, cmd=self.update_vals)
-		self.pack_start(self.bpc_check, False, True, 5)
+		self.pack(self.bpc_check, padding=5)
 
 		txt = _('Use Black preserving transforms')
 		self.bpt_check = wal.CheckButton(self, txt, cmd=self.update_vals)
-		self.pack_start(self.bpt_check, False, True, 0)
+		self.pack(self.bpt_check)
 
 		self.update_widgets()
 
@@ -291,17 +285,17 @@ class ProfilesTab(PrefsTab):
 
 	name = _('Color profiles')
 
-	def __init__(self, app, dlg, fmt_config):
-		PrefsTab.__init__(self, app, dlg, fmt_config)
+	def __init__(self, master, app, dlg):
+		PrefsTab.__init__(self, master, app, dlg)
 
 		title = wal.DecorLabel(self, _('Document related profiles'), bold=True)
-		self.pack_start(title, False, False, 0)
-		self.pack_start(gtk.HSeparator(), False, False, 5)
+		self.pack(title)
+		self.pack(wal.HLine(self), padding=5)
 
 		tab = gtk.Table(9, 3, False)
 		tab.set_row_spacings(5)
 		tab.set_col_spacings(10)
-		self.pack_start(tab, True, True, 0)
+		self.pack(tab, True, True)
 		self.cs_widgets = {}
 		self.cs_profiles = {}
 		self.cs_config_profiles = {}

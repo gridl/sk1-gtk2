@@ -28,7 +28,7 @@ from widgets import Label, DecorLabel, Image, ClickableImage, CheckButton
 from widgets import ToggleButton, ImgToggleButton, ActionToggleButton
 from widgets import ComboBoxText, ComboBoxEntry, ColorButton, RadioButton
 from widgets import SpinButton, SpinButtonInt, URL_Label, Entry, TextView
-from widgets import NoteBook
+from widgets import NoteBook, Frame
 from canvas import ColorPlate, ImgPlate, ActiveColorPlate, CairoCanvas
 
 from dialogs import info_dialog, warning_dialog, error_dialog
