@@ -528,6 +528,17 @@ class NoteBook(gtk.Notebook):
 
 	def get_page_count(self):return len(self.pages)
 
+class Frame(gtk.Frame):
+
+	def __init__(self, master, text=None):
+		self.master = master
+		gtk.Frame.__init__(self, text)
+
+	def add(self, child): gtk.Frame.add(self, child)
+	def set_label_widget(self, widget): gtk.Frame.set_label_widget(self, widget)
+
+
+
 
 
 
