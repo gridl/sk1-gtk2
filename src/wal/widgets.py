@@ -499,7 +499,8 @@ class NoteBook(gtk.Notebook):
 		self.master = master
 		self.pages = []
 		gtk.Notebook.__init__(self)
-		self.connect('switch-page', self.page_switched)
+		self.connect(gconst.EVENT_SWITCH_PAGE, self.page_switched)
+		self.set_property(gconst.PROP_SCROLLABLE, True)
 
 	#--- Stub for subclassing
 	def page_switched(self, *args):pass

@@ -15,19 +15,17 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, wal
+import wal
 
 from sk1 import events, rc
 
-class AppDocBook(gtk.Notebook):
+class AppDocBook(wal.NoteBook):
 
 	docs = []
 
 	def __init__(self, master, app):
-		self.master = master
 		self.app = app
-		gtk.Notebook.__init__(self)
-		self.connect('switch-page', self.change_doc)
+		wal.NoteBook.__init__(self, master)
 		self.set_property('scrollable', True)
 		events.connect(events.DOC_CHANGED, self.doc_changed)
 		events.connect(events.DOC_MODIFIED, self.doc_modified)
