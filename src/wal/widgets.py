@@ -499,11 +499,16 @@ class NoteBook(gtk.Notebook):
 		self.master = master
 		self.pages = []
 		gtk.Notebook.__init__(self)
-		self.connect(gconst.EVENT_SWITCH_PAGE, self.page_switched)
+		self.connect(gconst.EVENT_SWITCH_PAGE, self._page_switched)
 		self.set_property(gconst.PROP_SCROLLABLE, True)
 
+	def _page_switched(self, widget, page, index, *args):
+		if not index < 0 and self.pages:
+			self.page_switched(self.pages[index])
+		return True
+
 	#--- Stub for subclassing
-	def page_switched(self, *args):pass
+	def page_switched(self, page):pass
 
 	def add_page(self, page, tab_txt='', tab_label=None):
 		self.pages.append(page)
