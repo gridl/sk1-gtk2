@@ -191,14 +191,15 @@ class Ruler(gtk.DrawingArea):
 			self.units = units
 			self.queue_draw()
 
-	def check_config(self, *args):
-		if not args[0][0][:6] == 'ruler_': return
-		if args[0][0] == 'ruler_size':
+	def check_config(self, attr, value):
+		if not attr[:6] == 'ruler_': return
+		if attr == 'ruler_size':
 			size = config.ruler_size
 			if self.orient: self.set_size_request(size, -1)
 			else: self.set_size_request(-1, size)
 			return
-		if args[0][0] == 'ruler_font_size': load_font()
+		if attr == 'ruler_font_size':
+			load_font()
 		self.queue_draw()
 
 	def update_ruler(self, *args):
