@@ -15,5 +15,27 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 
-def pconv_run():pass
+from pconv.app_conf import AppConfig, AppData
+
+global config
+
+def dummy_translator(text):
+	return text
+
+_ = dummy_translator
+config = None
+
+def pconv_run():
+
+	global config
+
+	config = AppConfig(__path__[0])
+	appdata = AppData()
+	config.load(appdata.app_config)
+
+	from pconv.pcapp import Application
+
+	app = Application(appdata)
+	app.run()

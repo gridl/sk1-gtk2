@@ -17,15 +17,17 @@
 
 
 from uc2.application import UCApplication
+
 from pconv.app_mw import AppMainWindow
 
 class Application(UCApplication):
 
-	def __init__(self, appdata=None):
+	def __init__(self, appdata):
 
 		UCApplication.__init__(self)
 		self.appdata = appdata
 
-		self.mw = AppMainWindow(self, [])
+		self.mw = AppMainWindow(self)
 
-	def run(self):pass
+	def run(self):
+		self.mw.run()
