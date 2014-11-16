@@ -18,6 +18,7 @@
 
 from uc2.application import UCApplication
 
+from pconv.actions import create_actions
 from pconv.inspector import DocumentInspector
 from pconv.proxy import AppProxy
 from pconv.app_mw import AppMainWindow
@@ -25,6 +26,7 @@ from pconv.app_mw import AppMainWindow
 class Application(UCApplication):
 
 	docs = []
+	actions = []
 
 	def __init__(self, appdata):
 
@@ -34,7 +36,7 @@ class Application(UCApplication):
 		self.insp = DocumentInspector(self)
 		self.proxy = AppProxy(self)
 
-		self.mw = AppMainWindow(self)
+		self.mw = AppMainWindow(self, create_actions(self))
 		self.proxy.update_references()
 
 	def run(self):

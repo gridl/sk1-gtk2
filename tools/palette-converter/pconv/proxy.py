@@ -22,7 +22,16 @@ class AppProxy:
 
 	def __init__(self, app):
 		self.app = app
-		self.insp = app.inspector
+		self.insp = app.insp
 
 	def update_references(self):
 		self.mw = self.app.mw
+
+	def new(self, *args): pass
+	def open(self, *args): pass
+	def save(self, *args): pass
+	def save_as(self, *args): pass
+	def close(self, *args): pass
+	def close_all(self, *args): pass
+	def properties(self, *args): pass
+	def preferences(self, *args): pass
