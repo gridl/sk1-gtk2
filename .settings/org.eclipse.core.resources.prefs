@@ -80,3 +80,6 @@ encoding//src/wal/image_ids.py=utf-8
 encoding//src/wal/rc.py=utf-8
 encoding//src/wal/widgets.py=utf-8
 encoding//src/wal/window.py=utf-8
+encoding//tools/palette-converter/pc-launcher.py=utf-8
+encoding//tools/palette-converter/pconv/__init__.py=utf-8
+encoding//tools/palette-converter/pconv/pcapp.py=utf-8
