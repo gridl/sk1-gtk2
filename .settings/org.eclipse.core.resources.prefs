@@ -85,4 +85,6 @@ encoding//tools/palette-converter/pconv/__init__.py=utf-8
 encoding//tools/palette-converter/pconv/app_conf.py=utf-8
 encoding//tools/palette-converter/pconv/app_mw.py=utf-8
 encoding//tools/palette-converter/pconv/events.py=utf-8
+encoding//tools/palette-converter/pconv/inspector.py=utf-8
 encoding//tools/palette-converter/pconv/pcapp.py=utf-8
+encoding//tools/palette-converter/pconv/proxy.py=utf-8

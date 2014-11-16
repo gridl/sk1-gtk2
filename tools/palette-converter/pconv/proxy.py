@@ -15,27 +15,14 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+class AppProxy:
 
-from uc2.application import UCApplication
+	app = None
+	mw = None
 
-from pconv.inspector import DocumentInspector
-from pconv.proxy import AppProxy
-from pconv.app_mw import AppMainWindow
+	def __init__(self, app):
+		self.app = app
+		self.insp = app.inspector
 
-class Application(UCApplication):
-
-	docs = []
-
-	def __init__(self, appdata):
-
-		UCApplication.__init__(self)
-		self.appdata = appdata
-
-		self.insp = DocumentInspector(self)
-		self.proxy = AppProxy(self)
-
-		self.mw = AppMainWindow(self)
-		self.proxy.update_references()
-
-	def run(self):
-		self.mw.run()
+	def update_references(self):
+		self.mw = self.app.mw

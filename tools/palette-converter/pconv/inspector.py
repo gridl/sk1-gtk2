@@ -15,27 +15,19 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+class DocumentInspector:
 
-from uc2.application import UCApplication
+	def __init__(self, app):
+		self.app = app
 
-from pconv.inspector import DocumentInspector
-from pconv.proxy import AppProxy
-from pconv.app_mw import AppMainWindow
+	def is_doc(self):
+		if self.app.docs:
+			return True
+		else:
+			return False
 
-class Application(UCApplication):
-
-	docs = []
-
-	def __init__(self, appdata):
-
-		UCApplication.__init__(self)
-		self.appdata = appdata
-
-		self.insp = DocumentInspector(self)
-		self.proxy = AppProxy(self)
-
-		self.mw = AppMainWindow(self)
-		self.proxy.update_references()
-
-	def run(self):
-		self.mw.run()
+	def is_not_doc(self):
+		if self.app.docs:
+			return False
+		else:
+			return True

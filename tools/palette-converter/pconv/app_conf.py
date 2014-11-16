@@ -24,7 +24,7 @@ from pconv import events
 
 class AppData(UCData):
 
-	app_name = 'Palette Converter'
+	app_name = 'sK1 Palette Converter'
 	app_proc = 'pconv'
 	app_org = 'sK1 Project'
 	app_domain = 'sk1project.org'
