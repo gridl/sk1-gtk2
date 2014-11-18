@@ -35,6 +35,11 @@ def pconv_run():
 	appdata = AppData()
 	config.load(appdata.app_config)
 
+	if config.mw_disable_global_menu:
+		os.environ["UBUNTU_MENUPROXY"] = "0"
+	if config.mw_disable_overlay_scroll:
+		os.environ["LIBOVERLAY_SCROLLBAR"] = "0"
+
 	from pconv.pcapp import Application
 
 	app = Application(appdata)

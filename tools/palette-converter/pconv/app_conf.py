@@ -54,6 +54,8 @@ class AppConfig(UCConfig):
 		return defaults
 
 	#============== GENERIC SECTION ===================
+	mw_disable_global_menu = True
+	mw_disable_overlay_scroll = True
 
 	mw_size = (700, 500)
 	mw_min_size = (700, 500)
