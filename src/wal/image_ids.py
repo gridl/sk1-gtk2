@@ -59,9 +59,9 @@ STOCK_PLUGIN_LAYERS = gtk.STOCK_JUSTIFY_FILL
 STOCK_PLUGIN_DOM_VIEWER = gtk.STOCK_INDEX
 STOCK_PLUGIN_PAGES = gtk.STOCK_DND_MULTIPLE
 
-STOCK_CLOSE_NORMAL = 'img_close_normal'
-STOCK_CLOSE_ACTIVE = 'img_close_active'
-STOCK_CLOSE_PRESSED = 'img_close_pressed'
+TAB_CLOSE_NORMAL = 'img_close_normal'
+TAB_CLOSE_ACTIVE = 'img_close_active'
+TAB_CLOSE_PRESSED = 'img_close_pressed'
 
 
 

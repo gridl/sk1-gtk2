@@ -15,7 +15,8 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, gconst, rc, gobject
+import gtk, gconst, rc, gobject, image_ids
+from boxes import HBox
 
 class HLine(gtk.HSeparator):
 
@@ -533,6 +534,96 @@ class NoteBook(gtk.Notebook):
 		return self.pages[gtk.Notebook.get_current_page(self)]
 
 	def get_page_count(self):return len(self.pages)
+
+class DBTabButton(gtk.EventBox):
+
+	def __init__(self, master, tooltip='Close Tab', cmd=None):
+		self.master = master
+		self.cmd = cmd
+		gtk.EventBox.__init__(self)
+		self.image = Image(self, image_ids.TAB_CLOSE_NORMAL)
+		self.add(self.image)
+		if tooltip: self.set_tooltip_text(tooltip)
+		self.connect(gconst.EVENT_BUTTON_PRESS, self._mouse_pressed)
+		self.connect(gconst.EVENT_BUTTON_RELEASE, self._mouse_released)
+		self.connect(gconst.EVENT_ENTER_NOTIFY, self._mouse_entered)
+		self.connect(gconst.EVENT_LEAVE_NOTIFY, self._mouse_leaved)
+
+	def _mouse_pressed(self, widget, event):
+		self._set_image(image_ids.TAB_CLOSE_PRESSED)
+
+	def _mouse_released(self, widget, event):
+		self._set_image(image_ids.TAB_CLOSE_ACTIVE)
+		if self.cmd: self.cmd()
+
+	def _mouse_entered(self, widget, event):
+		self._set_image(image_ids.TAB_CLOSE_ACTIVE)
+	def _mouse_leaved(self, widget, event):
+		self._set_image(image_ids.TAB_CLOSE_NORMAL)
+
+	def _set_image(self, image_id): self.image.set_image(image_id)
+
+class DBTabLabel(HBox):
+
+	doc = None
+	cmd = None
+	do_action = False
+
+	def __init__(self, master, doc, txt, cmd=None, icon_id=None):
+		HBox.__init__(self, master)
+
+		self.doc = doc
+		self.cmd = cmd
+
+		if icon_id: self.pack_start(Image(self, icon_id), False)
+
+		self.label = gtk.Label('')
+		self.but_icon = Image(self, gtk.STOCK_CLOSE)
+
+
+		self.tab_button = gtk.EventBox()
+		self.tab_button.set_border_width(0)
+		self.tab_button.set_visible_window(False)
+		self.tab_button.set_size_request(15, 15)
+		self.tab_button.add(self.but_icon)
+
+		self.pack_start(self.label, False)
+		self.pack_start(self.tab_button, False)
+		self.set_caption(txt)
+		self.show_all()
+		self.but_icon.set_property('sensitive', False)
+
+		self.tab_button.connect('button-press-event', self.button_press)
+		self.tab_button.connect('button-release-event', self.button_release)
+		self.tab_button.connect('leave-notify-event', self.leave_event)
+		self.tab_button.connect('enter-notify-event', self.enter_event)
+
+	def set_caption(self, txt):
+		self.label.set_text('  %s  ' % (txt))
+
+	def enter_event(self, *args):
+		self.but_icon.set_property('sensitive', True)
+
+	def leave_event(self, *args):
+		self.but_icon.set_property('sensitive', False)
+		self.do_action = False
+
+	def button_press(self, *args):
+		self.but_icon.set_property('sensitive', False)
+		self.do_action = True
+
+	def button_release(self, *args):
+		self.but_icon.set_property('sensitive', True)
+		if self.do_action and self.cmd: self.cmd(self.doc)
+
+class DocBook(NoteBook):
+
+	switch_cmd = None
+	close_cmd = None
+
+	def __init__(self, master, switch_cmd=None, close_cmd=None, icon=None):
+
+		NoteBook.__init__(self, master)
 
 class Frame(gtk.Frame):
 
