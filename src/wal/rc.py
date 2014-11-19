@@ -111,6 +111,13 @@ def registry_aliases(txt, overlay_icons=True):
 def registry_provider(provider):
 	PROVIDERS.append(provider)
 
+def wal_provider(image_id):
+	path = os.path.join(GENERIC_ICONS_PATH, image_id + '.png')
+	if os.path.isfile(path):return path
+	return None
+
+registry_provider(wal_provider)
+
 def get_image_path(image_id):
 	for item in PROVIDERS:
 		imagepath = item(image_id)
