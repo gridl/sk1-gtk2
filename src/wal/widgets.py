@@ -535,19 +535,22 @@ class NoteBook(gtk.Notebook):
 
 	def get_page_count(self):return len(self.pages)
 
-class DBTabButton(gtk.EventBox):
+class DBTabButton(gtk.Alignment):
 
 	def __init__(self, master, tooltip='Close Tab', cmd=None):
 		self.master = master
 		self.cmd = cmd
-		gtk.EventBox.__init__(self)
+		gtk.Alignment.__init__(self, .5, .5)
+		self.eventbox = gtk.EventBox()
 		self.image = Image(self, image_ids.TAB_CLOSE_NORMAL)
-		self.add(self.image)
-		if tooltip: self.set_tooltip_text(tooltip)
-		self.connect(gconst.EVENT_BUTTON_PRESS, self._mouse_pressed)
-		self.connect(gconst.EVENT_BUTTON_RELEASE, self._mouse_released)
-		self.connect(gconst.EVENT_ENTER_NOTIFY, self._mouse_entered)
-		self.connect(gconst.EVENT_LEAVE_NOTIFY, self._mouse_leaved)
+		self.eventbox.add(self.image)
+		self.eventbox.set_visible_window(False)
+		self.add(self.eventbox)
+		if tooltip: self.eventbox.set_tooltip_text(tooltip)
+		self.eventbox.connect(gconst.EVENT_BUTTON_PRESS, self._mouse_pressed)
+		self.eventbox.connect(gconst.EVENT_BUTTON_RELEASE, self._mouse_released)
+		self.eventbox.connect(gconst.EVENT_ENTER_NOTIFY, self._mouse_entered)
+		self.eventbox.connect(gconst.EVENT_LEAVE_NOTIFY, self._mouse_leaved)
 
 	def _mouse_pressed(self, widget, event):
 		self._set_image(image_ids.TAB_CLOSE_PRESSED)
@@ -575,46 +578,21 @@ class DBTabLabel(HBox):
 		self.doc = doc
 		self.cmd = cmd
 
-		if icon_id: self.pack_start(Image(self, icon_id), False)
+
+		self.pack_end(DBTabButton(self, cmd=self.close_cmd), False, False, 2)
+
+		if icon_id: self.pack_start(Image(self, icon_id), False, False, 2)
 
 		self.label = gtk.Label('')
-		self.but_icon = Image(self, gtk.STOCK_CLOSE)
-
-
-		self.tab_button = gtk.EventBox()
-		self.tab_button.set_border_width(0)
-		self.tab_button.set_visible_window(False)
-		self.tab_button.set_size_request(15, 15)
-		self.tab_button.add(self.but_icon)
-
-		self.pack_start(self.label, False)
-		self.pack_start(self.tab_button, False)
+		self.pack_start(self.label, False, False, 2)
 		self.set_caption(txt)
+
 		self.show_all()
-		self.but_icon.set_property('sensitive', False)
 
-		self.tab_button.connect('button-press-event', self.button_press)
-		self.tab_button.connect('button-release-event', self.button_release)
-		self.tab_button.connect('leave-notify-event', self.leave_event)
-		self.tab_button.connect('enter-notify-event', self.enter_event)
+	def set_caption(self, txt): self.label.set_text(txt)
+	def close_cmd(self):
+		if self.cmd: self.cmd(self.doc)
 
-	def set_caption(self, txt):
-		self.label.set_text('  %s  ' % (txt))
-
-	def enter_event(self, *args):
-		self.but_icon.set_property('sensitive', True)
-
-	def leave_event(self, *args):
-		self.but_icon.set_property('sensitive', False)
-		self.do_action = False
-
-	def button_press(self, *args):
-		self.but_icon.set_property('sensitive', False)
-		self.do_action = True
-
-	def button_release(self, *args):
-		self.but_icon.set_property('sensitive', True)
-		if self.do_action and self.cmd: self.cmd(self.doc)
 
 class DocBook(NoteBook):
 
