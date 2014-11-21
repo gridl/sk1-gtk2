@@ -53,6 +53,7 @@ class AppMainWindow(wal.MainWindow):
 		self.tools = AppTools(self.app, hbox)
 		hbox.pack(self.tools, padding=1)
 		self.inner_hpaned = gtk.HPaned()
+
 		self.nb = gtk.Notebook()
 		self.nb.connect('switch-page', self.change_doc)
 		self.nb.set_property('scrollable', True)
