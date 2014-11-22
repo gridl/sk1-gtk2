@@ -7,7 +7,7 @@ class MW(wal.MainWindow):
 		self.set_size(300, 200)
 		hbox = wal.HBox(self)
 
-		but = wal.ImgButton(hbox, wal.IMG_PALETTE_ARROW_BOTTOM,
+		but = wal.ImgButton(hbox, wal.STOCK_ADD,
 						tooltip='test', cmd=self.test)
 		hbox.pack(but, padding=10)
 
