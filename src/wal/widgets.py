@@ -140,7 +140,7 @@ class Button(gtk.Button):
 		self.master = master
 		self.cmd = cmd
 		gtk.Button.__init__(self, text, stock)
-		if cmd: self.connect(gconst.EVENT_CLICKED, cmd)
+		if cmd: self.connect(gconst.EVENT_CLICKED, self._do_callback)
 		if cmd and repeat:
 			self.connect(gconst.EVENT_BUTTON_PRESS, self._mouse_pressed)
 			self.connect(gconst.EVENT_BUTTON_RELEASE, self._mouse_released)
@@ -174,11 +174,19 @@ class ImgButton(Button):
 
 class ToggleButton(gtk.ToggleButton):
 
+	cmd = None
+
 	def __init__(self, master, text=None, cmd=None, flat=True):
 		self.master = master
 		gtk.ToggleButton.__init__(self, text)
-		if cmd: self.connect(gconst.EVENT_TOGGLED, cmd)
+		if cmd:
+			self.cmd = cmd
+			self.connect(gconst.EVENT_TOGGLED, self._do_callback)
 		if flat:self.set_property(gconst.PROP_RELIEF, gtk.RELIEF_NONE)
+
+	def _do_callback(self, *args):
+		if self.cmd: self.cmd()
+		return True
 
 	def set_sensitive(self, val): gtk.ToggleButton.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.ToggleButton.get_sensitive(self)
@@ -598,10 +606,33 @@ class DocBook(NoteBook):
 
 	switch_cmd = None
 	close_cmd = None
+	icon_id = None
+	labels = {}
 
-	def __init__(self, master, switch_cmd=None, close_cmd=None, icon=None):
-
+	def __init__(self, master, switch_cmd=None, close_cmd=None, icon_id=None):
+		self.switch_cmd = switch_cmd
+		self.close_cmd = close_cmd
+		self.icon_id = icon_id
+		self.labels = {}
 		NoteBook.__init__(self, master)
+
+	def page_switched(self, doc):
+		if self.switch_cmd: self.switch_cmd(doc)
+
+	def add_doc(self, doc, txt):
+		label = DBTabLabel(self, doc, txt, self.close_cmd, self.icon_id)
+		self.labels[doc] = label
+		self.add_page(doc, tab_label=label)
+
+	def remove_doc(self, doc):
+		if doc in self.pages:
+			self.labels.pop(doc)
+			self.remove_page(doc)
+
+	def set_caption(self, doc, txt):
+		if doc in self.pages: self.labels[doc].set_caption(txt)
+
+	def set_active_doc(self, doc): self.set_active_page(doc)
 
 class Frame(gtk.Frame):
 
