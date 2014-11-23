@@ -12,7 +12,7 @@ class MW(wal.MainWindow):
 		but = wal.Button(self, 'Test button', cmd=self.test, flat=True)
 		self.pack(but, padding=10)
 
-	def test(self, *args):print 'CLICKED!'
+	def test(self):print 'CLICKED!'
 
 
 mw = MW()

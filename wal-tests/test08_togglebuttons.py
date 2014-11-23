@@ -13,16 +13,16 @@ class MW(wal.MainWindow):
 		but = wal.ToggleButton(hbox, 'FTest', cmd=self.test, flat=True)
 		hbox.pack(but, padding=10)
 
-		but = wal.ImgToggleButton(hbox, wal.IMG_PALETTE_ARROW_BOTTOM,
+		but = wal.ImgToggleButton(hbox, wal.STOCK_ABOUT,
 						tooltip='test', cmd=self.test)
 		hbox.pack(but, padding=10)
 
-		but = wal.ImgToggleButton(hbox, wal.IMG_PALETTE_DOUBLE_ARROW_BOTTOM,
+		but = wal.ImgToggleButton(hbox, wal.STOCK_CANCEL,
 						tooltip='test', cmd=self.test)
 		hbox.pack(but, padding=10)
 		self.pack(hbox)
 
-	def test(self, *args):print 'CHANGED!'
+	def test(self):print 'CHANGED!'
 
 
 mw = MW()

@@ -16,7 +16,7 @@ class MW(wal.MainWindow):
 		hbox.pack(but, padding=10)
 		self.pack(hbox)
 
-	def test(self, *args):print 'CLICKED!'
+	def test(self):print 'CLICKED!'
 
 
 mw = MW()
