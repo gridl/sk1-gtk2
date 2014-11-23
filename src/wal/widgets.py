@@ -223,11 +223,18 @@ class ActionToggleButton(ToggleButton):
 
 class CheckButton(gtk.CheckButton):
 
+	cmd = None
+
 	def __init__(self, master, text, state=False, cmd=None):
 		self.master = master
+		self.cmd = cmd
 		gtk.CheckButton.__init__(self, text)
 		self.set_active(state)
-		if cmd: self.connect(gconst.EVENT_TOGGLED, cmd)
+		if cmd: self.connect(gconst.EVENT_TOGGLED, self._do_callback)
+
+	def _do_callback(self, *args):
+		if self.cmd: self.cmd()
+		return True
 
 	def set_sensitive(self, val): gtk.CheckButton.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.CheckButton.get_sensitive(self)
@@ -236,11 +243,18 @@ class CheckButton(gtk.CheckButton):
 
 class RadioButton(gtk.RadioButton):
 
+	cmd = None
+
 	def __init__(self, master, text, group=None, state=False, cmd=None):
 		self.master = master
+		self.cmd = cmd
 		gtk.RadioButton.__init__(self, group, text)
 		self.set_active(state)
-		if cmd: self.connect(gconst.EVENT_TOGGLED, cmd)
+		if cmd: self.connect(gconst.EVENT_TOGGLED, self._do_callback)
+
+	def _do_callback(self, *args):
+		if self.cmd: self.cmd()
+		return True
 
 	def set_sensitive(self, val): gtk.RadioButton.set_sensitive(self, val)
 	def get_sensitive(self): return gtk.RadioButton.get_sensitive(self)
@@ -251,12 +265,19 @@ class RadioButton(gtk.RadioButton):
 
 class ColorButton(gtk.ColorButton):
 
+	cmd = None
+
 	def __init__(self, master, color, title='', cmd=None):
 		self.master = master
+		self.cmd = cmd
 		gtk.ColorButton.__init__(self)
 		self.set_color(color)
-		if cmd:self.connect(gconst.EVENT_COLOR_SET, cmd)
+		if cmd:self.connect(gconst.EVENT_COLOR_SET, self._do_callback)
 		if title:self.set_title(title)
+
+	def _do_callback(self, *args):
+		if self.cmd: self.cmd()
+		return True
 
 	def set_color(self, color):
 		gtk.ColorButton.set_color(self, rc.rgb_to_gdkcolor(color))
@@ -269,8 +290,11 @@ class ColorButton(gtk.ColorButton):
 
 class ComboBoxText(gtk.ComboBox):
 
+	cmd = None
+
 	def __init__(self, master, listdata=[], cmd=None):
 		self.master = master
+		self.cmd = cmd
 		self.liststore = gtk.ListStore(gobject.TYPE_STRING)
 		gtk.ComboBox.__init__(self, self.liststore)
 		cell = gtk.CellRendererText()
@@ -278,7 +302,11 @@ class ComboBoxText(gtk.ComboBox):
 		self.add_attribute(cell, 'text', 0)
 		self.set_list(listdata)
 		self.set_active(0)
-		if cmd: self.connect(gconst.EVENT_CHANGED, cmd)
+		if cmd: self.connect(gconst.EVENT_CHANGED, self._do_callback)
+
+	def _do_callback(self, *args):
+		if self.cmd: self.cmd()
+		return True
 
 	def clear(self):
 		self.liststore.clear()
@@ -295,11 +323,11 @@ class ComboBoxText(gtk.ComboBox):
 
 class ComboBoxEntry(gtk.ComboBoxEntry):
 
-	callback = None
+	cmd = None
 
 	def __init__(self, master, listdata=[], editable=False, cmd=None):
 		self.master = master
-		self.callback = cmd
+		self.cmd = cmd
 		self.liststore = gtk.ListStore(gobject.TYPE_STRING)
 		gtk.ComboBoxEntry.__init__(self, self.liststore)
 		self.set_list(listdata)
@@ -307,7 +335,9 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 		self.set_editable(editable)
 		if cmd: self.child.connect(gconst.EVENT_CHANGED, self._changed)
 
-	def _changed(self, *args): self.callback()
+	def _changed(self, *args):
+		if self.cmd: self.cmd()
+		return True
 
 	def set_editable(self, value=True):
 		self.child.set_property(gconst.PROP_EDITABLE, value)
@@ -581,11 +611,9 @@ class DBTabLabel(HBox):
 	do_action = False
 
 	def __init__(self, master, doc, txt, cmd=None, icon_id=None):
-		HBox.__init__(self, master)
-
 		self.doc = doc
 		self.cmd = cmd
-
+		HBox.__init__(self, master)
 
 		self.pack_end(DBTabButton(self, cmd=self.close_cmd), False, False, 2)
 
