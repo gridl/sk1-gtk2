@@ -15,7 +15,7 @@ class MW(wal.MainWindow):
 								check_focus=True)
 		hbox.pack(self.sb2, padding=30)
 
-	def callback(self, *args):
+	def callback(self):
 		print 'Changed!'
 		print self.sb1.get_value()
 		print self.sb2.get_value()

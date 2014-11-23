@@ -10,7 +10,7 @@ class MW(wal.MainWindow):
 		rb2 = wal.RadioButton(self, 'Blue', rb0, False, cmd=self.callback)
 		self.pack_all((rb0, rb1, rb2), padding=10)
 
-	def callback(self, *args):
+	def callback(self):
 		print 'Changed!'
 
 mw = MW()

@@ -13,7 +13,7 @@ class MW(wal.MainWindow):
 		txt2.set_editable(False)
 		self.pack_all((self.txt0, txt1, txt2), padding=10)
 
-	def callback(self, *args):
+	def callback(self):
 		print self.txt0.get_text()
 
 mw = MW()

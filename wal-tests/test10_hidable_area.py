@@ -13,7 +13,7 @@ class MW(wal.MainWindow):
 
 		self.pack(wal.Button(self, 'Test HidableArea', cmd=self.test_area), end=True)
 
-	def test_area(self, *args):
+	def test_area(self):
 		self.area.set_visible(not self.area.get_visible())
 
 mw = MW()

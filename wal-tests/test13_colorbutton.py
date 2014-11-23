@@ -14,7 +14,7 @@ class MW(wal.MainWindow):
 								cmd=self.callback)
 		hbox.pack(self.cb2, padding=30)
 
-	def callback(self, *args):
+	def callback(self):
 		print 'Changed!'
 		print self.cb1.get_color()
 		print self.cb2.get_color()

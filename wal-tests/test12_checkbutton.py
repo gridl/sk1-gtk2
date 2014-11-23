@@ -10,7 +10,7 @@ class MW(wal.MainWindow):
 		self.pack(wal.CheckButton(self, 'Not selected', False, cmd=self.callback),
 				padding=30)
 
-	def callback(self, *args):
+	def callback(self):
 		print 'Changed!'
 
 mw = MW()
