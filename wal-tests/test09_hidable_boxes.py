@@ -27,10 +27,10 @@ class MW(wal.MainWindow):
 		vbox.pack(wal.Button(vbox, 'Test HBox', cmd=self.test_hbox))
 		vbox.pack(wal.Button(vbox, 'Test VBox', cmd=self.test_vbox))
 
-	def test_hbox(self, *args):
+	def test_hbox(self):
 		self.hbox.set_visible(not self.hbox.get_visible())
 
-	def test_vbox(self, *args):
+	def test_vbox(self):
 		self.vbox.set_visible(not self.vbox.get_visible())
 
 mw = MW()
