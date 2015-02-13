@@ -206,11 +206,11 @@ def about_dialog(parent):
 	from sk1.dialogs.credits import CREDITS
 	from sk1.dialogs.license import LICENSE
 	authors = [
-		"\nIgor E. Novikov (sK1, Gtk+ version; sK1, Tk version)\n\
-		<igor.e.novikov@gmail.com>\n\n\
+"\nIgor E. Novikov (sK1 2.x, Gtk+ version; sK1 0.9.x, Tk version)\n\
+<igor.e.novikov@gmail.com>\n\n\
 ------------------------------",
-		"Bernhard Herzog (Skencil, Tk version)\n\
-		<bernhard@users.sourceforge.net>\n",
+"Bernhard Herzog (Skencil 0.6.x, Tk version)\n\
+<bernhard@users.sourceforge.net>\n",
 		]
 
 	about = gtk.AboutDialog()
@@ -219,14 +219,18 @@ def about_dialog(parent):
 
 	about.set_program_name(parent.app.appdata.app_name)
 	about.set_version(parent.app.appdata.version)
-	about.set_copyright("Copyright (C) 2011-2014 by Igor E. Novikov\n")
+
+	from time import gmtime, strftime
+	year = strftime("%Y", gmtime())
+
+	about.set_copyright("Copyright (C) 2011-%s by Igor E. Novikov\n" % (year))
 	about.set_comments(_("Vector graphics editor based on sK1 0.9.x") + "\n" + \
-						  _("and Skencil 0.6.x experience."))
-	about.set_website('http://www.sk1project.org')
+						  _("and PrintDesign 1.0 branches."))
+	about.set_website('http://sk1project.org')
 
 	about.set_logo(wal.rc.get_pixbuf(rc.IMG_APP_ICON))
 	about.set_authors(authors + [CREDITS])
-	about.set_translator_credits(CREDITS)
+	about.set_translator_credits("")
 	about.set_license(LICENSE)
 	about.run()
 	about.destroy()
